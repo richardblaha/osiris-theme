@@ -45,9 +45,17 @@ Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](ht
 - **GTK** — GTK 3, GTK 4 / libadwaita named-colour + widget stylesheets
   (`desktop/gtk-*`, `desktop/gtk-common/`), assembled into `Osiris` /
   `Osiris-Light` themes; `osiris-gtk-theme` helper for the libadwaita opt-in.
-- **GNOME Shell** — templated theme (`desktop/gnome-shell/gnome-shell.css.in`)
-  covering panel, quick settings, calendar/notifications, OSD, overview
-  search/dash, app grid, switchers, modal dialogs and the lock screen.
+- **GNOME Shell** — templated theme (`desktop/gnome-shell/gnome-shell.css.in`,
+  GNOME 42→48) covering the panel + corners, boxpointers, Quick Settings
+  (toggles, sliders, submenus, background-apps), the date menu (calendar,
+  weather, world clocks, DND, media controls, notification messages,
+  placeholder), notification banners, OSDs, the overview (search, dash, running
+  dots, workspace thumbnails, window previews with captions and close buttons),
+  the app grid with folders and page indicators, Alt-Tab / Alt-backtick /
+  workspace switchers, modal dialogs (run/polkit/end-session/network-agent), the
+  lock and GDM login screen (auth prompt, caps-lock, user list), the
+  screenshot/screencast UI, the IME candidate popup, tiling previews, the pad
+  OSD and Looking Glass. Both variants.
 - **Metacity / Marco** — `desktop/metacity-1/metacity-theme-3.xml.in` rendered
   per variant into `Osiris{,-Light}/metacity-1/` (GNOME Flashback, MATE, Xorg
   fallback) — accent-bar titlebar, rounded top corners, coloured window buttons.
@@ -55,6 +63,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](ht
   into `osiris` / `osiris-light` style schemes for GNOME Text Editor, gedit,
   GNOME Builder, meld, gnome-latex (shipped to `gtksourceview-5/4/3.0/styles/`
   by `osiris-theme-gtk`).
+- **`osiris-gnome-theme-<ver>.tar.gz`** — the GTK + GNOME Shell + Metacity theme
+  (both variants) + GtkSourceView schemes + install README, a `make themes`
+  release artifact for distros without the `.deb` / `.rpm`.
 - **KDE Plasma / Qt** — Plasma colour schemes, Kvantum `OsirisDark` /
   `OsirisLight` (`.kvconfig` + generated element SVG), `OsirisDark` Aurorae
   decoration, `Osiris` Plasma desktop theme.

@@ -56,7 +56,7 @@ jobs:
         with:
           node-version: 20
       - run: sudo apt-get update && sudo apt-get install -y jq zip
-      - run: scripts/build.sh vitepress bootstrap browsers
+      - run: scripts/build.sh vitepress bootstrap browsers themes
       - uses: actions/upload-artifact@v4
         with:
           name: npm
@@ -66,6 +66,11 @@ jobs:
         with:
           name: browsers
           path: dist/*.zip
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: themes
+          path: dist/osiris-gnome-theme-*.tar.gz
           if-no-files-found: error
 
   deb:

@@ -49,7 +49,8 @@ rasterise_svg() {
 # Expand @TOKEN@ placeholders in the GNOME Shell template for one variant.
 render_gnome_shell() {
   local variant="$1" infile="$2" outfile="$3"
-  local acc acc_fg sec panel surface hover border fg fg_dim success warning error
+  local acc acc_fg sec panel surface hover border fg fg_dim fg_muted sel
+  local success warning error
   acc="$(tok ".accent.primary.$variant")"
   sec="$(tok ".accent.secondary.$variant")"
   panel="$(tok ".themes.$variant.bg.activitybar")"
@@ -58,24 +59,32 @@ render_gnome_shell() {
   border="$(tok ".themes.$variant.border.strong")"
   fg="$(tok ".themes.$variant.text.primary")"
   fg_dim="$(tok ".themes.$variant.text.secondary")"
+  fg_muted="$(tok ".themes.$variant.text.muted")"
+  sel="$(tok ".themes.$variant.bg.selection")"
   success="$(tok ".state.success.$variant")"
   warning="$(tok ".state.warning.$variant")"
   error="$(tok ".state.error.$variant")"
-  if [ "$variant" = "dark" ]; then acc_fg="#04151a"; else acc_fg="#ffffff"; fi
+  acc_fg="$(tok ".themes.$variant.text.inverse")"
 
   sed -e "s|@ACCENT@|$acc|g" \
       -e "s|@ACCENT_FG@|$acc_fg|g" \
       -e "s|@ACCENT_SOFT@|${acc}26|g" \
+      -e "s|@ACCENT_DIM@|${acc}14|g" \
       -e "s|@SECONDARY@|$sec|g" \
       -e "s|@SECONDARY_SOFT@|${sec}26|g" \
       -e "s|@PANEL@|$panel|g" \
       -e "s|@SURFACE@|$surface|g" \
       -e "s|@SURFACE_HOVER@|$hover|g" \
+      -e "s|@SELECTION@|$sel|g" \
       -e "s|@BORDER@|$border|g" \
       -e "s|@FG@|$fg|g" \
       -e "s|@FG_DIM@|$fg_dim|g" \
+      -e "s|@FG_MUTED@|$fg_muted|g" \
       -e "s|@SUCCESS@|$success|g" \
+      -e "s|@SUCCESS_SOFT@|${success}26|g" \
       -e "s|@WARNING@|$warning|g" \
+      -e "s|@WARNING_SOFT@|${warning}26|g" \
       -e "s|@ERROR@|$error|g" \
+      -e "s|@ERROR_SOFT@|${error}26|g" \
       "$infile" > "$outfile"
 }

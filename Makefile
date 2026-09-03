@@ -10,8 +10,8 @@ BUILD      := scripts/build.sh
 
 .DEFAULT_GOAL := help
 .PHONY: help all tokens vscode vitepress bootstrap npm icons terminal browsers \
-        gtk gnome sourceview plasma desktop grub wallpapers pages deb rpm dist \
-        install-local clean distclean lint
+        gtk gnome sourceview themes plasma desktop grub wallpapers pages deb rpm \
+        dist install-local clean distclean lint
 
 help: ## Show this help
 	@grep -hE '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | \
@@ -51,6 +51,9 @@ gnome: ## Render GNOME Shell themes (build/themes/)
 sourceview: ## GtkSourceView schemes — GNOME Text Editor / gedit / Builder (build/sourceview/)
 	@$(BUILD) sourceview
 
+themes: ## GTK + GNOME Shell + Metacity theme tarball (dist/osiris-gnome-theme-<ver>.tar.gz)
+	@$(BUILD) themes
+
 plasma: ## Assemble KDE Plasma / Qt / Kvantum / Aurorae (build/plasma/)
 	@$(BUILD) plasma
 
@@ -73,7 +76,7 @@ deb: desktop icons terminal grub wallpapers ## Build all .deb packages into dist
 rpm: desktop icons terminal grub wallpapers ## Build all .rpm packages into dist/
 	@packaging/rpm/build-rpms.sh
 
-dist: vscode npm browsers deb rpm ## Everything that ships in a GitHub Release -> dist/
+dist: vscode npm browsers themes deb rpm ## Everything that ships in a GitHub Release -> dist/
 	@ls -la $(DIST_DIR)
 
 install-local: desktop icons terminal wallpapers ## Build + install themes into $$HOME (no root)

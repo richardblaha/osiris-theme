@@ -58,6 +58,7 @@ make icons         # -> build/icons/Osiris/            (XDG icon theme; needs: p
 make terminal      # -> build/terminal/                (GNOME Terminal / Ptyxis / Konsole)
 make browsers      # -> dist/osiris-{chromium,firefox}-{dark,light}-<ver>.zip  (needs: zip)
 make sourceview    # -> build/sourceview/Osiris{,-Light}.xml   (GNOME editor schemes)
+make themes        # -> dist/osiris-gnome-theme-<ver>.tar.gz    (GTK+Shell+Metacity bundle)
 make desktop       # -> build/themes/ (gtk + gnome-shell + metacity), sourceview, plasma
 make grub          # -> build/grub/osiris/             (needs: python3-pil, rsvg-convert)
 make wallpapers    # -> build/wallpapers/              (needs: python3 + rsvg-convert/inkscape/cairosvg)

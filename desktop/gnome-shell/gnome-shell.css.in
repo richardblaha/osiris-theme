@@ -1,29 +1,93 @@
 /* ============================================================================
-   OSIRIS - GNOME Shell theme (template).
-   scripts/lib/common.sh :: render_gnome_shell fills the placeholders from
-   assets/tokens.json per variant and writes <theme>/gnome-shell/gnome-shell.css.
-   Placeholder tokens (each wrapped in AT signs): ACCENT, ACCENT_FG, ACCENT_SOFT,
-   SECONDARY, SECONDARY_SOFT, PANEL, SURFACE, SURFACE_HOVER, BORDER, FG, FG_DIM,
-   SUCCESS, WARNING, ERROR.
+   OSIRIS — GNOME Shell theme (template).
+   scripts/lib/common.sh :: render_gnome_shell substitutes the AT-wrapped tokens
+   from assets/tokens.json per variant, writing
+   <theme>/gnome-shell/gnome-shell.css. Both an Osiris (dark) and an
+   Osiris-Light (light) variant are produced.
+
+   Tokens (each wrapped in AT signs): ACCENT ACCENT_FG ACCENT_SOFT ACCENT_DIM
+   SECONDARY SECONDARY_SOFT PANEL SURFACE SURFACE_HOVER SELECTION BORDER FG
+   FG_DIM FG_MUTED SUCCESS SUCCESS_SOFT WARNING WARNING_SOFT ERROR ERROR_SOFT.
+
+   Targets GNOME Shell 42 -> 48. Unknown selectors degrade gracefully.
    ========================================================================== */
 
+/* ---- Global -------------------------------------------------------- */
 stage {
   font-family: "Inter", "Cantarell", sans-serif;
   color: @FG@;
   font-size: 10.5pt;
 }
 
-/* ---- Top panel ------------------------------------------------------- */
+.system-status-icon,
+.popup-menu-icon { icon-size: 16px; }
+
+/* text entries (search, run dialog, auth prompt, IBus) */
+.entry, StEntry {
+  background-color: @SURFACE_HOVER@;
+  color: @FG@;
+  caret-color: @ACCENT@;
+  selection-background-color: @ACCENT@;
+  selected-color: @ACCENT_FG@;
+  border: 1px solid @BORDER@;
+  border-radius: 6px;
+  padding: 7px 10px;
+}
+.entry:focus, StEntry:focus {
+  border-color: @ACCENT@;
+  box-shadow: 0 0 0 3px @ACCENT_SOFT@;
+}
+.entry:hover { border-color: @FG_MUTED@; }
+StEntry StLabel.hint-text { color: @FG_MUTED@; }
+.entry StIcon { color: @FG_DIM@; }
+
+/* sliders (quick settings, OSD, a11y) */
+.slider { color: @ACCENT@; -barlevel-height: 4px; -slider-handle-radius: 8px; }
+.slider:hover { color: @ACCENT@; }
+
+/* check boxes / radio */
+.check-box StBin, .radio-box StBin { border: 2px solid @BORDER@; }
+.check-box:checked StBin, .radio-box:checked StBin {
+  background-color: @ACCENT@;
+  border-color: @ACCENT@;
+  color: @ACCENT_FG@;
+}
+
+/* scrollbars */
+StScrollBar { padding: 0; }
+StScrollView StScrollBar { min-width: 8px; min-height: 8px; }
+StScrollBar StButton#vhandle, StScrollBar StButton#hhandle {
+  background-color: @BORDER@;
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { background-color: @FG_MUTED@; }
+
+/* tooltips */
+.dash-label, .tile-label, StTooltip {
+  background-color: @SURFACE@;
+  color: @FG@;
+  border: 1px solid @BORDER@;
+  border-radius: 6px;
+  padding: 4px 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+/* ---- Top panel ---------------------------------------------------- */
 #panel {
   background-color: @PANEL@;
   border-bottom: 1px solid @BORDER@;
   font-weight: 500;
-  height: 28px;
+  height: 30px;
 }
+#panel:overview { background-color: transparent; border-color: transparent; }
 #panel .panel-button {
   color: @FG_DIM@;
-  border-radius: 3px;
+  border-radius: 6px;
   transition-duration: 150ms;
+  -natural-hpadding: 8px;
+  -minimum-hpadding: 6px;
 }
 #panel .panel-button:hover { color: @FG@; background-color: @SURFACE_HOVER@; }
 #panel .panel-button:active,
@@ -32,89 +96,228 @@ stage {
 #panel .panel-button:checked {
   color: @ACCENT_FG@;
   background-color: @ACCENT@;
+  box-shadow: none;
 }
 #panel .panel-button.clock-display:hover .clock { background-color: transparent; }
+#panel .panel-button.clock-display:active .clock,
+#panel .panel-button.clock-display:overview .clock,
+#panel .panel-button.clock-display:focus .clock { background-color: transparent; }
 #panel .panel-button .system-status-icon,
 #panel .panel-button .app-menu-icon > StIcon { icon-size: 16px; }
+#panel #panelActivities.panel-button:hover,
 #panel #panelActivities.panel-button:checked,
-#panel #panelActivities.panel-button:active { box-shadow: inset 0 -2px 0 @SECONDARY@; }
-
-/* ---- Popups / menus ------------------------------------------------ */
-.popup-menu {
-  color: @FG@;
-  min-width: 15em;
+#panel #panelActivities.panel-button:active {
+  box-shadow: inset 0 -2px 0 @SECONDARY@;
 }
-.popup-menu-boxpointer, #calendarArea, .quick-settings, .aggregate-menu {
-  -arrow-border-radius: 6px;
+#panel .panel-corner {
+  -panel-corner-radius: 0;
+  -panel-corner-background-color: @PANEL@;
+  -panel-corner-border-color: transparent;
+}
+#panel .power-status.panel-status-indicators-box { spacing: 0; }
+#panelLeft, #panelCenter, #panelRight { spacing: 4px; }
+
+/* ---- Boxpointer / popup menus ----------------------------------- */
+.popup-menu { color: @FG@; min-width: 15em; }
+.popup-menu-boxpointer,
+#calendarArea, .quick-settings, .aggregate-menu, .candidate-popup-boxpointer {
+  -arrow-border-radius: 12px;
   -arrow-background-color: @SURFACE@;
   -arrow-border-color: @BORDER@;
   -arrow-border-width: 1px;
+  -boxpointer-gap: 4px;
 }
 .popup-menu-content, .quick-settings {
   background-color: @SURFACE@;
   border: 1px solid @BORDER@;
-  border-radius: 6px;
+  border-radius: 12px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
-  padding: 6px;
+  padding: 8px;
 }
-.popup-menu-item { border-radius: 3px; padding: 8px 10px; spacing: 8px; }
+.popup-menu-item { border-radius: 6px; padding: 8px 10px; spacing: 8px; color: @FG@; }
 .popup-menu-item:hover, .popup-menu-item:focus, .popup-menu-item.selected {
   background-color: @ACCENT_SOFT@;
   color: @FG@;
 }
 .popup-menu-item:active { background-color: @ACCENT@; color: @ACCENT_FG@; }
+.popup-menu-item:insensitive { color: @FG_MUTED@; }
+.popup-menu-item .popup-inactive-menu-item { color: @FG_DIM@; }
+.popup-sub-menu {
+  background-color: @SURFACE_HOVER@;
+  border: none;
+  box-shadow: none;
+  border-radius: 6px;
+}
+.popup-sub-menu .popup-menu-item:ltr { padding-left: 20px; }
 .popup-separator-menu-item .popup-separator-menu-item-separator,
 .popup-menu-item .toggle-switch { color: @BORDER@; }
+.popup-menu-ornament { width: 1.2em; color: @ACCENT@; }
 
-/* ---- Quick Settings toggles -------------------------------------- */
-.quick-toggle {
+/* ---- Quick Settings -------------------------------------------- */
+.quick-settings { spacing: 12px; }
+.quick-settings-grid { spacing: 8px; }
+.quick-toggle, .quick-menu-toggle {
   background-color: @SURFACE_HOVER@;
   color: @FG@;
   border-radius: 999px;
+  border: none;
 }
-.quick-toggle:checked, .quick-slider .slider { color: @ACCENT@; }
-.quick-toggle:checked { background-color: @ACCENT@; color: @ACCENT_FG@; }
-.quick-settings-system-item .icon-button { border-radius: 999px; background-color: @SURFACE_HOVER@; }
-.quick-settings-system-item .icon-button:hover { background-color: @SURFACE_HOVER@; }
+.quick-toggle:hover, .quick-menu-toggle:hover { background-color: @SELECTION@; }
+.quick-toggle:checked, .quick-menu-toggle:checked,
+.quick-toggle-has-menu:checked {
+  background-color: @ACCENT@;
+  color: @ACCENT_FG@;
+}
+.quick-toggle:checked:hover { background-image: linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)); }
+.quick-toggle .quick-toggle-arrow, .quick-menu-toggle .quick-toggle-arrow {
+  background-color: transparent;
+  border-radius: 999px;
+}
+.quick-toggle .quick-toggle-arrow:hover { background-color: @SURFACE_HOVER@; }
+.quick-slider .slider { color: @ACCENT@; }
+.quick-slider StIcon { color: @FG_DIM@; }
+.quick-settings-system-item .icon-button,
+.quick-settings-system-item .power-item {
+  border-radius: 999px;
+  background-color: @SURFACE_HOVER@;
+  color: @FG@;
+}
+.quick-settings-system-item .icon-button:hover { background-color: @SELECTION@; }
+.quick-settings-system-item .icon-button:checked { background-color: @ACCENT@; color: @ACCENT_FG@; }
+.quick-settings-system-item .icon-button.settings-app-button:active { background-color: @ACCENT@; }
+.quick-toggle-menu {
+  background-color: @SURFACE_HOVER@;
+  border-radius: 12px;
+  padding: 8px;
+}
+.quick-toggle-menu .popup-menu-item:checked,
+.quick-toggle-menu .popup-menu-item.selected { background-color: @ACCENT_SOFT@; }
+.quick-toggle-menu .header .title { color: @FG@; font-weight: 700; }
+.quick-toggle-menu .header .subtitle { color: @FG_DIM@; }
+.quick-toggle-menu .header .icon { color: @ACCENT@; }
+.background-apps-quick-toggle .background-apps-menu-placeholder { color: @FG_MUTED@; }
+.nm-network-item:checked, .bt-device-item:checked { background-color: @ACCENT_SOFT@; }
 
-/* ---- Toggle switch --------------------------------------------- */
+/* toggle switch (shared: QS, popups, a11y) */
 .toggle-switch { color: @BORDER@; }
 .toggle-switch:checked { color: @ACCENT@; }
 
-/* ---- Calendar / notifications --------------------------------- */
-.calendar, .datemenu-today-button, .message-list-sections, .world-clocks-button, .events-button {
+/* ---- Date menu: calendar + notifications ---------------------- */
+#calendarArea { spacing: 12px; }
+.datemenu-popover { spacing: 0; }
+.datemenu-calendar-column { border: none; spacing: 8px; }
+.calendar, .datemenu-today-button, .message-list-sections,
+.world-clocks-button, .events-button, .weather-button {
   background-color: @SURFACE@;
   border: 1px solid @BORDER@;
-  border-radius: 6px;
+  border-radius: 12px;
 }
-.calendar-today {
+.datemenu-today-button:hover, .datemenu-today-button:focus,
+.world-clocks-button:hover, .events-button:hover, .weather-button:hover {
+  background-color: @SURFACE_HOVER@;
+}
+.datemenu-today-button .date-label { color: @FG@; font-weight: 700; }
+.datemenu-today-button .day-label { color: @FG_DIM@; }
+.calendar { padding: 8px; }
+.calendar .calendar-month-label { color: @FG@; font-weight: 700; }
+.calendar .pager-button { color: @FG_DIM@; border-radius: 999px; }
+.calendar .pager-button:hover { background-color: @SURFACE_HOVER@; color: @FG@; }
+.calendar-day-heading { color: @FG_MUTED@; font-weight: 600; }
+.calendar-day-base { border-radius: 999px; color: @FG@; }
+.calendar-day-base:hover, .calendar-day-base:focus { background-color: @SURFACE_HOVER@; }
+.calendar-day-base.calendar-nonwork-day { color: @FG_DIM@; }
+.calendar-other-month-day { color: @FG_MUTED@; }
+.calendar-today, .calendar-today:selected {
   background-color: @ACCENT@;
   color: @ACCENT_FG@;
   border-color: @ACCENT@;
+  font-weight: 700;
 }
-.calendar-day-base:hover, .calendar-day-base:focus { background-color: @SURFACE_HOVER@; }
-.calendar-day-base.calendar-day-with-events { color: @SECONDARY@; font-weight: 700; }
+.calendar-day-base:selected { background-color: @SELECTION@; }
+.calendar-day-with-events { color: @SECONDARY@; font-weight: 700; }
+.calendar-week-number { color: @FG_MUTED@; font-weight: 700; }
+
+.world-clocks-header, .events-button .events-title, .weather-header {
+  color: @FG_DIM@;
+  font-weight: 700;
+}
+.world-clocks-city, .weather-forecast-time { color: @FG@; }
+.world-clocks-time, .weather-forecast-temp { color: @FG_DIM@; }
+.world-clocks-timezone { color: @FG_MUTED@; }
+.weather-forecast-icon { color: @ACCENT@; }
+.events-list .event-time { color: @FG_MUTED@; }
+
+.message-list { padding: 0; }
+.message-list-placeholder { color: @FG_MUTED@; }
+.message-list-placeholder StIcon { icon-size: 48px; color: @FG_MUTED@; }
+.message-list-clear-button, .dnd-button {
+  color: @FG_DIM@;
+  border-radius: 999px;
+  padding: 6px 12px;
+}
+.message-list-clear-button:hover { background-color: @SURFACE_HOVER@; color: @FG@; }
+.message-list-section-title { color: @FG_DIM@; font-weight: 700; }
+
 .message {
   background-color: @SURFACE@;
   border: 1px solid @BORDER@;
   border-left: 3px solid @ACCENT@;
-  border-radius: 3px;
+  border-radius: 8px;
 }
+.message:hover { background-color: @SURFACE_HOVER@; }
 .message .message-title { color: @FG@; font-weight: 600; }
-.message .message-body { color: @FG_DIM@; }
+.message .message-content, .message .message-body { color: @FG_DIM@; }
+.message .message-secondary-bin > StLabel { color: @FG_MUTED@; }
+.message .message-close-button, .message .message-expand-button { color: @FG_DIM@; }
+.message .message-close-button:hover { color: @ERROR@; }
+.message-media-control { color: @FG_DIM@; border-radius: 999px; }
+.message-media-control:hover { background-color: @SURFACE_HOVER@; color: @FG@; }
+.message-media-control:insensitive { color: @FG_MUTED@; }
+.media-message-cover-icon { border-radius: 6px; }
+.media-message-cover-icon .fallback { color: @FG_MUTED@; background-color: @SURFACE_HOVER@; }
 
-/* ---- On-screen displays (volume / brightness) ---------------- */
+/* ---- Notification banners (top-of-screen) -------------------- */
+.notification-banner {
+  background-color: @SURFACE@;
+  color: @FG@;
+  border: 1px solid @BORDER@;
+  border-left: 3px solid @ACCENT@;
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  width: 34em;
+}
+.notification-banner .notification-title { color: @FG@; font-weight: 700; }
+.notification-banner .notification-body { color: @FG_DIM@; }
+.notification-banner .notification-button,
+.notification-banner .notification-icon-button {
+  background-color: @SURFACE_HOVER@;
+  color: @FG@;
+  border: none;
+  border-radius: 6px;
+}
+.notification-banner .notification-button:hover { background-color: @SELECTION@; }
+.notification-banner .notification-button:active { background-color: @ACCENT@; color: @ACCENT_FG@; }
+.summary-notification-stack-scrollview { padding: 0; }
+
+/* ---- On-screen displays ------------------------------------- */
 .osd-window {
   background-color: @SURFACE@;
+  color: @FG@;
   border: 1px solid @BORDER@;
-  border-radius: 6px;
+  border-radius: 16px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
 }
+.osd-window .osd-monitor-label { color: @FG_DIM@; }
 .osd-window .level-bar { background-color: @ACCENT@; border-radius: 999px; }
 .osd-window .level { background-color: @SURFACE_HOVER@; border-radius: 999px; }
+.osd-window StIcon { icon-size: 96px; color: @FG@; }
 
-/* ---- Overview: search + dash -------------------------------- */
+/* ---- Overview: controls, search, dash ---------------------- */
+#overview { spacing: 12px; }
 #overviewGroup { background-color: @PANEL@; }
+.controls-manager { spacing: 12px; }
+.controls-manager > .search-entry { max-width: 26em; }
+
 .search-entry {
   background-color: @SURFACE_HOVER@;
   color: @FG@;
@@ -122,84 +325,294 @@ stage {
   border-radius: 999px;
   padding: 7px 12px;
 }
+.search-entry:hover { border-color: @FG_MUTED@; }
 .search-entry:focus { border-color: @ACCENT@; box-shadow: 0 0 0 3px @ACCENT_SOFT@; }
-.search-section-content { background-color: @SURFACE@; border-radius: 6px; }
+.search-entry .search-entry-icon { color: @FG_DIM@; }
+.search-entry StLabel.hint-text { color: @FG_MUTED@; }
+
+#searchResultsBin { max-width: 1000px; }
+.search-section-content { background-color: @SURFACE@; border-radius: 12px; }
+.search-section .search-section-separator { background-color: @BORDER@; }
+.list-search-result, .grid-search-result { color: @FG@; border-radius: 8px; }
+.list-search-result:hover, .grid-search-result:hover { background-color: @SURFACE_HOVER@; }
 .search-provider-icon:selected, .list-search-result:selected, .grid-search-result:selected {
   background-color: @ACCENT_SOFT@;
-  border-radius: 6px;
+  border-radius: 8px;
 }
+.list-search-result-title { color: @FG@; }
+.list-search-result-description { color: @FG_DIM@; }
+.search-statustext { color: @FG_MUTED@; }
+
 #dash {
   background-color: @PANEL@;
   border: 1px solid @BORDER@;
-  border-radius: 12px 0 0 12px;
+  border-radius: 18px 0 0 18px;
 }
+#dash .overview-icon { color: @FG@; border-radius: 8px; }
 #dash .dash-item-container .app-well-app:hover .overview-icon,
-#dash .dash-item-container .app-well-app:focus .overview-icon {
+#dash .dash-item-container .app-well-app:focus .overview-icon,
+#dash .show-apps:hover .overview-icon,
+#dash .show-apps:focus .overview-icon {
   background-color: @SURFACE_HOVER@;
-  border-radius: 6px;
+  border-radius: 8px;
 }
+#dash .app-well-app:selected .overview-icon,
+#dash .app-well-app:checked .overview-icon { background-color: @ACCENT_SOFT@; }
 #dash .app-well-app-running-dot { background-color: @ACCENT@; }
-.dash-separator { background-color: @BORDER@; }
+.dash-separator { background-color: @BORDER@; width: 1px; margin: 0 8px; }
 
-/* ---- App grid ---------------------------------------------- */
-.icon-grid .overview-icon { color: @FG@; border-radius: 6px; }
+/* ---- Overview: workspace thumbnails + window previews ------ */
+.workspace-thumbnails { spacing: 8px; }
+.workspace-thumbnail-indicator {
+  border: 3px solid @ACCENT@;
+  border-radius: 10px;
+}
+.workspace-thumbnails .placeholder { background-color: @ACCENT_SOFT@; }
+
+.window-caption {
+  background-color: @SURFACE@;
+  color: @FG@;
+  border: 1px solid @BORDER@;
+  border-radius: 999px;
+  padding: 4px 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+.window-close, .workspace-close-button {
+  background-color: @ERROR@;
+  color: #ffffff;
+  border: 2px solid @SURFACE@;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+.window-close:hover { background-image: linear-gradient(rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12)); }
+.window-clone-border { border: 2px solid @ACCENT@; border-radius: 6px; }
+
+/* ---- Overview: app grid + folders ------------------------- */
+.icon-grid { spacing: 12px; }
+.icon-grid .overview-icon { color: @FG@; border-radius: 8px; }
+.app-well-app:hover .overview-icon,
+.app-well-app:focus .overview-icon { background-color: @SURFACE_HOVER@; }
+.app-well-app:selected .overview-icon,
+.app-well-app:drop .overview-icon,
+.app-folder:hover .overview-icon { background-color: @ACCENT_SOFT@; }
+.app-folder .overview-icon { background-color: @SURFACE_HOVER@; }
 .app-folder-dialog {
   background-color: @SURFACE@;
   border: 1px solid @BORDER@;
-  border-radius: 6px;
+  border-radius: 16px;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.65);
 }
-.page-indicator .page-indicator-icon { background-color: @FG_DIM@; }
-.page-indicator:checked .page-indicator-icon { background-color: @ACCENT@; }
+.app-folder-dialog .folder-name-container .folder-name-entry { min-width: 12em; }
+.page-indicators .page-indicator .page-indicator-icon,
+.page-indicator .page-indicator-icon { background-color: @FG_MUTED@; border-radius: 999px; }
+.page-indicator:checked .page-indicator-icon,
+.page-indicator:hover .page-indicator-icon { background-color: @ACCENT@; }
+.page-navigation-arrow { color: @FG_DIM@; }
+.page-navigation-arrow:hover { color: @ACCENT@; background-color: @SURFACE_HOVER@; border-radius: 999px; }
+.app-view-controls .button, .app-grid .app-view-controls .button { color: @FG_DIM@; }
 
-/* ---- Window / app switcher (Alt-Tab) ---------------------- */
+/* ---- Window / app switcher (Alt-Tab, Alt-`) -------------- */
 .switcher-popup { padding: 8px; }
-.switcher-list {
+.switcher-list, .app-switcher-popup .switcher-list {
   background-color: @SURFACE@;
   border: 1px solid @BORDER@;
-  border-radius: 6px;
+  border-radius: 12px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  padding: 8px;
 }
-.switcher-list .item-box { border-radius: 6px; padding: 8px; }
+.switcher-list .item-box { border-radius: 8px; padding: 8px; }
+.switcher-list .item-box:outlined { border: 1px solid @BORDER@; }
 .switcher-list .item-box:selected {
   background-color: @ACCENT_SOFT@;
   border: 1px solid @ACCENT@;
+  color: @FG@;
 }
+.switcher-list .thumbnail-box .thumbnail { border-radius: 4px; }
 .switcher-arrow { border-color: @FG_DIM@; }
 .switcher-arrow:highlighted { color: @ACCENT@; border-color: @ACCENT@; }
+.thumbnail-scroll-gradient-left, .thumbnail-scroll-gradient-right { width: 0; }
+.cycler-highlight { border: 3px solid @ACCENT@; border-radius: 6px; }
 
-/* ---- Workspace switcher ---------------------------------- */
+/* ---- Workspace switcher popup --------------------------- */
+.workspace-switcher-group .workspace-switcher {
+  background-color: @SURFACE@;
+  border: 1px solid @BORDER@;
+  border-radius: 12px;
+  padding: 8px;
+}
+.workspace-switcher .ws-switcher-box { background-color: @SURFACE_HOVER@; border-radius: 6px; }
 .workspace-switcher .ws-switcher-box:active,
 .ws-switcher-active-up, .ws-switcher-active-down { background-color: @ACCENT@; }
 
-/* ---- Modal dialogs (run, polkit, end-session) ----------- */
+/* ---- Modal dialogs ------------------------------------- */
 .modal-dialog {
   background-color: @SURFACE@;
+  color: @FG@;
   border: 1px solid @BORDER@;
-  border-radius: 6px;
+  border-radius: 16px;
   box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.65);
 }
-.modal-dialog .modal-dialog-linked-button {
+.modal-dialog .modal-dialog-content-box { color: @FG_DIM@; }
+.modal-dialog .modal-dialog-content-box .modal-dialog-title { color: @FG@; font-weight: 700; }
+.modal-dialog .modal-dialog-linked-button,
+.modal-dialog .button {
   background-color: @SURFACE_HOVER@;
   color: @FG@;
   border: none;
-  border-radius: 3px;
+  border-radius: 8px;
+  padding: 10px 16px;
 }
-.modal-dialog .modal-dialog-linked-button:hover { background-color: @SURFACE_HOVER@; }
-.modal-dialog .modal-dialog-linked-button:default {
+.modal-dialog .modal-dialog-linked-button:hover,
+.modal-dialog .button:hover { background-color: @SELECTION@; }
+.modal-dialog .modal-dialog-linked-button:focus { box-shadow: 0 0 0 3px @ACCENT_SOFT@; }
+.modal-dialog .modal-dialog-linked-button:default,
+.modal-dialog .button:default {
   background-color: @ACCENT@;
   color: @ACCENT_FG@;
 }
-.modal-dialog .modal-dialog-linked-button:default:hover { background-image: none; }
+.modal-dialog .modal-dialog-linked-button:default:hover {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08));
+}
+.modal-dialog .modal-dialog-linked-button.destructive-action { color: @ERROR@; }
+.modal-dialog .modal-dialog-linked-button.destructive-action:default {
+  background-color: @ERROR@;
+  color: #ffffff;
+}
 .run-dialog .run-dialog-entry { border-color: @ACCENT@; }
+.run-dialog .run-dialog-error-box { color: @ERROR@; }
+.end-session-dialog { width: 30em; }
+.end-session-dialog .end-session-dialog-battery-warning { color: @WARNING@; }
+.audio-selection-dialog .audio-selection-box { spacing: 20px; }
+.access-dialog, .geolocation-dialog { width: 28em; }
 
-/* ---- Screen shield / lock screen ----------------------- */
+/* ---- Screen shield / lock / login (GDM) ---------------- */
 #lockDialogGroup { background-color: @PANEL@; }
-.unlock-dialog .modal-dialog-button-box .modal-dialog-linked-button:default { background-color: @ACCENT@; color: @ACCENT_FG@; }
 .screen-shield-clock { color: @FG@; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6); }
+.screen-shield-clock-time { font-weight: 300; }
+.screen-shield-clock-date { color: @FG_DIM@; }
+.screen-shield-notifications-container .message,
+.screen-shield-notification-label { color: @FG@; }
 
-/* ---- Tiling / drop zones ------------------------------ */
-.tile-preview { background-color: @ACCENT_SOFT@; border: 1px solid @ACCENT@; }
+.login-dialog, .unlock-dialog {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+.login-dialog-banner { color: @FG_DIM@; }
+.login-dialog-user-list-view { -st-vfade-offset: 1em; }
+.login-dialog-user-list .login-dialog-user-list-item:ltr { padding-right: 1em; }
+.login-dialog-user-list .login-dialog-user-list-item .user-widget-label { color: @FG@; }
+.login-dialog-user-list .login-dialog-user-list-item:selected,
+.login-dialog-user-list .login-dialog-user-list-item:focus {
+  background-color: @ACCENT@;
+  color: @ACCENT_FG@;
+  border-radius: 8px;
+}
+.login-dialog-user-list .login-dialog-user-list-item:hover { background-color: @SURFACE_HOVER@; border-radius: 8px; }
+.login-dialog-prompt-layout { padding: 8px 4em; }
+.login-dialog-prompt-entry { min-width: 22em; }
+.login-dialog-message-warning { color: @WARNING@; }
+.login-dialog-message-hint, .prompt-dialog-password-layout .prompt-dialog-error-label { color: @ERROR@; }
+.caps-lock-warning-label, .prompt-dialog-caps-lock-warning { color: @WARNING@; }
+.login-dialog-not-listed-button .login-dialog-not-listed-label { color: @FG_DIM@; }
+.login-dialog-session-list-button { color: @FG_DIM@; }
+.login-dialog-session-list-button:hover { color: @ACCENT@; }
+#loginDialog .modal-dialog-button.login-dialog-button {
+  background-color: @SURFACE_HOVER@;
+  color: @FG@;
+  border-radius: 8px;
+}
+#loginDialog .modal-dialog-button.login-dialog-button:default { background-color: @ACCENT@; color: @ACCENT_FG@; }
+.user-widget.horizontal .user-widget-label,
+.user-widget.vertical .user-widget-label { color: @FG@; }
+.user-icon { border: 2px solid @BORDER@; border-radius: 999px; }
+.framed-user-icon { border: 2px solid @BORDER@; border-radius: 999px; }
 
-/* ---- Misc pills / progress --------------------------- */
+/* ---- Screenshot / screencast UI ------------------------ */
+.screenshot-ui-panel {
+  background-color: @SURFACE@;
+  border: 1px solid @BORDER@;
+  border-radius: 999px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  padding: 12px;
+  spacing: 12px;
+}
+.screenshot-ui-shot-cast-container {
+  background-color: @SURFACE_HOVER@;
+  border-radius: 999px;
+  padding: 4px;
+}
+.screenshot-ui-shot-cast-button { color: @FG_DIM@; border-radius: 999px; padding: 8px 14px; }
+.screenshot-ui-shot-cast-button:checked { background-color: @ACCENT@; color: @ACCENT_FG@; }
+.screenshot-ui-type-button, .screenshot-ui-show-pointer-button {
+  background-color: @SURFACE_HOVER@;
+  color: @FG@;
+  border-radius: 999px;
+  border: none;
+}
+.screenshot-ui-type-button:checked, .screenshot-ui-show-pointer-button:checked {
+  background-color: @ACCENT@;
+  color: @ACCENT_FG@;
+}
+.screenshot-ui-capture-button .screenshot-ui-capture-button-circle {
+  background-color: @ACCENT@;
+  border: 3px solid @SURFACE@;
+}
+.screenshot-ui-capture-button:checked .screenshot-ui-capture-button-circle { background-color: @ERROR@; }
+.screenshot-ui-selection-editor .screenshot-ui-area-selector-handle { background-color: @ACCENT@; }
+.screenshot-ui-area-indicator-selection { border: 1px solid @ACCENT@; }
+.screencast-indicator, .screen-recording-indicator {
+  background-color: @ERROR@;
+  color: #ffffff;
+  border-radius: 999px;
+}
+
+/* ---- IME / candidate popup ---------------------------- */
+.candidate-popup-content {
+  background-color: @SURFACE@;
+  border: 1px solid @BORDER@;
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  padding: 6px;
+}
+.candidate-box { border-radius: 6px; padding: 4px 8px; }
+.candidate-box:selected, .candidate-box:hover { background-color: @ACCENT_SOFT@; }
+.candidate-box:selected { color: @FG@; }
+.candidate-page-button-box .candidate-page-button { color: @FG_DIM@; }
+.candidate-index { color: @FG_MUTED@; }
+
+/* ---- Tiling, hot corner, misc ------------------------ */
+.tile-preview {
+  background-color: @ACCENT_SOFT@;
+  border: 1px solid @ACCENT@;
+}
+.tile-preview-tile-icon { color: @FG@; }
+.ripple-box { background-color: @ACCENT_SOFT@; border: 1px solid @ACCENT_SOFT@; }
+
+.pad-osd-window {
+  background-color: @SURFACE@;
+  border: 1px solid @BORDER@;
+  border-radius: 12px;
+}
+.pad-osd-window .pad-osd-title-box .pad-osd-title-menu-box .button { color: @FG_DIM@; }
+
+.magnifier-zoom-region { border: 2px solid @ACCENT@; }
+.magnifier-zoom-region.full-screen { border-width: 0; }
+
+.welcome-dialog .welcome-dialog-image-frame { border: 1px solid @BORDER@; border-radius: 12px; }
+
 .hotplug-notification-item:focus { background-color: @ACCENT_SOFT@; }
+.hotplug-notification-item:hover { background-color: @SURFACE_HOVER@; }
+
 .progress-bar { background-color: @SECONDARY@; }
+
+.extension-list-header { color: @FG_DIM@; font-weight: 700; }
+
+/* looking glass (dev tool) — minimal legibility only */
+#LookingGlassDialog {
+  background-color: @SURFACE@;
+  border: 1px solid @BORDER@;
+  border-radius: 12px;
+  color: @FG@;
+}
+#LookingGlassDialog .lg-toolbar-button:checked { color: @ACCENT@; }

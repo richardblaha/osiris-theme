@@ -167,6 +167,19 @@ sudo apt install ./osiris-icon-theme_<ver>_all.deb ./osiris-theme-gtk_<ver>_all.
 sudo dnf install ./osiris-desktop-theme-<ver>.noarch.rpm
 ```
 
+### Other distros (Arch, openSUSE, NixOS, …)
+
+Download `osiris-gnome-theme-<ver>.tar.gz` from
+[Releases](https://github.com/richardblaha/osiris-themes/releases) — it bundles
+the GTK 3/4 + GNOME Shell + Metacity theme (`Osiris` + `Osiris-Light`) and the
+GtkSourceView schemes with an install README:
+
+```sh
+tar xf osiris-gnome-theme-<ver>.tar.gz && cd osiris-gnome-theme-<ver>
+cp -r Osiris Osiris-Light ~/.local/share/themes/
+# then: GNOME Tweaks → Appearance, and the "User Themes" extension for the Shell
+```
+
 ### From source (no packages, no root)
 
 ```sh

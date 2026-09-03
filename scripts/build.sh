@@ -17,6 +17,7 @@
 #   gtk         -> build/themes/Osiris{,-Light}/gtk-{3.0,4.0}/ + metacity-1/
 #   gnome       -> build/themes/Osiris{,-Light}/gnome-shell/
 #   sourceview  -> build/sourceview/Osiris{,-Light}.xml  (GtkSourceView style schemes)
+#   themes      -> dist/osiris-gnome-theme-<ver>.tar.gz   (GTK+Shell+Metacity tarball)
 #   plasma      -> build/plasma/{color-schemes,Kvantum,aurorae,desktoptheme}/
 #   desktop     gtk + gnome + sourceview + plasma
 #   grub        -> build/grub/osiris/  (theme.txt + pixmaps + icons + fonts)
@@ -209,6 +210,47 @@ build_gnome() {
 }
 
 # ---------------------------------------------------------------------------
+# Distributable tarball of the GTK + GNOME Shell + Metacity theme (both variants)
+# for distros without the .deb / .rpm (Arch, openSUSE, NixOS, gnome-look.org …).
+build_themes() {
+  log "packaging the desktop theme tarball"
+  have tar || die "'tar' required"
+  [ -d "$BUILD_DIR/themes/Osiris" ] || build_gtk
+  [ -d "$BUILD_DIR/themes/Osiris/gnome-shell" ] || build_gnome
+  [ -d "$BUILD_DIR/sourceview" ] || build_sourceview
+  local s="$BUILD_DIR/theme-pkg/osiris-gnome-theme-$VERSION"
+  rm -rf "$BUILD_DIR/theme-pkg"; mkdir -p "$s" "$DIST_DIR"
+  cp -r "$BUILD_DIR/themes/Osiris" "$BUILD_DIR/themes/Osiris-Light" "$s/"
+  mkdir -p "$s/gtksourceview/styles"
+  cp "$BUILD_DIR/sourceview/"*.xml "$s/gtksourceview/styles/"
+  cat > "$s/README.md" <<EOF
+# OSIRIS GNOME theme ($VERSION)
+
+GTK 3/4 + libadwaita, GNOME Shell, Metacity — dark (\`Osiris\`) and light
+(\`Osiris-Light\`). Plus the \`osiris\` / \`osiris-light\` GtkSourceView schemes
+for GNOME Text Editor / gedit / Builder.
+
+## Install (per-user)
+
+    cp -r Osiris Osiris-Light ~/.local/share/themes/
+    for v in 5 4 3.0; do
+      mkdir -p ~/.local/share/gtksourceview-\$v/styles
+      cp gtksourceview/styles/*.xml ~/.local/share/gtksourceview-\$v/styles/
+    done
+
+Then, with GNOME Tweaks (or \`gsettings\`):
+
+    gsettings set org.gnome.desktop.interface gtk-theme 'Osiris'
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    # GNOME Shell theme needs the "User Themes" extension:
+    gsettings set org.gnome.shell.extensions.user-theme name 'Osiris'
+EOF
+  ( cd "$BUILD_DIR/theme-pkg" && tar -czf "$DIST_DIR/osiris-gnome-theme-$VERSION.tar.gz" \
+      "osiris-gnome-theme-$VERSION" )
+  log "  -> $DIST_DIR/osiris-gnome-theme-$VERSION.tar.gz"
+}
+
+# ---------------------------------------------------------------------------
 build_plasma() {
   log "assembling KDE Plasma / Qt themes"
   local p="$BUILD_DIR/plasma"
@@ -293,7 +335,7 @@ build_pages() {
 }
 
 # ---------------------------------------------------------------------------
-for tgt in tokens vscode vitepress bootstrap icons terminal browsers gtk gnome plasma sourceview grub wallpapers pages; do
+for tgt in tokens vscode vitepress bootstrap icons terminal browsers gtk gnome plasma sourceview themes grub wallpapers pages; do
   case "$tgt" in
     gtk|gnome|plasma|sourceview) want "$tgt" || want desktop || continue ;;
     vitepress|bootstrap)         want "$tgt" || want npm || continue ;;

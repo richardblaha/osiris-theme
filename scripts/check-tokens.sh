@@ -199,6 +199,18 @@ mt = open(os.path.join(root, "desktop", "metacity-1", "metacity-theme-3.xml.in")
 for ph in ("@ACCENT@", "@TITLEBAR@", "@FG@", "@ERROR@", "@THEME_NAME@"):
     if ph not in mt:
         errs.append(f"metacity template: missing placeholder {ph}")
+# every AT-token the GNOME Shell template uses must be one render_gnome_shell knows
+import re
+common = open(os.path.join(root, "scripts", "lib", "common.sh"), encoding="utf-8").read()
+known = set(re.findall(r"s\|@([A-Z_]+)@\|", common))
+gs_tpl = open(os.path.join(root, "desktop", "gnome-shell", "gnome-shell.css.in"), encoding="utf-8").read()
+used = set(re.findall(r"@([A-Z_]+)@", gs_tpl))
+unknown = used - known
+if unknown:
+    errs.append(f"gnome-shell.css.in uses unknown token(s): {sorted(unknown)}")
+for tok_name in ("ACCENT", "PANEL", "SURFACE", "FG"):
+    if tok_name not in used:
+        errs.append(f"gnome-shell.css.in no longer references @{tok_name}@")
 for e in errs:
     print("  GNOME " + e)
 sys.exit(1 if errs else 0)

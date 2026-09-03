@@ -54,7 +54,7 @@ jobs:
           set -euo pipefail
           mkdir -p dist
           find artifacts -type f \
-            \( -name '*.vsix' -o -name '*.tgz' -o -name '*.zip' \
+            \( -name '*.vsix' -o -name '*.tgz' -o -name '*.tar.gz' -o -name '*.zip' \
                -o -name '*.deb' -o -name '*.rpm' \) \
             -exec cp -v {} dist/ \;
           echo "---- release assets ----"
@@ -91,6 +91,9 @@ jobs:
               `osiris-icon-theme`, `osiris-theme-grub`, `osiris-wallpapers`, and the
               `osiris-desktop-theme` metapackage.
             - Fedora/RHEL `.rpm`: the matching noarch set.
+            - Other distros: `osiris-gnome-theme-*.tar.gz` — GTK 3/4 + GNOME Shell
+              + Metacity (dark + light) plus the GtkSourceView schemes, with an
+              install README.
 
             Live preview / design system → https://richardblaha.github.io/osiris-themes/
 
