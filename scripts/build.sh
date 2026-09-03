@@ -14,10 +14,11 @@
 #   icons       -> build/icons/Osiris/   (XDG icon theme: index.theme + scalable/ + sizes)
 #   terminal    -> build/terminal/       (GNOME Terminal / Ptyxis / Konsole schemes)
 #   browsers    -> dist/osiris-{chromium,firefox}-{dark,light}-<ver>.zip
-#   gtk         -> build/themes/Osiris{,-Light}/gtk-{3.0,4.0}/
+#   gtk         -> build/themes/Osiris{,-Light}/gtk-{3.0,4.0}/ + metacity-1/
 #   gnome       -> build/themes/Osiris{,-Light}/gnome-shell/
+#   sourceview  -> build/sourceview/Osiris{,-Light}.xml  (GtkSourceView style schemes)
 #   plasma      -> build/plasma/{color-schemes,Kvantum,aurorae,desktoptheme}/
-#   desktop     gtk + gnome + plasma
+#   desktop     gtk + gnome + sourceview + plasma
 #   grub        -> build/grub/osiris/  (theme.txt + pixmaps + icons + fonts)
 #   wallpapers  -> build/wallpapers/   (PNGs + GNOME XML + KDE packages)
 #   pages       -> build/pages/        (docs/ site for GitHub Pages)
@@ -161,12 +162,38 @@ assemble_gtk_variant() {   # <variant> <ThemeName>
 
   sed -e "s|@THEME_NAME@|$name|g" -e "s|@VARIANT@|$variant|g" \
       desktop/index.theme.in > "$t/index.theme"
+
+  # Metacity / Marco decoration (GNOME Flashback, MATE, Xorg fallback)
+  local acc_fg; acc_fg="$(tok ".themes.$variant.text.inverse")"
+  mkdir -p "$t/metacity-1"
+  sed -e "s|@THEME_NAME@|$name|g" -e "s|@VARIANT@|$variant|g" \
+      -e "s|@TITLEBAR@|$(tok ".themes.$variant.bg.titlebar")|g" \
+      -e "s|@TITLEBAR_BACKDROP@|$(tok ".themes.$variant.bg.activitybar")|g" \
+      -e "s|@FG@|$(tok ".themes.$variant.text.primary")|g" \
+      -e "s|@FG_DIM@|$(tok ".themes.$variant.text.secondary")|g" \
+      -e "s|@ACCENT@|$(tok ".accent.primary.$variant")|g" \
+      -e "s|@ACCENT_FG@|$acc_fg|g" \
+      -e "s|@SECONDARY@|$(tok ".accent.secondary.$variant")|g" \
+      -e "s|@BORDER@|$(tok ".themes.$variant.border.strong")|g" \
+      -e "s|@HOVER@|$(tok ".themes.$variant.bg.hover")|g" \
+      -e "s|@ERROR@|$(tok ".state.error.$variant")|g" \
+      desktop/metacity-1/metacity-theme-3.xml.in > "$t/metacity-1/metacity-theme-3.xml"
 }
 
 build_gtk() {
   log "assembling GTK themes"
   assemble_gtk_variant dark  Osiris
   assemble_gtk_variant light Osiris-Light
+}
+
+# ---------------------------------------------------------------------------
+build_sourceview() {
+  log "generating GtkSourceView style schemes (GNOME Text Editor / gedit / Builder)"
+  have python3 || die "python3 required for the GtkSourceView schemes"
+  local d="$BUILD_DIR/sourceview"
+  rm -rf "$d"; mkdir -p "$d"
+  python3 scripts/lib/gen_sourceview.py "$d"
+  log "  -> $d/Osiris{,-Light}.xml"
 }
 
 # ---------------------------------------------------------------------------
@@ -266,11 +293,11 @@ build_pages() {
 }
 
 # ---------------------------------------------------------------------------
-for tgt in tokens vscode vitepress bootstrap icons terminal browsers gtk gnome plasma grub wallpapers pages; do
+for tgt in tokens vscode vitepress bootstrap icons terminal browsers gtk gnome plasma sourceview grub wallpapers pages; do
   case "$tgt" in
-    gtk|gnome|plasma)     want "$tgt" || want desktop || continue ;;
-    vitepress|bootstrap)  want "$tgt" || want npm || continue ;;
-    *)                    want "$tgt" || continue ;;
+    gtk|gnome|plasma|sourceview) want "$tgt" || want desktop || continue ;;
+    vitepress|bootstrap)         want "$tgt" || want npm || continue ;;
+    *)                           want "$tgt" || continue ;;
   esac
   "build_$tgt"
 done

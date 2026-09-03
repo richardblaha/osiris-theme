@@ -28,8 +28,10 @@ tokens.json ──┬─→ vscode/themes/*.json            → osiris-theme.vsi
               ├─→ iconography/glyphs.json  ┬─→ vscode/fileicons/*     → Osiris File Icons
               │   + iconography/map/*.json ├─→ vscode/producticons/*  → Osiris Product Icons
               │                            └─→ build/icons/Osiris/    → /usr/share/icons/Osiris
-              ├─→ desktop/gtk-* + gtk-common/*     → /usr/share/themes/Osiris{,-Light}
+              ├─→ desktop/gtk-* + gtk-common/*     → /usr/share/themes/Osiris{,-Light}/gtk-{3.0,4.0}
               ├─→ desktop/gnome-shell/*.css.in     → …/Osiris{,-Light}/gnome-shell
+              ├─→ desktop/metacity-1/*.xml.in      → …/Osiris{,-Light}/metacity-1  (Flashback/Marco)
+              ├─→ tokens.json → GtkSourceView      → gtksourceview-5/4/3.0/styles/osiris{,-light}.xml
               ├─→ desktop/plasma/*                 → color-schemes / Kvantum / aurorae / desktoptheme
               ├─→ tokens.json → terminal           → GNOME Terminal · Ptyxis · Konsole schemes
               ├─→ boot/grub/*                      → /boot/grub/themes/osiris
@@ -65,6 +67,7 @@ osiris-themes/
 │   ├── gtk-common/              # @define-color palettes + shared widget rules
 │   ├── gtk-3.0/  gtk-4.0/       # toolkit-specific extras
 │   ├── gnome-shell/             # gnome-shell.css.in (+ assets/)
+│   ├── metacity-1/              # metacity-theme-3.xml.in (Flashback / Marco / Xorg)
 │   ├── plasma/                  # color-schemes, Kvantum, aurorae, desktoptheme
 │   └── terminal/               # VTE schemes: GNOME Terminal / Ptyxis / Konsole
 ├── boot/grub/                   # theme.txt, background.svg, icons/, fonts/, install.sh
@@ -77,7 +80,7 @@ osiris-themes/
 │   ├── generate-wallpapers.py   # raster + GNOME/KDE bundle assembly
 │   ├── check-tokens.sh          # palette drift guard (CI gate)
 │   ├── install-local.sh         # build → $HOME, no root
-│   └── lib/                     # common.sh, gen_icons.py, gen_kvantum_svg.py, gen_grub_assets.py
+│   └── lib/                     # common.sh, gen_icons.py, gen_terminal.py, gen_sourceview.py, …
 ├── .github/workflows/           # build.yml, release.yml
 ├── Makefile
 └── VERSION
@@ -144,10 +147,12 @@ sudo apt install ./osiris-desktop-theme_<ver>_all.deb   # metapackage — pulls 
 sudo apt install ./osiris-icon-theme_<ver>_all.deb ./osiris-theme-gtk_<ver>_all.deb
 ```
 
-- `osiris-theme-gtk` — GTK 3/4 + libadwaita + GNOME Shell, the **Ptyxis**
-  terminal palette and a GNOME Terminal profile installer
-  (`/usr/share/osiris/gnome-terminal/install.sh`). Apply the theme with
-  `osiris-gtk-theme --apply` (or GNOME Tweaks → Appearance).
+- `osiris-theme-gtk` — GTK 3/4 + libadwaita + GNOME Shell + Metacity (Flashback),
+  the GtkSourceView syntax schemes (**osiris** / **osiris-light** — used by GNOME
+  Text Editor, gedit, GNOME Builder, meld…), the **Ptyxis** terminal palette and
+  a GNOME Terminal profile installer (`/usr/share/osiris/gnome-terminal/install.sh`).
+  Apply the theme with `osiris-gtk-theme --apply` (or GNOME Tweaks → Appearance);
+  pick the editor scheme in the app's preferences.
 - `osiris-icon-theme` — Material-Symbols icon set. Select **Osiris** in GNOME
   Tweaks → Appearance → Icons, or System Settings → Icons on KDE.
 - `osiris-theme-plasma` — set **System Settings → Colors → Osiris**, decoration
@@ -172,9 +177,11 @@ make install-local        # builds + installs into ~/.local/share and switches
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) and
 [`docs/ICONOGRAPHY.md`](docs/ICONOGRAPHY.md). TL;DR: `make help`, then `make dist`
-produces every `.vsix` / `.tgz` / `.zip` / `.deb` / `.rpm` into `dist/`. CI does
-the same on every push; tagging `vX.Y.Z` cuts a GitHub Release and redeploys the
-Pages preview.
+produces every `.vsix` / `.tgz` / `.zip` / `.deb` / `.rpm` into `dist/`. CI
+(`build.yml`) does the same on every push and PR; pushing a tag `vX.Y.Z` that
+matches `VERSION` runs `release.yml` — it builds everything, publishes a GitHub
+Release with all artifacts attached, `npm publish`es the two npm packages
+(needs the `NPM_TOKEN` secret) and redeploys the Pages preview.
 
 ## License
 

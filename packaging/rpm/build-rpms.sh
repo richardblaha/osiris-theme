@@ -17,7 +17,7 @@ mkdir -p "$TOP"/{SOURCES,SPECS,BUILD,RPMS,SRPMS}
 # tarball named <name>-<version>/ at the root (matches %autosetup)
 PREFIX="$NAME-$VERSION"
 tar -c --exclude='./.git' --exclude='./build' --exclude='./dist' \
-      --exclude='./node_modules' --exclude='./vscode/node_modules' \
+      --exclude='node_modules' --exclude='*.tgz' --exclude='./bootstrap/dist' \
       --transform "s,^\.,$PREFIX," -C "$REPO" . \
   | gzip > "$TOP/SOURCES/$PREFIX.tar.gz"
 

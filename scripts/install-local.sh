@@ -23,6 +23,16 @@ do_gtk() {
   mkdir -p "$DATA/themes" "$HOME/.themes"
   cp -rT "$BUILD_DIR/themes/$n" "$DATA/themes/$n"
   cp -rT "$BUILD_DIR/themes/$n" "$HOME/.themes/$n"
+  # GtkSourceView schemes (GNOME Text Editor / gedit / Builder / meld)
+  if [ -d "$BUILD_DIR/sourceview" ]; then
+    for v in 5 4 3.0; do
+      mkdir -p "$DATA/gtksourceview-$v/styles"
+      cp "$BUILD_DIR/sourceview/Osiris.xml"       "$DATA/gtksourceview-$v/styles/osiris.xml"
+      cp "$BUILD_DIR/sourceview/Osiris-Light.xml" "$DATA/gtksourceview-$v/styles/osiris-light.xml"
+    done
+    have gsettings && gsettings set org.gnome.TextEditor style-scheme \
+      "$([ "$MODE" = light ] && echo osiris-light || echo osiris)" 2>/dev/null || true
+  fi
   # libadwaita opt-in
   mkdir -p "$CONFIG/gtk-4.0" "$CONFIG/gtk-3.0"
   cp "$BUILD_DIR/themes/$n/gtk-4.0/gtk.css"    "$CONFIG/gtk-4.0/gtk.css"

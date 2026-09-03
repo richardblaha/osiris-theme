@@ -1,5 +1,8 @@
 usr/share/themes/Osiris
 usr/share/themes/Osiris-Light
 usr/bin/osiris-gtk-theme
+usr/share/gtksourceview-5/styles/osiris*.xml
+usr/share/gtksourceview-4/styles/osiris*.xml
+usr/share/gtksourceview-3.0/styles/osiris*.xml
 usr/share/org.gnome.Ptyxis/palettes/osiris.palette
 usr/share/osiris/gnome-terminal

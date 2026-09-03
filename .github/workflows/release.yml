@@ -1,5 +1,10 @@
 name: Release
 
+# Push a tag `vX.Y.Z` (matching the VERSION file) → this builds every artifact,
+# publishes a GitHub Release with them attached, pushes the npm packages to the
+# registry and redeploys the Pages preview. `vX.Y.Z-rc.1` etc. → pre-release +
+# npm dist-tag `next`.
+
 on:
   push:
     tags: ["v*"]
@@ -9,9 +14,113 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tag must match VERSION
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          want="$(cat VERSION)"
+          case "$tag" in
+            "$want"|"$want"-*)
+              echo "tag $GITHUB_REF_NAME matches VERSION ($want)" ;;
+            *)
+              echo "::error::tag $GITHUB_REF_NAME does not match VERSION ($want) — bump VERSION or retag"
+              exit 1 ;;
+          esac
+
   build:
+    needs: verify
     uses: ./.github/workflows/build.yml
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Collect release assets
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          find artifacts -type f \
+            \( -name '*.vsix' -o -name '*.tgz' -o -name '*.zip' \
+               -o -name '*.deb' -o -name '*.rpm' \) \
+            -exec cp -v {} dist/ \;
+          echo "---- release assets ----"
+          ls -la dist/
+          # sanity: the four package kinds the release is defined by must be present
+          for kind in vsix deb rpm tgz; do
+            ls dist/*."$kind" >/dev/null 2>&1 || { echo "::error::no .$kind produced"; exit 1; }
+          done
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: OSIRIS Themes ${{ github.ref_name }}
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: dist/*
+          body: |
+            **OSIRIS Themes ${{ github.ref_name }}** — one design system, every surface. See `CHANGELOG.md`.
+
+            ### VS Code
+            `osiris-theme-*.vsix` — *Osiris Dark* / *Osiris Light* colour themes,
+            *Osiris File Icons* and *Osiris Product Icons*.
+
+            ### Web
+            - npm: `osiris-vitepress-theme`, `osiris-bootstrap-theme` — attached as
+              `.tgz` and published to <https://www.npmjs.com/>.
+            - Browsers: `osiris-{chromium,firefox}-{dark,light}-*.zip` — Manifest V3
+              (Chromium/Chrome/Edge) and V2 (Firefox) themes.
+
+            ### Linux desktop
+            - Debian/Ubuntu `.deb`: `osiris-theme-gtk`, `osiris-theme-plasma`,
+              `osiris-icon-theme`, `osiris-theme-grub`, `osiris-wallpapers`, and the
+              `osiris-desktop-theme` metapackage.
+            - Fedora/RHEL `.rpm`: the matching noarch set.
+
+            Live preview / design system → https://richardblaha.github.io/osiris-themes/
+
+  publish-npm:
+    needs: [build, release]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+      - uses: actions/download-artifact@v4
+        with:
+          name: npm
+          path: dist
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${NODE_AUTH_TOKEN:-}" ]; then
+            echo "::warning::NPM_TOKEN secret not set — skipping npm publish (tarballs are still on the Release)"
+            exit 0
+          fi
+          dist_tag=latest
+          case "$GITHUB_REF_NAME" in *-*) dist_tag=next ;; esac
+          for tgz in dist/*.tgz; do
+            echo "publishing $tgz (@$dist_tag)"
+            npm publish "$tgz" --provenance --access public --tag "$dist_tag"
+          done
 
   publish-pages:
     needs: build
@@ -28,86 +137,3 @@ jobs:
           path: build/pages
       - id: deploy
         uses: actions/deploy-pages@v4
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-          pattern: "{vsix,npm,browsers,deb,rpm}"
-
-      - name: Collect release assets
-        run: |
-          set -euo pipefail
-          mkdir -p dist
-          find artifacts -type f \
-            \( -name '*.vsix' -o -name '*.tgz' -o -name '*.zip' \
-               -o -name '*.deb' -o -name '*.rpm' \) \
-            -exec cp -v {} dist/ \;
-          echo "---- release assets ----"
-          ls -la dist/
-
-      - name: Verify tag matches VERSION
-        run: |
-          tag="${GITHUB_REF_NAME#v}"
-          file="$(cat VERSION)"
-          # allow v0.1.0 == 0.1.0 and pre-release tags like v0.1.0-alpha.1
-          case "$tag" in "$file"|"$file"-*) : ;; *)
-            echo "::error::tag $GITHUB_REF_NAME does not match VERSION ($file)"; exit 1 ;;
-          esac
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          draft: true
-          prerelease: ${{ contains(github.ref_name, '-') }}
-          generate_release_notes: true
-          fail_on_unmatched_files: true
-          files: dist/*
-          body: |
-            OSIRIS themes ${{ github.ref_name }}
-
-            **VS Code** — `osiris-theme-*.vsix` (Osiris Dark / Light color themes,
-            Osiris File Icons, Osiris Product Icons)
-            **npm** — `osiris-vitepress-theme`, `osiris-bootstrap-theme`
-            (`.tgz` attached; also published to the npm registry)
-            **Browsers** — `osiris-{chromium,firefox}-{dark,light}-*.zip`
-            (Chromium/Chrome/Edge + Firefox themes)
-            **Debian/Ubuntu** — `osiris-theme-gtk`, `osiris-theme-plasma`,
-            `osiris-icon-theme`, `osiris-theme-grub`, `osiris-wallpapers`,
-            `osiris-desktop-theme` (meta)
-            **Fedora/RHEL** — the matching `.rpm` set
-
-            Live preview / design system: https://richardblaha.github.io/osiris-themes/
-            See `CHANGELOG.md` for details.
-
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org
-      - uses: actions/download-artifact@v4
-        with:
-          name: npm
-          path: dist
-      - name: Publish to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          set -euo pipefail
-          if [ -z "${NODE_AUTH_TOKEN:-}" ]; then
-            echo "::warning::NPM_TOKEN secret not set — skipping npm publish"; exit 0
-          fi
-          dist_tag=latest
-          case "$GITHUB_REF_NAME" in *-*) dist_tag=next ;; esac
-          for tgz in dist/*.tgz; do
-            npm publish "$tgz" --provenance --access public --tag "$dist_tag"
-          done

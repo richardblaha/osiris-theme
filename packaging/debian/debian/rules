@@ -10,15 +10,22 @@ DESTDIR = debian/tmp
 	dh $@
 
 override_dh_auto_build:
-	scripts/build.sh tokens gtk gnome plasma icons terminal grub wallpapers
+	scripts/build.sh tokens gtk gnome sourceview plasma icons terminal grub wallpapers
 
 override_dh_auto_install:
-	# --- GTK / GNOME Shell ---
+	# --- GTK / GNOME Shell / Metacity ---
 	install -d $(DESTDIR)/usr/share/themes
 	cp -rT build/themes/Osiris        $(DESTDIR)/usr/share/themes/Osiris
 	cp -rT build/themes/Osiris-Light  $(DESTDIR)/usr/share/themes/Osiris-Light
 	install -d $(DESTDIR)/usr/bin
 	install -m0755 packaging/common/osiris-gtk-theme $(DESTDIR)/usr/bin/osiris-gtk-theme
+
+	# --- GtkSourceView style schemes (GNOME Text Editor / gedit / Builder) ---
+	for v in 5 4 3.0; do \
+	  install -d $(DESTDIR)/usr/share/gtksourceview-$$v/styles ; \
+	  cp build/sourceview/Osiris.xml       $(DESTDIR)/usr/share/gtksourceview-$$v/styles/osiris.xml ; \
+	  cp build/sourceview/Osiris-Light.xml $(DESTDIR)/usr/share/gtksourceview-$$v/styles/osiris-light.xml ; \
+	done
 
 	# --- Terminal (VTE): Ptyxis palette + GNOME Terminal profile installer ---
 	install -d $(DESTDIR)/usr/share/org.gnome.Ptyxis/palettes

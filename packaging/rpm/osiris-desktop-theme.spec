@@ -1,8 +1,12 @@
 %global debug_package %{nil}
 %global _build_id_links none
+# version comes from `rpmbuild --define "version X"` (packaging/rpm/build-rpms.sh
+# reads it from the repo VERSION file); this default keeps a bare `rpmbuild -bb`
+# working too.
+%{!?version: %global version 0.1.0}
 
 Name:           osiris-desktop-theme
-Version:        0.1.0
+Version:        %{version}
 Release:        1%{?dist}
 Summary:        OSIRIS dual-accent desktop theme (metapackage)
 License:        MIT
@@ -75,7 +79,7 @@ and KDE Plasma light/dark wallpaper packages.
 %autosetup -n %{name}-%{version}
 
 %build
-scripts/build.sh tokens gtk gnome plasma icons terminal grub wallpapers
+scripts/build.sh tokens gtk gnome sourceview plasma icons terminal grub wallpapers
 
 %check
 scripts/check-tokens.sh
@@ -83,11 +87,18 @@ scripts/check-tokens.sh
 %install
 rm -rf %{buildroot}
 
-# GTK / GNOME Shell
+# GTK / GNOME Shell / Metacity
 install -d %{buildroot}%{_datadir}/themes
 cp -rT build/themes/Osiris       %{buildroot}%{_datadir}/themes/Osiris
 cp -rT build/themes/Osiris-Light %{buildroot}%{_datadir}/themes/Osiris-Light
 install -Dm0755 packaging/common/osiris-gtk-theme %{buildroot}%{_bindir}/osiris-gtk-theme
+
+# GtkSourceView style schemes (GNOME Text Editor / gedit / Builder)
+for v in 5 4 3.0; do
+  install -d %{buildroot}%{_datadir}/gtksourceview-$v/styles
+  install -m0644 build/sourceview/Osiris.xml       %{buildroot}%{_datadir}/gtksourceview-$v/styles/osiris.xml
+  install -m0644 build/sourceview/Osiris-Light.xml %{buildroot}%{_datadir}/gtksourceview-$v/styles/osiris-light.xml
+done
 
 # Terminal (VTE): Ptyxis palette + GNOME Terminal profile installer
 install -d %{buildroot}%{_datadir}/org.gnome.Ptyxis/palettes
@@ -168,6 +179,12 @@ fi
 %{_datadir}/themes/Osiris
 %{_datadir}/themes/Osiris-Light
 %{_bindir}/osiris-gtk-theme
+%{_datadir}/gtksourceview-5/styles/osiris.xml
+%{_datadir}/gtksourceview-5/styles/osiris-light.xml
+%{_datadir}/gtksourceview-4/styles/osiris.xml
+%{_datadir}/gtksourceview-4/styles/osiris-light.xml
+%{_datadir}/gtksourceview-3.0/styles/osiris.xml
+%{_datadir}/gtksourceview-3.0/styles/osiris-light.xml
 %{_datadir}/org.gnome.Ptyxis/palettes/osiris.palette
 %{_datadir}/osiris/gnome-terminal
 

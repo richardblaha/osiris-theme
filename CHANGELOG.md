@@ -48,6 +48,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](ht
 - **GNOME Shell** — templated theme (`desktop/gnome-shell/gnome-shell.css.in`)
   covering panel, quick settings, calendar/notifications, OSD, overview
   search/dash, app grid, switchers, modal dialogs and the lock screen.
+- **Metacity / Marco** — `desktop/metacity-1/metacity-theme-3.xml.in` rendered
+  per variant into `Osiris{,-Light}/metacity-1/` (GNOME Flashback, MATE, Xorg
+  fallback) — accent-bar titlebar, rounded top corners, coloured window buttons.
+- **GtkSourceView** — `scripts/lib/gen_sourceview.py` turns `themes.<v>.syntax`
+  into `osiris` / `osiris-light` style schemes for GNOME Text Editor, gedit,
+  GNOME Builder, meld, gnome-latex (shipped to `gtksourceview-5/4/3.0/styles/`
+  by `osiris-theme-gtk`).
 - **KDE Plasma / Qt** — Plasma colour schemes, Kvantum `OsirisDark` /
   `OsirisLight` (`.kvconfig` + generated element SVG), `OsirisDark` Aurorae
   decoration, `Osiris` Plasma desktop theme.

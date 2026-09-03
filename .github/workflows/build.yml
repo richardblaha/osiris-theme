@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
   workflow_call:
     outputs:
@@ -107,6 +107,9 @@ jobs:
           if-no-files-found: error
 
   pages-build:
+    # release.yml deploys Pages itself on a tag — don't also build the artifact
+    # here (its name would collide with the release run's upload).
+    if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
     needs: tokens
     runs-on: ubuntu-latest
     steps:
@@ -118,8 +121,8 @@ jobs:
           path: build/pages
 
   pages-deploy:
-    # only publish the live site from main (and from release.yml via workflow_call)
-    if: github.ref == 'refs/heads/main'
+    # publish the live site only from the default branch
+    if: github.ref == 'refs/heads/master'
     needs: pages-build
     runs-on: ubuntu-latest
     permissions:

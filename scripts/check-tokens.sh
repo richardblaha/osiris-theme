@@ -178,6 +178,33 @@ PY
   check "iconography accent" "#00f2fe" "$ICON_DS"
 fi
 
+# --- GNOME: GtkSourceView scheme tracks tokens; Metacity template is intact ---
+if command -v python3 >/dev/null 2>&1; then
+  ROOT="$ROOT" python3 - <<'PY' || fail=1
+import os, sys
+root = os.environ["ROOT"]
+sys.path.insert(0, os.path.join(root, "scripts", "lib"))
+import gen_sourceview as gs
+tok = gs.TOK
+errs = []
+for v in ("dark", "light"):
+    xml = gs.scheme(v)
+    syn = tok["themes"][v]["syntax"]
+    for role in ("keyword", "function", "string", "type", "number", "comment", "property"):
+        if syn[role] not in xml:
+            errs.append(f"sourceview {v}: {role} {syn[role]} missing")
+    if f'id="{"osiris" if v == "dark" else "osiris-light"}"' not in xml:
+        errs.append(f"sourceview {v}: wrong scheme id")
+mt = open(os.path.join(root, "desktop", "metacity-1", "metacity-theme-3.xml.in"), encoding="utf-8").read()
+for ph in ("@ACCENT@", "@TITLEBAR@", "@FG@", "@ERROR@", "@THEME_NAME@"):
+    if ph not in mt:
+        errs.append(f"metacity template: missing placeholder {ph}")
+for e in errs:
+    print("  GNOME " + e)
+sys.exit(1 if errs else 0)
+PY
+fi
+
 if [ "$fail" -ne 0 ]; then
   echo "check-tokens: FAILED"
   exit 1

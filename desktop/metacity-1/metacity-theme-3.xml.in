@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OSIRIS Metacity/Marco window decoration (template).
+     scripts/build.sh :: assemble_gtk_variant fills the @TOKENS@ per variant.
+     Used by GNOME Flashback, Marco (MATE), Metacity and the Xorg fallback;
+     mutter/libadwaita draw their own decorations from the GTK theme. -->
+<metacity_theme>
+  <info>
+    <name>@THEME_NAME@</name>
+    <author>OSIRIS</author>
+    <copyright>MIT</copyright>
+    <date>2026</date>
+    <description>OSIRIS dual-accent window decoration (@VARIANT@)</description>
+  </info>
+
+  <!-- palette (from assets/tokens.json) -->
+  <constant name="titlebar"     value="@TITLEBAR@"/>
+  <constant name="titlebar_bd"  value="@TITLEBAR_BACKDROP@"/>
+  <constant name="fg"           value="@FG@"/>
+  <constant name="fg_dim"       value="@FG_DIM@"/>
+  <constant name="accent"       value="@ACCENT@"/>
+  <constant name="accent_fg"    value="@ACCENT_FG@"/>
+  <constant name="secondary"    value="@SECONDARY@"/>
+  <constant name="border"       value="@BORDER@"/>
+  <constant name="hover"        value="@HOVER@"/>
+  <constant name="error"        value="@ERROR@"/>
+
+  <frame_geometry name="normal" title_scale="medium" rounded_top_left="6"
+                  rounded_top_right="6" rounded_bottom_left="0" rounded_bottom_right="0">
+    <distance name="left_width" value="1"/>
+    <distance name="right_width" value="1"/>
+    <distance name="bottom_height" value="1"/>
+    <distance name="left_titlebar_edge" value="8"/>
+    <distance name="right_titlebar_edge" value="8"/>
+    <aspect_ratio name="button" value="1.0"/>
+    <distance name="title_vertical_pad" value="8"/>
+    <border name="title_border" left="4" right="4" top="4" bottom="4"/>
+    <border name="button_border" left="0" right="0" top="4" bottom="4"/>
+  </frame_geometry>
+
+  <frame_geometry name="max" parent="normal" rounded_top_left="0" rounded_top_right="0">
+    <distance name="left_width" value="0"/>
+    <distance name="right_width" value="0"/>
+    <distance name="bottom_height" value="0"/>
+  </frame_geometry>
+
+  <frame_geometry name="border" title_scale="medium" has_title="false">
+    <distance name="left_width" value="1"/>
+    <distance name="right_width" value="1"/>
+    <distance name="bottom_height" value="1"/>
+    <distance name="left_titlebar_edge" value="0"/>
+    <distance name="right_titlebar_edge" value="0"/>
+    <distance name="title_vertical_pad" value="0"/>
+    <border name="title_border" left="0" right="0" top="0" bottom="0"/>
+    <border name="button_border" left="0" right="0" top="0" bottom="0"/>
+  </frame_geometry>
+
+  <!-- drawing -->
+  <draw_ops name="title_text">
+    <title color="fg" x="0" y="(height - title_height) / 2"
+           ellipsize_width="width"/>
+  </draw_ops>
+  <draw_ops name="title_text_unfocused">
+    <title color="fg_dim" x="0" y="(height - title_height) / 2"
+           ellipsize_width="width"/>
+  </draw_ops>
+
+  <draw_ops name="titlebar_bg">
+    <rectangle color="titlebar" x="0" y="0" width="width-1" height="height-1" filled="true"/>
+    <line color="accent" x1="0" y1="height-1" x2="width" y2="height-1"/>
+    <line color="accent" x1="0" y1="height-2" x2="width" y2="height-2"/>
+  </draw_ops>
+  <draw_ops name="titlebar_bg_unfocused">
+    <rectangle color="titlebar_bd" x="0" y="0" width="width-1" height="height-1" filled="true"/>
+    <line color="border" x1="0" y1="height-1" x2="width" y2="height-1"/>
+  </draw_ops>
+
+  <draw_ops name="edges">
+    <rectangle color="border" x="0" y="0" width="width-1" height="height-1" filled="false"/>
+  </draw_ops>
+  <draw_ops name="blank"/>
+
+  <!-- window buttons: rounded chip on hover -->
+  <draw_ops name="button_bg">
+    <rectangle color="hover" x="1" y="1" width="width-3" height="height-3" filled="true"/>
+  </draw_ops>
+  <draw_ops name="button_bg_close">
+    <rectangle color="error" x="1" y="1" width="width-3" height="height-3" filled="true"/>
+  </draw_ops>
+
+  <draw_ops name="close_icon">
+    <line color="fg" x1="width/2-4" y1="height/2-4" x2="width/2+4" y2="height/2+4" width="2"/>
+    <line color="fg" x1="width/2+4" y1="height/2-4" x2="width/2-4" y2="height/2+4" width="2"/>
+  </draw_ops>
+  <draw_ops name="close_icon_prelight">
+    <include name="button_bg_close"/>
+    <line color="accent_fg" x1="width/2-4" y1="height/2-4" x2="width/2+4" y2="height/2+4" width="2"/>
+    <line color="accent_fg" x1="width/2+4" y1="height/2-4" x2="width/2-4" y2="height/2+4" width="2"/>
+  </draw_ops>
+  <draw_ops name="max_icon">
+    <rectangle color="fg" x="width/2-5" y="height/2-5" width="10" height="10" filled="false"/>
+  </draw_ops>
+  <draw_ops name="max_icon_prelight">
+    <include name="button_bg"/>
+    <rectangle color="fg" x="width/2-5" y="height/2-5" width="10" height="10" filled="false"/>
+  </draw_ops>
+  <draw_ops name="unmax_icon">
+    <rectangle color="fg" x="width/2-5" y="height/2-3" width="8" height="8" filled="false"/>
+    <rectangle color="fg" x="width/2-2" y="height/2-6" width="8" height="8" filled="false"/>
+  </draw_ops>
+  <draw_ops name="unmax_icon_prelight">
+    <include name="button_bg"/>
+    <include name="unmax_icon"/>
+  </draw_ops>
+  <draw_ops name="min_icon">
+    <line color="fg" x1="width/2-5" y1="height/2+4" x2="width/2+5" y2="height/2+4" width="2"/>
+  </draw_ops>
+  <draw_ops name="min_icon_prelight">
+    <include name="button_bg"/>
+    <line color="fg" x1="width/2-5" y1="height/2+4" x2="width/2+5" y2="height/2+4" width="2"/>
+  </draw_ops>
+  <draw_ops name="menu_icon">
+    <rectangle color="secondary" x="width/2-4" y="height/2-4" width="8" height="8" filled="true"/>
+  </draw_ops>
+
+  <!-- frame styles -->
+  <frame_style name="normal_focused" geometry="normal">
+    <piece position="entire_background" draw_ops="titlebar_bg"/>
+    <piece position="title" draw_ops="title_text"/>
+    <piece position="left_edge" draw_ops="edges"/>
+    <piece position="right_edge" draw_ops="edges"/>
+    <piece position="bottom_edge" draw_ops="edges"/>
+    <button function="close"   state="normal"   draw_ops="close_icon"/>
+    <button function="close"   state="prelight" draw_ops="close_icon_prelight"/>
+    <button function="close"   state="pressed"  draw_ops="close_icon_prelight"/>
+    <button function="maximize" state="normal"  draw_ops="max_icon"/>
+    <button function="maximize" state="prelight" draw_ops="max_icon_prelight"/>
+    <button function="maximize" state="pressed" draw_ops="max_icon_prelight"/>
+    <button function="unmaximize" state="normal" draw_ops="unmax_icon"/>
+    <button function="unmaximize" state="prelight" draw_ops="unmax_icon_prelight"/>
+    <button function="unmaximize" state="pressed" draw_ops="unmax_icon_prelight"/>
+    <button function="minimize" state="normal"  draw_ops="min_icon"/>
+    <button function="minimize" state="prelight" draw_ops="min_icon_prelight"/>
+    <button function="minimize" state="pressed" draw_ops="min_icon_prelight"/>
+    <button function="menu"     state="normal"  draw_ops="menu_icon"/>
+    <button function="menu"     state="prelight" draw_ops="menu_icon"/>
+    <button function="menu"     state="pressed" draw_ops="menu_icon"/>
+  </frame_style>
+
+  <frame_style name="normal_unfocused" geometry="normal">
+    <piece position="entire_background" draw_ops="titlebar_bg_unfocused"/>
+    <piece position="title" draw_ops="title_text_unfocused"/>
+    <piece position="left_edge" draw_ops="edges"/>
+    <piece position="right_edge" draw_ops="edges"/>
+    <piece position="bottom_edge" draw_ops="edges"/>
+    <button function="close"   state="normal"   draw_ops="close_icon"/>
+    <button function="close"   state="prelight" draw_ops="close_icon_prelight"/>
+    <button function="close"   state="pressed"  draw_ops="close_icon_prelight"/>
+    <button function="maximize" state="normal"  draw_ops="max_icon"/>
+    <button function="maximize" state="prelight" draw_ops="max_icon_prelight"/>
+    <button function="maximize" state="pressed" draw_ops="max_icon_prelight"/>
+    <button function="unmaximize" state="normal" draw_ops="unmax_icon"/>
+    <button function="unmaximize" state="prelight" draw_ops="unmax_icon_prelight"/>
+    <button function="unmaximize" state="pressed" draw_ops="unmax_icon_prelight"/>
+    <button function="minimize" state="normal"  draw_ops="min_icon"/>
+    <button function="minimize" state="prelight" draw_ops="min_icon_prelight"/>
+    <button function="minimize" state="pressed" draw_ops="min_icon_prelight"/>
+    <button function="menu"     state="normal"  draw_ops="menu_icon"/>
+    <button function="menu"     state="prelight" draw_ops="menu_icon"/>
+    <button function="menu"     state="pressed" draw_ops="menu_icon"/>
+  </frame_style>
+
+  <frame_style name="max_focused" parent="normal_focused" geometry="max"/>
+  <frame_style name="max_unfocused" parent="normal_unfocused" geometry="max"/>
+
+  <frame_style name="border_only" geometry="border">
+    <piece position="entire_background" draw_ops="edges"/>
+  </frame_style>
+
+  <frame_style_set name="normal">
+    <frame focus="yes" state="normal"           style="normal_focused"/>
+    <frame focus="no"  state="normal"           style="normal_unfocused"/>
+    <frame focus="yes" state="maximized"        style="max_focused"/>
+    <frame focus="no"  state="maximized"        style="max_unfocused"/>
+    <frame focus="yes" state="shaded"           style="normal_focused"/>
+    <frame focus="no"  state="shaded"           style="normal_unfocused"/>
+    <frame focus="yes" state="maximized_and_shaded" style="max_focused"/>
+    <frame focus="no"  state="maximized_and_shaded" style="max_unfocused"/>
+    <frame focus="yes" state="fullscreen"       style="border_only"/>
+    <frame focus="no"  state="fullscreen"       style="border_only"/>
+    <frame focus="yes" state="tiled_left"       style="normal_focused"/>
+    <frame focus="no"  state="tiled_left"       style="normal_unfocused"/>
+    <frame focus="yes" state="tiled_right"      style="normal_focused"/>
+    <frame focus="no"  state="tiled_right"      style="normal_unfocused"/>
+  </frame_style_set>
+
+  <frame_style_set name="borderless" parent="normal">
+    <frame focus="yes" state="normal" style="border_only"/>
+    <frame focus="no"  state="normal" style="border_only"/>
+  </frame_style_set>
+
+  <window type="normal"   style_set="normal"/>
+  <window type="dialog"   style_set="normal"/>
+  <window type="modal_dialog" style_set="normal"/>
+  <window type="menu"     style_set="normal"/>
+  <window type="utility"  style_set="normal"/>
+  <window type="border"   style_set="borderless"/>
+  <window type="splashscreen" style_set="borderless"/>
+</metacity_theme>

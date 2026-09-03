@@ -1,8 +1,10 @@
 # desktop/ — Linux desktop themes
 
-Sources for the GTK, GNOME Shell, and KDE Plasma / Qt themes. Nothing here is
-installed verbatim; `scripts/build.sh` assembles it into installable theme trees
-under `build/`, and the `.deb` / `.rpm` packaging stages those.
+Sources for the GTK, GNOME Shell, Metacity, GtkSourceView, KDE Plasma / Qt and
+terminal themes. Nothing here is installed verbatim; `scripts/build.sh` assembles
+it into installable trees under `build/`, and the `.deb` / `.rpm` packaging
+stages those. Every artifact ships **both** an `Osiris` (dark) and an
+`Osiris-Light` (light) variant.
 
 | Source | Assembled into | Installed path |
 |---|---|---|
@@ -10,7 +12,10 @@ under `build/`, and the `.deb` / `.rpm` packaging stages those.
 | `gtk-common/colors-light.css` + `widgets.css` + `gtk-3.0/gtk3.css` | `Osiris-Light/gtk-3.0/gtk.css` | `/usr/share/themes/Osiris-Light/` |
 | `gtk-common/colors-*.css` + `widgets.css` + `gtk-4.0/gtk4.css` | `Osiris{,-Light}/gtk-4.0/gtk.css` | same |
 | `gnome-shell/gnome-shell.css.in` (+ `assets/`) | `Osiris{,-Light}/gnome-shell/` | same |
+| `metacity-1/metacity-theme-3.xml.in` | `Osiris{,-Light}/metacity-1/metacity-theme-3.xml` | same |
 | `index.theme.in` | `Osiris{,-Light}/index.theme` | same |
+| `assets/tokens.json` (via `scripts/lib/gen_sourceview.py`) | `build/sourceview/Osiris{,-Light}.xml` | `/usr/share/gtksourceview-{5,4,3.0}/styles/osiris{,-light}.xml` |
+| `assets/tokens.json` (via `scripts/lib/gen_terminal.py`) | `build/terminal/{gnome-terminal,ptyxis,konsole}/` | see [`terminal/`](terminal/README.md) |
 | `plasma/color-schemes/*.colors` | — (copied as-is) | `/usr/share/color-schemes/` |
 | `plasma/Kvantum/Osiris{Dark,Light}/` (+ generated `.svg`) | — | `/usr/share/Kvantum/Osiris{Dark,Light}/` |
 | `plasma/aurorae/OsirisDark/` | — | `/usr/share/aurorae/themes/OsirisDark/` |

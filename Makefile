@@ -10,8 +10,8 @@ BUILD      := scripts/build.sh
 
 .DEFAULT_GOAL := help
 .PHONY: help all tokens vscode vitepress bootstrap npm icons terminal browsers \
-        gtk gnome plasma desktop grub wallpapers pages deb rpm dist install-local \
-        clean distclean lint
+        gtk gnome sourceview plasma desktop grub wallpapers pages deb rpm dist \
+        install-local clean distclean lint
 
 help: ## Show this help
 	@grep -hE '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | \
@@ -42,16 +42,19 @@ terminal: ## Generate GNOME Terminal / Ptyxis / Konsole schemes (build/terminal/
 browsers: ## Package Chromium + Firefox themes (dist/*.zip)
 	@$(BUILD) browsers
 
-gtk: ## Assemble GTK 3/4 themes (build/themes/)
+gtk: ## Assemble GTK 3/4 + Metacity themes (build/themes/)
 	@$(BUILD) gtk
 
 gnome: ## Render GNOME Shell themes (build/themes/)
 	@$(BUILD) gnome
 
+sourceview: ## GtkSourceView schemes — GNOME Text Editor / gedit / Builder (build/sourceview/)
+	@$(BUILD) sourceview
+
 plasma: ## Assemble KDE Plasma / Qt / Kvantum / Aurorae (build/plasma/)
 	@$(BUILD) plasma
 
-desktop: gtk gnome plasma ## All Linux desktop themes
+desktop: gtk gnome sourceview plasma ## All Linux desktop themes
 
 grub: ## Build the GRUB2 theme (build/grub/)
 	@$(BUILD) grub
