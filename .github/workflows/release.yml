@@ -126,8 +126,11 @@ jobs:
           done
 
   publish-pages:
+    # Non-fatal: requires "Settings → Pages → Source: GitHub Actions" (one-time).
+    # Until that is enabled deploy-pages 404s — the Release itself is unaffected.
     needs: build
     runs-on: ubuntu-latest
+    continue-on-error: true
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}

@@ -83,8 +83,8 @@ jobs:
         run: |
           apt-get update
           apt-get install -y --no-install-recommends \
-            build-essential debhelper devscripts dpkg-dev \
-            make jq python3 python3-pil librsvg2-bin fonts-firacode grub-common ca-certificates
+            build-essential debhelper dpkg-dev \
+            make jq git python3 python3-pil librsvg2-bin fonts-firacode grub-common ca-certificates
       - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - run: packaging/debian/build-debs.sh
       - uses: actions/upload-artifact@v4
@@ -101,7 +101,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install build deps
         run: |
-          dnf install -y rpm-build make jq python3 python3-pillow \
+          dnf install -y rpm-build make jq git python3 python3-pillow \
             librsvg2-tools grub2-tools tar gzip
       - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - run: packaging/rpm/build-rpms.sh
@@ -126,10 +126,13 @@ jobs:
           path: build/pages
 
   pages-deploy:
-    # publish the live site only from the default branch
+    # publish the live site only from the default branch.
+    # Non-fatal: needs "Settings → Pages → Source: GitHub Actions" enabled once;
+    # until then this step 404s and is allowed to.
     if: github.ref == 'refs/heads/master'
     needs: pages-build
     runs-on: ubuntu-latest
+    continue-on-error: true
     permissions:
       pages: write
       id-token: write

@@ -25,15 +25,11 @@ tar -c --exclude='./.git' --exclude='./build' --exclude='./dist' \
 cp -rT "$REPO/packaging/debian/debian" "$SRC/debian"
 chmod +x "$SRC/debian/rules"
 
-# stamp the changelog with the repo VERSION so the .deb version tracks the tag
-if command -v dch >/dev/null; then
-  ( cd "$SRC" && DEBEMAIL="osiris@example.org" DEBFULLNAME="OSIRIS" \
-      dch --newversion "$VERSION-1" --distribution unstable --force-bad-version \
-          "Release $VERSION." )
-else
-  sed -i "1s/([^)]*)/($VERSION-1)/" "$SRC/debian/changelog"
-  sed -i "s/^\( -- .*>\)  .*/\1  $(date -R)/" "$SRC/debian/changelog"
-fi
+# stamp the changelog top entry with the repo VERSION + a fresh date, so the
+# built .deb version tracks the release tag (no dch / devscripts needed)
+sed -i "1s/^\(osiris-desktop-theme \)([^)]*)/\1($VERSION-1)/" "$SRC/debian/changelog"
+sed -i "s/^\( -- .*>\)  .*/\1  $(date -R)/" "$SRC/debian/changelog"
+head -1 "$SRC/debian/changelog"
 
 ( cd "$SRC" && dpkg-buildpackage -us -uc -b --no-sign )
 
