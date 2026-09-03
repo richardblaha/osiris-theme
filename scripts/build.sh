@@ -8,6 +8,12 @@
 #   all         everything below (default)
 #   tokens      run check-tokens.sh (palette drift guard)
 #   vscode      -> build/vscode/osiris-theme-<ver>.vsix   (needs: node + vsce)
+#   vitepress   -> dist/osiris-vitepress-theme-<ver>.tgz  (needs: npm)
+#   bootstrap   -> dist/osiris-bootstrap-theme-<ver>.tgz  (needs: npm)
+#   npm         vitepress + bootstrap
+#   icons       -> build/icons/Osiris/   (XDG icon theme: index.theme + scalable/ + sizes)
+#   terminal    -> build/terminal/       (GNOME Terminal / Ptyxis / Konsole schemes)
+#   browsers    -> dist/osiris-{chromium,firefox}-{dark,light}-<ver>.zip
 #   gtk         -> build/themes/Osiris{,-Light}/gtk-{3.0,4.0}/
 #   gnome       -> build/themes/Osiris{,-Light}/gnome-shell/
 #   plasma      -> build/plasma/{color-schemes,Kvantum,aurorae,desktoptheme}/
@@ -38,12 +44,25 @@ build_vscode() {
   local d="$BUILD_DIR/vscode"
   rm -rf "$d"; mkdir -p "$d"
   cp -r vscode/. "$d/"
+  # generate the file + product icon themes from iconography/ into the build copy
+  if have python3; then
+    python3 scripts/lib/gen_icons.py vscode-file "$d"
+    python3 scripts/lib/gen_icons.py vscode-product "$d"
+  else
+    warn "python3 missing — icon themes not generated; dropping them from package.json"
+    node -e "const f='$d/package.json',j=require('./'+f);delete j.contributes.iconThemes;delete j.contributes.productIconThemes;require('fs').writeFileSync(f,JSON.stringify(j,null,2)+'\n')"
+  fi
   ( cd "$d"
     # sync version from repo VERSION
     node -e "const f='package.json',j=require('./'+f);j.version='$VERSION';require('fs').writeFileSync(f,JSON.stringify(j,null,2)+'\n')"
     # icon.png from icon.svg
     if [ ! -f icon.png ]; then
       rasterise_svg icon.svg icon.png 256 256 || warn "icon.png not generated; unset 'icon' in package.json if vsce fails"
+    fi
+    if [ ! -f producticons/osiris-symbols.woff ]; then
+      warn "osiris-symbols.woff missing (fantasticon unavailable) — dropping product icon theme"
+      node -e "const f='package.json',j=require('./'+f);delete j.contributes.productIconThemes;require('fs').writeFileSync(f,JSON.stringify(j,null,2)+'\n')"
+      rm -rf producticons
     fi
     if have vsce; then VSCE=vsce
     elif have npx; then VSCE="npx --yes @vscode/vsce"
@@ -52,6 +71,79 @@ build_vscode() {
   )
   mkdir -p "$DIST_DIR"; cp "$d/osiris-theme-$VERSION.vsix" "$DIST_DIR/"
   log "  -> $DIST_DIR/osiris-theme-$VERSION.vsix"
+}
+
+# ---------------------------------------------------------------------------
+build_icons() {
+  log "generating XDG icon theme"
+  have python3 || die "python3 required for the icon theme"
+  local d="$BUILD_DIR/icons"
+  rm -rf "$d"; mkdir -p "$d"
+  python3 scripts/lib/gen_icons.py xdg "$d"
+  # a lowercase-name copy some tools expect
+  [ -d "$d/Osiris" ] && ln -sfn Osiris "$d/osiris" 2>/dev/null || true
+  log "  -> $d/Osiris"
+}
+
+# ---------------------------------------------------------------------------
+build_terminal() {
+  log "generating terminal colour schemes"
+  have python3 || die "python3 required for the terminal schemes"
+  local d="$BUILD_DIR/terminal"
+  rm -rf "$d"; mkdir -p "$d"
+  python3 scripts/lib/gen_terminal.py all "$d"
+  log "  -> $d (gnome-terminal / ptyxis / konsole)"
+}
+
+# ---------------------------------------------------------------------------
+build_browsers() {
+  log "packaging browser themes"
+  have zip || die "'zip' required to package the browser themes"
+  local d="$BUILD_DIR/browsers"
+  rm -rf "$d"; mkdir -p "$d" "$DIST_DIR"
+  cp -r browsers/. "$d/"
+  rm -f "$d/README.md"
+  ( cd "$d"
+    for variant in chromium-dark chromium-light firefox-dark firefox-light; do
+      [ -d "$variant" ] || continue
+      node -e "const f='$variant/manifest.json',j=require('./'+f);j.version='$VERSION';require('fs').writeFileSync(f,JSON.stringify(j,null,2)+'\n')"
+      ( cd "$variant" && zip -qr "../osiris-$variant-$VERSION.zip" . -x '.*' )
+      cp "osiris-$variant-$VERSION.zip" "$DIST_DIR/"
+    done
+  )
+  log "  -> $DIST_DIR/osiris-{chromium,firefox}-{dark,light}-$VERSION.zip"
+}
+
+# ---------------------------------------------------------------------------
+# npm_pack <dir> [install]  — copy the package to build/, sync its version from
+# VERSION, optionally install deps (for a build/prepack step), `npm pack` -> dist/
+npm_pack() {
+  local dir="$1" install="${2:-}"
+  have npm || die "npm required to build the '$dir' package"
+  local d="$BUILD_DIR/$dir"
+  rm -rf "$d"; mkdir -p "$d" "$DIST_DIR"
+  cp -r "$dir/." "$d/"
+  rm -rf "$d/node_modules"
+  ( cd "$d"
+    node -e "const f='package.json',j=require('./'+f);j.version='$VERSION';require('fs').writeFileSync(f,JSON.stringify(j,null,2)+'\n')"
+    if [ -n "$install" ]; then
+      if [ -f package-lock.json ]; then npm ci --no-audit --no-fund
+      else npm install --no-audit --no-fund; fi
+    fi
+    npm pack --pack-destination "$DIST_DIR"
+  )
+}
+
+build_vitepress() {
+  log "packing osiris-vitepress-theme"
+  npm_pack vitepress
+  log "  -> $DIST_DIR/osiris-vitepress-theme-$VERSION.tgz"
+}
+
+build_bootstrap() {
+  log "compiling + packing osiris-bootstrap-theme"
+  npm_pack bootstrap install   # prepack runs `npm run build` -> dist/osiris-bootstrap.css
+  log "  -> $DIST_DIR/osiris-bootstrap-theme-$VERSION.tgz"
 }
 
 # ---------------------------------------------------------------------------
@@ -174,10 +266,11 @@ build_pages() {
 }
 
 # ---------------------------------------------------------------------------
-for tgt in tokens vscode gtk gnome plasma grub wallpapers pages; do
+for tgt in tokens vscode vitepress bootstrap icons terminal browsers gtk gnome plasma grub wallpapers pages; do
   case "$tgt" in
-    gtk|gnome|plasma) want "$tgt" || want desktop || continue ;;
-    *) want "$tgt" || continue ;;
+    gtk|gnome|plasma)     want "$tgt" || want desktop || continue ;;
+    vitepress|bootstrap)  want "$tgt" || want npm || continue ;;
+    *)                    want "$tgt" || continue ;;
   esac
   "build_$tgt"
 done

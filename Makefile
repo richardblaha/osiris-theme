@@ -9,20 +9,38 @@ DIST_DIR   := dist
 BUILD      := scripts/build.sh
 
 .DEFAULT_GOAL := help
-.PHONY: help all tokens vscode gtk gnome plasma desktop grub wallpapers pages \
-        deb rpm dist install-local clean distclean lint
+.PHONY: help all tokens vscode vitepress bootstrap npm icons terminal browsers \
+        gtk gnome plasma desktop grub wallpapers pages deb rpm dist install-local \
+        clean distclean lint
 
 help: ## Show this help
 	@grep -hE '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | \
 	  awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
 
-all: tokens vscode desktop grub wallpapers pages ## Build every artifact into build/
+all: tokens vscode npm icons terminal browsers desktop grub wallpapers pages ## Build every artifact into build/
 
 tokens: ## Verify palette drift (assets/tokens.json vs themes/docs)
 	@$(BUILD) tokens
 
 vscode: ## Build the .vsix (build/vscode/, dist/)
 	@$(BUILD) vscode
+
+vitepress: ## Pack osiris-vitepress-theme (dist/*.tgz) (needs: npm)
+	@$(BUILD) vitepress
+
+bootstrap: ## Compile + pack osiris-bootstrap-theme (dist/*.tgz) (needs: npm)
+	@$(BUILD) bootstrap
+
+npm: vitepress bootstrap ## Both npm packages -> dist/*.tgz
+
+icons: ## Generate the XDG icon theme (build/icons/Osiris/) (needs: python3)
+	@$(BUILD) icons
+
+terminal: ## Generate GNOME Terminal / Ptyxis / Konsole schemes (build/terminal/)
+	@$(BUILD) terminal
+
+browsers: ## Package Chromium + Firefox themes (dist/*.zip)
+	@$(BUILD) browsers
 
 gtk: ## Assemble GTK 3/4 themes (build/themes/)
 	@$(BUILD) gtk
@@ -46,17 +64,19 @@ pages: ## Stage the docs/preview site for GitHub Pages (build/pages/)
 
 lint: tokens ## Alias for `make tokens`
 
-deb: desktop grub wallpapers ## Build all .deb packages into dist/
+deb: desktop icons terminal grub wallpapers ## Build all .deb packages into dist/
 	@packaging/debian/build-debs.sh
 
-rpm: desktop grub wallpapers ## Build all .rpm packages into dist/
+rpm: desktop icons terminal grub wallpapers ## Build all .rpm packages into dist/
 	@packaging/rpm/build-rpms.sh
 
-dist: vscode deb rpm ## Everything that ships in a GitHub Release -> dist/
+dist: vscode npm browsers deb rpm ## Everything that ships in a GitHub Release -> dist/
 	@ls -la $(DIST_DIR)
 
-install-local: desktop wallpapers ## Build + install themes into $$HOME (no root)
+install-local: desktop icons terminal wallpapers ## Build + install themes into $$HOME (no root)
 	@scripts/install-local.sh desktop --dark
+	@scripts/install-local.sh icons
+	@scripts/install-local.sh terminal
 
 clean: ## Remove build/
 	@rm -rf $(BUILD_DIR)

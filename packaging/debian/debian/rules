@@ -10,7 +10,7 @@ DESTDIR = debian/tmp
 	dh $@
 
 override_dh_auto_build:
-	scripts/build.sh tokens gtk gnome plasma grub wallpapers
+	scripts/build.sh tokens gtk gnome plasma icons terminal grub wallpapers
 
 override_dh_auto_install:
 	# --- GTK / GNOME Shell ---
@@ -19,6 +19,15 @@ override_dh_auto_install:
 	cp -rT build/themes/Osiris-Light  $(DESTDIR)/usr/share/themes/Osiris-Light
 	install -d $(DESTDIR)/usr/bin
 	install -m0755 packaging/common/osiris-gtk-theme $(DESTDIR)/usr/bin/osiris-gtk-theme
+
+	# --- Terminal (VTE): Ptyxis palette + GNOME Terminal profile installer ---
+	install -d $(DESTDIR)/usr/share/org.gnome.Ptyxis/palettes
+	cp build/terminal/ptyxis/osiris.palette $(DESTDIR)/usr/share/org.gnome.Ptyxis/palettes/
+	install -d $(DESTDIR)/usr/share/osiris/gnome-terminal
+	cp -rT build/terminal/gnome-terminal $(DESTDIR)/usr/share/osiris/gnome-terminal
+	# Konsole colour schemes
+	install -d $(DESTDIR)/usr/share/konsole
+	cp build/terminal/konsole/*.colorscheme $(DESTDIR)/usr/share/konsole/
 
 	# --- KDE Plasma / Qt ---
 	install -d $(DESTDIR)/usr/share/color-schemes
@@ -30,6 +39,10 @@ override_dh_auto_install:
 	cp -rT build/plasma/aurorae/OsirisDark $(DESTDIR)/usr/share/aurorae/themes/OsirisDark
 	install -d $(DESTDIR)/usr/share/plasma/desktoptheme
 	cp -rT build/plasma/desktoptheme/Osiris $(DESTDIR)/usr/share/plasma/desktoptheme/Osiris
+
+	# --- Icon theme ---
+	install -d $(DESTDIR)/usr/share/icons
+	cp -rT build/icons/Osiris $(DESTDIR)/usr/share/icons/Osiris
 
 	# --- GRUB ---
 	install -d $(DESTDIR)/usr/share/grub/themes/osiris

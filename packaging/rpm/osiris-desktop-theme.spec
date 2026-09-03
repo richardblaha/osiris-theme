@@ -19,13 +19,14 @@ BuildRequires:  grub2-tools
 
 Requires:       osiris-theme-gtk = %{version}-%{release}
 Requires:       osiris-theme-plasma = %{version}-%{release}
+Requires:       osiris-icon-theme = %{version}-%{release}
 Requires:       osiris-theme-grub = %{version}-%{release}
 Requires:       osiris-wallpapers = %{version}-%{release}
 
 %description
 Metapackage pulling in every OSIRIS theme component: GTK/GNOME, KDE Plasma/Qt,
-the GRUB boot theme and the wallpapers. Colours come from the OSIRIS design
-system (see the bundled DESIGN_SYSTEM.md).
+the icon theme, the GRUB boot theme and the wallpapers. Colours come from the
+OSIRIS design system (see the bundled DESIGN_SYSTEM.md).
 
 # --------------------------------------------------------------------------
 %package -n osiris-theme-gtk
@@ -42,6 +43,17 @@ Recommends:     kvantum
 %description -n osiris-theme-plasma
 Plasma colour schemes, Kvantum Qt themes (OsirisDark / OsirisLight), the
 OsirisDark Aurorae decoration and the Osiris Plasma desktop theme.
+
+%package -n osiris-icon-theme
+Summary:        OSIRIS dual-accent icon theme (Material Symbols)
+BuildArch:      noarch
+Requires:       hicolor-icon-theme
+Recommends:     adwaita-icon-theme
+%description -n osiris-icon-theme
+Freedesktop icon theme in the Material Symbols visual language — cyan/rose on a
+GitHub-flavoured ramp. Covers actions, apps, categories, devices, emblems,
+mimetypes, places and status with GNOME/KDE compatibility symlinks; inherits
+Adwaita / Breeze / hicolor. Installed as %{_datadir}/icons/Osiris.
 
 %package -n osiris-theme-grub
 Summary:        OSIRIS graphical GRUB2 boot theme
@@ -63,7 +75,7 @@ and KDE Plasma light/dark wallpaper packages.
 %autosetup -n %{name}-%{version}
 
 %build
-scripts/build.sh tokens gtk gnome plasma grub wallpapers
+scripts/build.sh tokens gtk gnome plasma icons terminal grub wallpapers
 
 %check
 scripts/check-tokens.sh
@@ -77,6 +89,14 @@ cp -rT build/themes/Osiris       %{buildroot}%{_datadir}/themes/Osiris
 cp -rT build/themes/Osiris-Light %{buildroot}%{_datadir}/themes/Osiris-Light
 install -Dm0755 packaging/common/osiris-gtk-theme %{buildroot}%{_bindir}/osiris-gtk-theme
 
+# Terminal (VTE): Ptyxis palette + GNOME Terminal profile installer
+install -d %{buildroot}%{_datadir}/org.gnome.Ptyxis/palettes
+cp build/terminal/ptyxis/osiris.palette %{buildroot}%{_datadir}/org.gnome.Ptyxis/palettes/
+install -d %{buildroot}%{_datadir}/osiris/gnome-terminal
+cp -rT build/terminal/gnome-terminal %{buildroot}%{_datadir}/osiris/gnome-terminal
+install -d %{buildroot}%{_datadir}/konsole
+cp build/terminal/konsole/*.colorscheme %{buildroot}%{_datadir}/konsole/
+
 # KDE Plasma / Qt
 install -d %{buildroot}%{_datadir}/color-schemes
 cp build/plasma/color-schemes/*.colors %{buildroot}%{_datadir}/color-schemes/
@@ -87,6 +107,10 @@ install -d %{buildroot}%{_datadir}/aurorae/themes
 cp -rT build/plasma/aurorae/OsirisDark %{buildroot}%{_datadir}/aurorae/themes/OsirisDark
 install -d %{buildroot}%{_datadir}/plasma/desktoptheme
 cp -rT build/plasma/desktoptheme/Osiris %{buildroot}%{_datadir}/plasma/desktoptheme/Osiris
+
+# Icon theme
+install -d %{buildroot}%{_datadir}/icons
+cp -rT build/icons/Osiris %{buildroot}%{_datadir}/icons/Osiris
 
 # GRUB
 install -d %{buildroot}%{_datadir}/grub/themes/osiris
@@ -99,6 +123,15 @@ install -Dm0644 build/wallpapers/gnome-background-properties/osiris.xml \
   %{buildroot}%{_datadir}/gnome-background-properties/osiris.xml
 install -d %{buildroot}%{_datadir}/wallpapers
 cp -r build/wallpapers/kde/Osiris-* %{buildroot}%{_datadir}/wallpapers/
+
+# --------------------------------------------------------------------------
+%post -n osiris-icon-theme
+command -v gtk-update-icon-cache >/dev/null 2>&1 && \
+  gtk-update-icon-cache -q -f -t %{_datadir}/icons/Osiris || :
+
+%postun -n osiris-icon-theme
+command -v gtk-update-icon-cache >/dev/null 2>&1 && \
+  gtk-update-icon-cache -q -f -t %{_datadir}/icons/hicolor || :
 
 # --------------------------------------------------------------------------
 %post -n osiris-theme-grub
@@ -135,6 +168,8 @@ fi
 %{_datadir}/themes/Osiris
 %{_datadir}/themes/Osiris-Light
 %{_bindir}/osiris-gtk-theme
+%{_datadir}/org.gnome.Ptyxis/palettes/osiris.palette
+%{_datadir}/osiris/gnome-terminal
 
 %files -n osiris-theme-plasma
 %license LICENSE
@@ -144,6 +179,12 @@ fi
 %{_datadir}/Kvantum/OsirisLight
 %{_datadir}/aurorae/themes/OsirisDark
 %{_datadir}/plasma/desktoptheme/Osiris
+%{_datadir}/konsole/OsirisDark.colorscheme
+%{_datadir}/konsole/OsirisLight.colorscheme
+
+%files -n osiris-icon-theme
+%license LICENSE
+%{_datadir}/icons/Osiris
 
 %files -n osiris-theme-grub
 %license LICENSE
@@ -158,4 +199,4 @@ fi
 
 %changelog
 * Wed Sep 03 2026 OSIRIS <osiris@example.org> - 0.1.0-1
-- Initial packaging (gtk, plasma, grub, wallpapers, metapackage).
+- Initial packaging (gtk, plasma, icon-theme, grub, wallpapers, metapackage).

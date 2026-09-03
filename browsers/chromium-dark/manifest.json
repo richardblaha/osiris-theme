@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "OSIRIS Dark",
+  "short_name": "OSIRIS Dark",
+  "version": "0.1.0",
+  "description": "OSIRIS dual-accent browser theme — cyan/rose on a GitHub-flavoured near-black ramp. Chromium / Chrome / Edge.",
+  "theme": {
+    "colors": {
+      "frame": [13, 17, 23],
+      "frame_inactive": [13, 17, 23],
+      "frame_incognito": [1, 4, 9],
+      "frame_incognito_inactive": [1, 4, 9],
+      "background_tab": [13, 17, 23],
+      "background_tab_inactive": [13, 17, 23],
+      "background_tab_incognito": [1, 4, 9],
+      "background_tab_incognito_inactive": [1, 4, 9],
+      "toolbar": [22, 27, 34],
+      "tab_text": [230, 237, 243],
+      "tab_background_text": [139, 148, 158],
+      "tab_background_text_inactive": [86, 95, 109],
+      "tab_background_text_incognito": [139, 148, 158],
+      "bookmark_text": [230, 237, 243],
+      "toolbar_button_icon": [139, 148, 158],
+      "toolbar_text": [230, 237, 243],
+      "omnibox_background": [33, 38, 45],
+      "omnibox_text": [230, 237, 243],
+      "ntp_background": [13, 17, 23],
+      "ntp_text": [230, 237, 243],
+      "ntp_link": [0, 242, 254],
+      "ntp_header": [48, 54, 61],
+      "button_background": [33, 38, 45]
+    },
+    "tints": {
+      "buttons": [-1, -1, -1]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_background_repeat": "no-repeat"
+    }
+  }
+}

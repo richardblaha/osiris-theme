@@ -1,0 +1,43 @@
+{
+  "name": "osiris-vitepress-theme",
+  "version": "0.1.0",
+  "description": "Dual-accent (cyan / rose) theme for VitePress — dark & light — from the OSIRIS design system.",
+  "license": "MIT",
+  "type": "module",
+  "main": "theme/index.js",
+  "exports": {
+    ".": "./theme/index.js",
+    "./style.css": "./theme/osiris.css",
+    "./osiris.css": "./theme/osiris.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "theme/",
+    "README.md"
+  ],
+  "keywords": [
+    "vitepress",
+    "vitepress-theme",
+    "theme",
+    "osiris",
+    "dark",
+    "light",
+    "cyan",
+    "fira code"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/richardblaha/osiris-themes.git",
+    "directory": "vitepress"
+  },
+  "homepage": "https://richardblaha.github.io/osiris-themes/",
+  "bugs": {
+    "url": "https://github.com/richardblaha/osiris-themes/issues"
+  },
+  "peerDependencies": {
+    "vitepress": "^1.0.0"
+  },
+  "scripts": {
+    "lint": "bash ../scripts/check-tokens.sh"
+  }
+}

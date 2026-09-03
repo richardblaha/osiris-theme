@@ -7,6 +7,6 @@ Encoding=UTF-8
 [X-GNOME-Metatheme]
 GtkTheme=@THEME_NAME@
 MetacityTheme=@THEME_NAME@
-IconTheme=Adwaita
+IconTheme=Osiris
 CursorTheme=Adwaita
 ButtonLayout=close,minimize,maximize:

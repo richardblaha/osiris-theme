@@ -18,7 +18,8 @@ mkdir -p "$SRC"
 
 # copy the working tree (sans VCS / build cruft) into the build stage
 tar -c --exclude='./.git' --exclude='./build' --exclude='./dist' \
-      --exclude='./node_modules' --exclude='./vscode/node_modules' -C "$REPO" . \
+      --exclude='node_modules' --exclude='*.tgz' --exclude='./bootstrap/dist' \
+      -C "$REPO" . \
   | tar -x -C "$SRC"
 
 cp -rT "$REPO/packaging/debian/debian" "$SRC/debian"

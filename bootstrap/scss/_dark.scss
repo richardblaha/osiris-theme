@@ -1,0 +1,118 @@
+// ============================================================================
+// OSIRIS — Bootstrap 5 dark color mode
+// Derived from assets/tokens.json (themes.dark / accent.*.dark / state.*.dark).
+// Emitted under [data-bs-theme="dark"] via Bootstrap's color-mode() mixin.
+// ============================================================================
+
+@include color-mode(dark) {
+  // --- Brand & semantic ----------------------------------------------------
+  --#{$prefix}primary: #00f2fe;
+  --#{$prefix}primary-rgb: 0, 242, 254;
+  --#{$prefix}secondary: #ff2a85;
+  --#{$prefix}secondary-rgb: 255, 42, 133;
+  --#{$prefix}success: #3fb950;
+  --#{$prefix}success-rgb: 63, 185, 80;
+  --#{$prefix}info: #00f2fe;
+  --#{$prefix}info-rgb: 0, 242, 254;
+  --#{$prefix}warning: #d29922;
+  --#{$prefix}warning-rgb: 210, 153, 34;
+  --#{$prefix}danger: #ff5555;
+  --#{$prefix}danger-rgb: 255, 85, 85;
+  --#{$prefix}light: #e6edf3;
+  --#{$prefix}light-rgb: 230, 237, 243;
+  --#{$prefix}dark: #161b22;
+  --#{$prefix}dark-rgb: 22, 27, 34;
+
+  // --- Surfaces & ink — themes.dark --------------------------------------
+  --#{$prefix}body-bg: #0d1117;            // bg.editor
+  --#{$prefix}body-bg-rgb: 13, 17, 23;
+  --#{$prefix}body-color: #e6edf3;         // text.primary
+  --#{$prefix}body-color-rgb: 230, 237, 243;
+  --#{$prefix}emphasis-color: #ffffff;
+  --#{$prefix}emphasis-color-rgb: 255, 255, 255;
+  --#{$prefix}secondary-color: rgba(230, 237, 243, 0.7);
+  --#{$prefix}secondary-bg: #161b22;       // bg.sidebar
+  --#{$prefix}secondary-bg-rgb: 22, 27, 34;
+  --#{$prefix}tertiary-color: rgba(230, 237, 243, 0.5);
+  --#{$prefix}tertiary-bg: #21262d;        // bg.hover
+  --#{$prefix}tertiary-bg-rgb: 33, 38, 45;
+
+  --#{$prefix}border-color: #30363d;       // border.strong
+  --#{$prefix}border-color-translucent: rgba(255, 255, 255, 0.15);
+
+  --#{$prefix}link-color: #00f2fe;
+  --#{$prefix}link-color-rgb: 0, 242, 254;
+  --#{$prefix}link-hover-color: #4df5fe;
+  --#{$prefix}link-hover-color-rgb: 77, 245, 254;
+
+  --#{$prefix}code-color: #ffa198;         // syntax.property.dark
+  --#{$prefix}highlight-color: #e6edf3;
+  --#{$prefix}highlight-bg: rgba(210, 153, 34, 0.28);
+
+  --#{$prefix}focus-ring-color: rgba(0, 242, 254, 0.14);
+
+  // --- Subtle / emphasis triplets ---------------------------------------
+  --#{$prefix}primary-bg-subtle: #04262b;
+  --#{$prefix}primary-border-subtle: #0b6b73;
+  --#{$prefix}primary-text-emphasis: #66f6fe;
+  --#{$prefix}secondary-bg-subtle: #2b0c1c;
+  --#{$prefix}secondary-border-subtle: #7a1a44;
+  --#{$prefix}secondary-text-emphasis: #ff7fb4;
+  --#{$prefix}success-bg-subtle: #0f2915;
+  --#{$prefix}success-border-subtle: #256e30;
+  --#{$prefix}success-text-emphasis: #7fd08b;
+  --#{$prefix}info-bg-subtle: #04262b;
+  --#{$prefix}info-border-subtle: #0b6b73;
+  --#{$prefix}info-text-emphasis: #66f6fe;
+  --#{$prefix}warning-bg-subtle: #2e2408;
+  --#{$prefix}warning-border-subtle: #7d5c14;
+  --#{$prefix}warning-text-emphasis: #e3bd6b;
+  --#{$prefix}danger-bg-subtle: #2e1212;
+  --#{$prefix}danger-border-subtle: #7d2b2b;
+  --#{$prefix}danger-text-emphasis: #ff9a9a;
+
+  // --- Components that bake color at compile time -----------------------
+  // Bootstrap generates .btn-* / .alert-* with static values from the light
+  // palette; re-point the ones tied to an accent so dark mode uses cyan/rose.
+  .btn-primary {
+    --#{$prefix}btn-color: #04151a;        // text.inverse (dark)
+    --#{$prefix}btn-bg: #00f2fe;
+    --#{$prefix}btn-border-color: #00f2fe;
+    --#{$prefix}btn-hover-color: #04151a;
+    --#{$prefix}btn-hover-bg: #26f4fe;
+    --#{$prefix}btn-hover-border-color: #1af3fe;
+    --#{$prefix}btn-active-color: #04151a;
+    --#{$prefix}btn-active-bg: #4df5fe;
+    --#{$prefix}btn-active-border-color: #26f4fe;
+    --#{$prefix}btn-disabled-color: #04151a;
+    --#{$prefix}btn-disabled-bg: #00f2fe;
+    --#{$prefix}btn-disabled-border-color: #00f2fe;
+  }
+
+  .btn-secondary {
+    --#{$prefix}btn-color: #ffffff;
+    --#{$prefix}btn-bg: #ff2a85;
+    --#{$prefix}btn-border-color: #ff2a85;
+    --#{$prefix}btn-hover-color: #ffffff;
+    --#{$prefix}btn-hover-bg: #ff4996;
+    --#{$prefix}btn-hover-border-color: #ff3d90;
+    --#{$prefix}btn-active-color: #ffffff;
+    --#{$prefix}btn-active-bg: #ff69ac;
+    --#{$prefix}btn-active-border-color: #ff4996;
+    --#{$prefix}btn-disabled-color: #ffffff;
+    --#{$prefix}btn-disabled-bg: #ff2a85;
+    --#{$prefix}btn-disabled-border-color: #ff2a85;
+  }
+
+  .btn-outline-primary {
+    --#{$prefix}btn-color: #00f2fe;
+    --#{$prefix}btn-border-color: #00f2fe;
+    --#{$prefix}btn-hover-color: #04151a;
+    --#{$prefix}btn-hover-bg: #00f2fe;
+    --#{$prefix}btn-hover-border-color: #00f2fe;
+    --#{$prefix}btn-active-color: #04151a;
+    --#{$prefix}btn-active-bg: #00f2fe;
+    --#{$prefix}btn-active-border-color: #00f2fe;
+    --#{$prefix}btn-disabled-color: #00f2fe;
+  }
+}

@@ -11,6 +11,7 @@ Build-Depends:
  librsvg2-bin,
  fonts-firacode,
  grub-common,
+ hicolor-icon-theme,
 Standards-Version: 4.6.2
 Homepage: https://github.com/richardblaha/osiris-themes
 Rules-Requires-Root: no
@@ -22,8 +23,9 @@ Recommends: gnome-shell-extension-prefs
 Description: OSIRIS dual-accent GTK 3/4 + GNOME Shell theme
  Cyan/rose colour theme for GTK 3, GTK 4 / libadwaita and GNOME Shell, matching
  the OSIRIS design system (docs/DESIGN_SYSTEM.md). Ships the "Osiris" (dark) and
- "Osiris-Light" theme variants plus the `osiris-gtk-theme` helper that wires up
- the libadwaita opt-in drop-in.
+ "Osiris-Light" theme variants, the `osiris-gtk-theme` helper for the libadwaita
+ opt-in, the "Osiris" Ptyxis terminal palette, and a GNOME Terminal profile
+ installer under /usr/share/osiris/gnome-terminal.
 
 Package: osiris-theme-plasma
 Architecture: all
@@ -31,8 +33,20 @@ Depends: ${misc:Depends}
 Recommends: qt5-style-kvantum, qt6-style-kvantum
 Description: OSIRIS dual-accent KDE Plasma / Qt theme
  Plasma colour schemes (Osiris / Osiris Light), Kvantum Qt themes
- (OsirisDark / OsirisLight), the OsirisDark Aurorae window decoration and the
- "Osiris" Plasma desktop theme.
+ (OsirisDark / OsirisLight), the OsirisDark Aurorae window decoration, the
+ "Osiris" Plasma desktop theme and the Konsole "Osiris Dark/Light" colour
+ schemes.
+
+Package: osiris-icon-theme
+Architecture: all
+Depends: ${misc:Depends}, hicolor-icon-theme
+Recommends: adwaita-icon-theme
+Description: OSIRIS dual-accent icon theme (Material Symbols)
+ Freedesktop icon theme in the Material Symbols visual language — cyan/rose on a
+ GitHub-flavoured ramp. Covers actions, apps, categories, devices, emblems,
+ mimetypes, places and status, with GNOME↔KDE compatibility symlinks. Inherits
+ Adwaita / Breeze / hicolor for anything unstyled. Installed as
+ /usr/share/icons/Osiris.
 
 Package: osiris-theme-grub
 Architecture: all
@@ -56,8 +70,9 @@ Depends:
  ${misc:Depends},
  osiris-theme-gtk (= ${source:Version}),
  osiris-theme-plasma (= ${source:Version}),
+ osiris-icon-theme (= ${source:Version}),
  osiris-theme-grub (= ${source:Version}),
  osiris-wallpapers (= ${source:Version}),
 Description: OSIRIS desktop theme (metapackage)
- Pulls in every OSIRIS theme component: GTK/GNOME, KDE Plasma/Qt, the GRUB boot
- theme and the wallpapers.
+ Pulls in every OSIRIS theme component: GTK/GNOME, KDE Plasma/Qt, the icon theme,
+ the GRUB boot theme and the wallpapers.

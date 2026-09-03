@@ -1,0 +1,60 @@
+{
+  "manifest_version": 2,
+  "name": "OSIRIS Dark",
+  "version": "0.1.0",
+  "description": "OSIRIS dual-accent browser theme — cyan/rose on a GitHub-flavoured near-black ramp. Firefox.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "osiris-dark@osiris.themes",
+      "strict_min_version": "91.0"
+    }
+  },
+  "theme": {
+    "colors": {
+      "frame": "#0d1117",
+      "frame_inactive": "#0d1117",
+      "tab_background_text": "#8b949e",
+      "tab_selected": "#161b22",
+      "tab_text": "#e6edf3",
+      "tab_line": "#00f2fe",
+      "tab_loading": "#00f2fe",
+      "tab_background_separator": "#21262d",
+      "toolbar": "#161b22",
+      "toolbar_text": "#e6edf3",
+      "toolbar_field": "#21262d",
+      "toolbar_field_text": "#e6edf3",
+      "toolbar_field_border": "#30363d",
+      "toolbar_field_focus": "#0d1117",
+      "toolbar_field_text_focus": "#e6edf3",
+      "toolbar_field_border_focus": "#00f2fe",
+      "toolbar_field_highlight": "#00f2fe",
+      "toolbar_field_highlight_text": "#04151a",
+      "toolbar_top_separator": "#0d1117",
+      "toolbar_bottom_separator": "#30363d",
+      "toolbar_vertical_separator": "#30363d",
+      "button_background_hover": "#21262d",
+      "button_background_active": "#30363d",
+      "icons": "#8b949e",
+      "icons_attention": "#00f2fe",
+      "ntp_background": "#0d1117",
+      "ntp_card_background": "#161b22",
+      "ntp_text": "#e6edf3",
+      "popup": "#161b22",
+      "popup_text": "#e6edf3",
+      "popup_border": "#30363d",
+      "popup_highlight": "#00f2fe",
+      "popup_highlight_text": "#04151a",
+      "sidebar": "#161b22",
+      "sidebar_text": "#e6edf3",
+      "sidebar_border": "#30363d",
+      "sidebar_highlight": "#00f2fe",
+      "sidebar_highlight_text": "#04151a",
+      "bookmark_text": "#e6edf3",
+      "toolbar_field_separator": "#30363d"
+    },
+    "properties": {
+      "color_scheme": "dark",
+      "content_color_scheme": "dark"
+    }
+  }
+}

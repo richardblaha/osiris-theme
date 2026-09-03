@@ -11,9 +11,18 @@
 /assets/wallpapers/**/*.png
 /boot/grub/**/*.png
 
+# generated icon themes (from iconography/ via scripts/lib/gen_icons.py)
+/vscode/fileicons/
+/vscode/producticons/
+/browsers/**/icon*.png
+
 # node
 node_modules/
 /vscode/node_modules/
+/vitepress/package-lock.json
+/bootstrap/package-lock.json
+/bootstrap/dist/
+*.tgz
 
 # python
 __pycache__/

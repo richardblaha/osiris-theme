@@ -39,12 +39,33 @@ jobs:
         with:
           node-version: 20
       - run: sudo apt-get update && sudo apt-get install -y librsvg2-bin jq
-      - run: npm install --global @vscode/vsce
+      - run: npm install --global @vscode/vsce fantasticon
       - run: scripts/build.sh vscode
       - uses: actions/upload-artifact@v4
         with:
           name: vsix
           path: dist/*.vsix
+          if-no-files-found: error
+
+  npm:
+    needs: tokens
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: sudo apt-get update && sudo apt-get install -y jq zip
+      - run: scripts/build.sh vitepress bootstrap browsers
+      - uses: actions/upload-artifact@v4
+        with:
+          name: npm
+          path: dist/*.tgz
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: browsers
+          path: dist/*.zip
           if-no-files-found: error
 
   deb:

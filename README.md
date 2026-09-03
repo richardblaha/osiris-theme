@@ -2,9 +2,11 @@
 
 # OSIRIS Themes
 
-**One repository for the entire OSIRIS visual identity** — VS Code, GTK, GNOME
-Shell, KDE Plasma / Qt, GRUB2 and wallpapers — all generated from a single set of
-design tokens and shipped as `.vsix`, `.deb` and `.rpm`.
+**One repository for the entire OSIRIS visual identity** — VS Code (color, file
+and product icons), a Material-Symbols icon theme, GTK, GNOME Shell, KDE Plasma /
+Qt, GRUB2, VitePress, Bootstrap 5, Chromium & Firefox, and wallpapers — all
+generated from a single set of design tokens and shipped as `.vsix`, npm
+packages, browser `.zip`s, `.deb` and `.rpm`.
 
 [Live preview & design system →](https://richardblaha.github.io/osiris-themes/)
 
@@ -22,11 +24,18 @@ editor, window chrome, panel, boot menu — is derived from
 interactive reference in [`docs/preview/`](docs/preview/).
 
 ```
-tokens.json ──┬─→ vscode/themes/*.json            → osiris-theme.vsix
+tokens.json ──┬─→ vscode/themes/*.json            → osiris-theme.vsix (colour theme)
+              ├─→ iconography/glyphs.json  ┬─→ vscode/fileicons/*     → Osiris File Icons
+              │   + iconography/map/*.json ├─→ vscode/producticons/*  → Osiris Product Icons
+              │                            └─→ build/icons/Osiris/    → /usr/share/icons/Osiris
               ├─→ desktop/gtk-* + gtk-common/*     → /usr/share/themes/Osiris{,-Light}
               ├─→ desktop/gnome-shell/*.css.in     → …/Osiris{,-Light}/gnome-shell
               ├─→ desktop/plasma/*                 → color-schemes / Kvantum / aurorae / desktoptheme
+              ├─→ tokens.json → terminal           → GNOME Terminal · Ptyxis · Konsole schemes
               ├─→ boot/grub/*                      → /boot/grub/themes/osiris
+              ├─→ vitepress/theme/osiris.css       → npm: osiris-vitepress-theme
+              ├─→ bootstrap/scss/*                 → npm: osiris-bootstrap-theme
+              ├─→ browsers/*/manifest.json         → Chromium / Chrome / Edge / Firefox
               └─→ assets/wallpapers/*              → /usr/share/backgrounds/osiris
 ```
 
@@ -43,16 +52,24 @@ osiris-themes/
 ├── docs/
 │   ├── preview/                 # interactive reference → GitHub Pages
 │   │   ├── index.html  styles.css  app.js
-│   └── DESIGN_SYSTEM.md         # written spec (ramp, syntax, states, components)
-├── vscode/                      # VS Code extension (Osiris Dark / Osiris Light)
+│   ├── DESIGN_SYSTEM.md         # written spec (ramp, syntax, states, components)
+│   └── ICONOGRAPHY.md           # icon spec (Material Symbols grid, colour, XDG layout)
+├── iconography/                 # icon single-source
+│   ├── glyphs.json              # ~145 Material-Symbols path primitives
+│   └── map/                     # filetypes.json · xdg.json · producticons.json
+├── vscode/                      # VS Code extension — colour + file + product icon themes
+├── vitepress/                   # npm: osiris-vitepress-theme (default-theme override)
+├── bootstrap/                   # npm: osiris-bootstrap-theme (Bootstrap 5, Sass)
+├── browsers/                    # chromium-{dark,light} + firefox-{dark,light} manifests
 ├── desktop/
 │   ├── gtk-common/              # @define-color palettes + shared widget rules
 │   ├── gtk-3.0/  gtk-4.0/       # toolkit-specific extras
 │   ├── gnome-shell/             # gnome-shell.css.in (+ assets/)
-│   └── plasma/                  # color-schemes, Kvantum, aurorae, desktoptheme
+│   ├── plasma/                  # color-schemes, Kvantum, aurorae, desktoptheme
+│   └── terminal/               # VTE schemes: GNOME Terminal / Ptyxis / Konsole
 ├── boot/grub/                   # theme.txt, background.svg, icons/, fonts/, install.sh
 ├── packaging/
-│   ├── debian/                  # source package → 5 binary debs
+│   ├── debian/                  # source package → 6 binary debs
 │   ├── rpm/                     # one spec → matching subpackages
 │   └── common/                  # osiris-gtk-theme helper
 ├── scripts/
@@ -60,7 +77,7 @@ osiris-themes/
 │   ├── generate-wallpapers.py   # raster + GNOME/KDE bundle assembly
 │   ├── check-tokens.sh          # palette drift guard (CI gate)
 │   ├── install-local.sh         # build → $HOME, no root
-│   └── lib/                     # common.sh, gen_kvantum_svg.py, gen_grub_assets.py
+│   └── lib/                     # common.sh, gen_icons.py, gen_kvantum_svg.py, gen_grub_assets.py
 ├── .github/workflows/           # build.yml, release.yml
 ├── Makefile
 └── VERSION
@@ -77,20 +94,65 @@ Download `osiris-theme-<ver>.vsix` from
 code --install-extension osiris-theme-<ver>.vsix
 ```
 
-Then **Preferences: Color Theme → Osiris Dark / Osiris Light**.
+Then:
+
+- **Preferences: Color Theme → Osiris Dark / Osiris Light**
+- **Preferences: File Icon Theme → Osiris File Icons**
+- **Preferences: Product Icon Theme → Osiris Product Icons**
+
+### Web — npm
+
+```sh
+npm i -D osiris-vitepress-theme   # VitePress default-theme skin
+npm i    osiris-bootstrap-theme   # Bootstrap 5 build (dark + light color modes)
+```
+
+See [`vitepress/`](vitepress/) and [`bootstrap/`](bootstrap/) for wiring.
+
+### Browsers
+
+Grab `osiris-<engine>-<variant>-<ver>.zip` from
+[Releases](https://github.com/richardblaha/osiris-themes/releases), or load the
+folder directly:
+
+- **Chromium / Chrome / Edge** — `chrome://extensions` → Developer mode → **Load
+  unpacked** → [`browsers/chromium-dark`](browsers/chromium-dark) (or `-light`).
+- **Firefox** — `about:debugging` → **Load Temporary Add-on** →
+  [`browsers/firefox-dark/manifest.json`](browsers/firefox-dark) (or `-light`).
+
+### Terminal
+
+`make terminal` renders one 16-colour ANSI palette (dark + light) into every
+VTE format — see [`desktop/terminal/`](desktop/terminal/):
+
+- **Ptyxis** (current GNOME default) — drop `osiris.palette` in
+  `~/.local/share/org.gnome.Ptyxis/palettes/`, pick **Osiris** in Preferences.
+- **GNOME Terminal** — run `build/terminal/gnome-terminal/install.sh` (`--default`
+  to also set it) — merges *Osiris Dark* / *Osiris Light* profiles, keeps yours.
+- **Konsole** — copy `Osiris{Dark,Light}.colorscheme` into `~/.local/share/konsole/`.
+- **GNOME Console** (`kgx`) can't be themed — it follows the system light/dark
+  palette only.
+
+The `.deb` / `.rpm` packages install the Ptyxis palette, the Konsole schemes and
+the GNOME Terminal installer under `/usr/share`.
 
 ### Debian / Ubuntu
 
 ```sh
-sudo apt install ./osiris-desktop-theme_<ver>_all.deb   # metapackage — pulls all four
+sudo apt install ./osiris-desktop-theme_<ver>_all.deb   # metapackage — pulls all six
 # …or pick components:
-sudo apt install ./osiris-theme-gtk_<ver>_all.deb ./osiris-wallpapers_<ver>_all.deb
+sudo apt install ./osiris-icon-theme_<ver>_all.deb ./osiris-theme-gtk_<ver>_all.deb
 ```
 
-- `osiris-theme-gtk` — GTK 3/4 + libadwaita + GNOME Shell. Apply with
+- `osiris-theme-gtk` — GTK 3/4 + libadwaita + GNOME Shell, the **Ptyxis**
+  terminal palette and a GNOME Terminal profile installer
+  (`/usr/share/osiris/gnome-terminal/install.sh`). Apply the theme with
   `osiris-gtk-theme --apply` (or GNOME Tweaks → Appearance).
+- `osiris-icon-theme` — Material-Symbols icon set. Select **Osiris** in GNOME
+  Tweaks → Appearance → Icons, or System Settings → Icons on KDE.
 - `osiris-theme-plasma` — set **System Settings → Colors → Osiris**, decoration
-  **Osiris Dark**, and (for full Qt coverage) the Kvantum style.
+  **Osiris Dark**, the Kvantum style (full Qt coverage) and the **Osiris
+  Dark/Light** Konsole colour schemes.
 - `osiris-theme-grub` — configures `/boot/grub` and runs `update-grub` on install.
 - `osiris-wallpapers` — appears in **Settings → Background** (static + *Dynamic*).
 
@@ -108,9 +170,11 @@ make install-local        # builds + installs into ~/.local/share and switches
 
 ## Building
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md). TL;DR: `make help`, then `make dist`
-produces every `.vsix` / `.deb` / `.rpm` into `dist/`. CI does the same on every
-push; tagging `vX.Y.Z` cuts a GitHub Release and redeploys the Pages preview.
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) and
+[`docs/ICONOGRAPHY.md`](docs/ICONOGRAPHY.md). TL;DR: `make help`, then `make dist`
+produces every `.vsix` / `.tgz` / `.zip` / `.deb` / `.rpm` into `dist/`. CI does
+the same on every push; tagging `vX.Y.Z` cuts a GitHub Release and redeploys the
+Pages preview.
 
 ## License
 

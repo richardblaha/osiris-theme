@@ -1,0 +1,247 @@
+/* ============================================================================
+   OSIRIS — VitePress theme override
+   Derived from assets/tokens.json. Maps the OSIRIS dual-accent system (cyan
+   primary + magenta/rose secondary on a GitHub-flavoured neutral ramp) onto
+   the VitePress default-theme design tokens.
+
+   Usage: import from .vitepress/theme/index.{js,ts}
+       import DefaultTheme from 'vitepress/theme'
+       import './osiris.css'
+       export default DefaultTheme
+
+   Pair with Shiki themes that match the ramp:
+       // .vitepress/config.*
+       markdown: { theme: { light: 'github-light', dark: 'github-dark' } }
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Fonts — tokens.font
+   --------------------------------------------------------------------------- */
+:root {
+  --vp-font-family-base: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Ubuntu, sans-serif;
+  --vp-font-family-mono: "Fira Code", ui-monospace, SFMono-Regular, Menlo,
+    Consolas, monospace;
+  font-feature-settings: "liga" 1, "calt" 1; /* Fira Code ligatures */
+}
+
+/* ===========================================================================
+   LIGHT  —  themes.light  /  accent.*.light  /  state.*.light
+   =========================================================================== */
+:root {
+  /* Brand — accent.primary.light, with tints for gradients/hovers */
+  --vp-c-brand-1: #0969da;
+  --vp-c-brand-2: #1c7ee6;
+  --vp-c-brand-3: #3f92ec;
+  --vp-c-brand-soft: rgba(9, 105, 218, 0.1);   /* accent.primarySoft.light */
+  --vp-c-brand: var(--vp-c-brand-1);           /* legacy alias */
+
+  /* Neutral ramp & surfaces — themes.light.bg / border / text */
+  --vp-c-bg: #ffffff;                          /* bg.editor */
+  --vp-c-bg-alt: #f6f8fa;                      /* bg.sidebar */
+  --vp-c-bg-elv: #ffffff;
+  --vp-c-bg-soft: #f6f8fa;
+
+  --vp-c-border: #d0d7de;                      /* border.strong */
+  --vp-c-divider: #eaeef2;                     /* border.subtle */
+  --vp-c-gutter: #eaeef2;
+
+  --vp-c-text-1: #1f2328;                      /* text.primary */
+  --vp-c-text-2: #57606a;                      /* text.secondary */
+  --vp-c-text-3: #8c959f;                      /* text.muted */
+
+  --vp-c-gray-1: #d0d7de;
+  --vp-c-gray-2: #eaeef2;
+  --vp-c-gray-3: #f6f8fa;
+  --vp-c-gray-soft: rgba(140, 149, 159, 0.14);
+
+  /* Semantic / status — state.*.light */
+  --vp-c-tip-1: var(--vp-c-brand-1);
+  --vp-c-tip-2: var(--vp-c-brand-2);
+  --vp-c-tip-3: var(--vp-c-brand-3);
+  --vp-c-tip-soft: var(--vp-c-brand-soft);
+
+  --vp-c-note-1: var(--vp-c-brand-1);
+  --vp-c-note-2: var(--vp-c-brand-2);
+  --vp-c-note-3: var(--vp-c-brand-3);
+  --vp-c-note-soft: var(--vp-c-brand-soft);
+
+  --vp-c-success-1: #1a7f37;
+  --vp-c-success-2: #2c974b;
+  --vp-c-success-3: #46a860;
+  --vp-c-success-soft: rgba(26, 127, 55, 0.12);
+
+  --vp-c-warning-1: #9a6700;
+  --vp-c-warning-2: #b1740f;
+  --vp-c-warning-3: #c68a24;
+  --vp-c-warning-soft: rgba(154, 103, 0, 0.12);
+
+  --vp-c-danger-1: #cf222e;
+  --vp-c-danger-2: #dd404b;
+  --vp-c-danger-3: #e35d67;
+  --vp-c-danger-soft: rgba(207, 34, 46, 0.12);
+
+  --vp-c-important-1: #e01a76;                 /* accent.secondary.light */
+  --vp-c-important-2: #e63d8c;
+  --vp-c-important-3: #ec60a3;
+  --vp-c-important-soft: rgba(224, 26, 118, 0.1);
+
+  --vp-c-caution-1: var(--vp-c-danger-1);
+  --vp-c-caution-2: var(--vp-c-danger-2);
+  --vp-c-caution-3: var(--vp-c-danger-3);
+  --vp-c-caution-soft: var(--vp-c-danger-soft);
+
+  /* Buttons */
+  --vp-button-brand-border: transparent;
+  --vp-button-brand-text: #ffffff;             /* text.inverse (light) */
+  --vp-button-brand-bg: var(--vp-c-brand-1);
+  --vp-button-brand-hover-border: transparent;
+  --vp-button-brand-hover-text: #ffffff;
+  --vp-button-brand-hover-bg: var(--vp-c-brand-2);
+  --vp-button-brand-active-border: transparent;
+  --vp-button-brand-active-text: #ffffff;
+  --vp-button-brand-active-bg: var(--vp-c-brand-3);
+
+  /* Code — themes.light.bg */
+  --vp-code-color: #57606a;
+  --vp-code-bg: rgba(140, 149, 159, 0.16);
+  --vp-code-block-bg: #f6f8fa;
+  --vp-code-line-highlight-color: rgba(9, 105, 218, 0.08);
+  --vp-code-line-number-color: #8c959f;
+
+  /* Custom blocks */
+  --vp-custom-block-info-bg: var(--vp-c-gray-soft);
+
+  /* Home hero — the signature cyan→rose accent sweep */
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(
+    120deg,
+    #0969da 30%,
+    #e01a76
+  );
+  --vp-home-hero-image-background-image: linear-gradient(
+    45deg,
+    rgba(9, 105, 218, 0.18),
+    rgba(224, 26, 118, 0.18)
+  );
+  --vp-home-hero-image-filter: blur(44px);
+
+  /* Shape — radius.md */
+  --vp-border-radius: 6px;
+}
+
+/* ===========================================================================
+   DARK  —  themes.dark  /  accent.*.dark  /  state.*.dark
+   =========================================================================== */
+.dark {
+  --vp-c-brand-1: #00f2fe;                     /* accent.primary.dark */
+  --vp-c-brand-2: #4df5fe;
+  --vp-c-brand-3: #00c3cc;
+  --vp-c-brand-soft: rgba(0, 242, 254, 0.14);  /* accent.primarySoft.dark */
+
+  --vp-c-bg: #0d1117;                          /* bg.editor */
+  --vp-c-bg-alt: #161b22;                      /* bg.sidebar */
+  --vp-c-bg-elv: #161b22;
+  --vp-c-bg-soft: #161b22;
+
+  --vp-c-border: #30363d;                      /* border.strong */
+  --vp-c-divider: #21262d;                     /* border.subtle */
+  --vp-c-gutter: #010409;
+
+  --vp-c-text-1: #e6edf3;                      /* text.primary */
+  --vp-c-text-2: #8b949e;                      /* text.secondary */
+  --vp-c-text-3: #565f6d;                      /* text.muted */
+
+  --vp-c-gray-1: #30363d;
+  --vp-c-gray-2: #21262d;
+  --vp-c-gray-3: #161b22;
+  --vp-c-gray-soft: rgba(139, 148, 158, 0.16);
+
+  --vp-c-success-1: #3fb950;
+  --vp-c-success-2: #359843;
+  --vp-c-success-3: #2b7a37;
+  --vp-c-success-soft: rgba(63, 185, 80, 0.14);
+
+  --vp-c-warning-1: #d29922;
+  --vp-c-warning-2: #b3821d;
+  --vp-c-warning-3: #8a6417;
+  --vp-c-warning-soft: rgba(210, 153, 34, 0.14);
+
+  --vp-c-danger-1: #ff5555;
+  --vp-c-danger-2: #e14b4b;
+  --vp-c-danger-3: #b93e3e;
+  --vp-c-danger-soft: rgba(255, 85, 85, 0.14);
+
+  --vp-c-important-1: #ff2a85;                 /* accent.secondary.dark */
+  --vp-c-important-2: #ff55a0;
+  --vp-c-important-3: #cc2269;
+  --vp-c-important-soft: rgba(255, 42, 133, 0.14);
+
+  --vp-button-brand-text: #04151a;             /* text.inverse (dark) */
+  --vp-button-brand-hover-text: #04151a;
+  --vp-button-brand-active-text: #04151a;
+
+  --vp-code-color: #8b949e;
+  --vp-code-bg: rgba(139, 148, 158, 0.16);
+  --vp-code-block-bg: #161b22;
+  --vp-code-line-highlight-color: rgba(0, 242, 254, 0.1);
+  --vp-code-line-number-color: #565f6d;
+
+  --vp-home-hero-name-background: linear-gradient(
+    120deg,
+    #00f2fe 30%,
+    #ff2a85
+  );
+  --vp-home-hero-image-background-image: linear-gradient(
+    45deg,
+    rgba(0, 242, 254, 0.2),
+    rgba(255, 42, 133, 0.2)
+  );
+}
+
+/* ---------------------------------------------------------------------------
+   Signature touches — the solid accent bar carried over from the shells.
+   --------------------------------------------------------------------------- */
+
+/* Nav: cyan underline on the active/hovered top-nav item */
+.VPNavBarMenuLink.active,
+.VPNavBarMenuLink:hover {
+  color: var(--vp-c-brand-1);
+}
+
+/* Sidebar: 2px accent bar on the active page (activity-bar indicator) */
+.VPSidebarItem.is-active > .item > .link > .text,
+.VPSidebarItem.is-active > .item > .text {
+  color: var(--vp-c-brand-1);
+}
+.VPSidebarItem.is-active.is-link > .item {
+  position: relative;
+}
+.VPSidebarItem.is-active.is-link > .item::before {
+  content: "";
+  position: absolute;
+  left: -17px;
+  top: 3px;
+  bottom: 3px;
+  width: 2px;
+  border-radius: 999px;
+  background: var(--vp-c-brand-1);
+}
+
+/* Inline code picks up the brand tint, like the editor */
+.vp-doc a > code,
+.vp-doc :not(pre) > code {
+  color: var(--vp-c-brand-1);
+}
+
+/* Focus ring — DESIGN_SYSTEM §6: 3px soft glow + 1px accent border */
+:root {
+  --vp-c-brand-outline: var(--vp-c-brand-soft);
+}
+.vp-doc a:focus-visible,
+.VPButton:focus-visible,
+.DocSearch-Button:focus-visible {
+  outline: 1px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px var(--vp-c-brand-soft);
+}

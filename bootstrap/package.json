@@ -1,0 +1,54 @@
+{
+  "name": "osiris-bootstrap-theme",
+  "version": "0.1.0",
+  "description": "Dual-accent (cyan / rose) theme for Bootstrap 5 — dark & light color modes — from the OSIRIS design system.",
+  "license": "MIT",
+  "main": "dist/osiris-bootstrap.css",
+  "style": "dist/osiris-bootstrap.css",
+  "sass": "scss/osiris.scss",
+  "exports": {
+    ".": "./dist/osiris-bootstrap.css",
+    "./css": "./dist/osiris-bootstrap.css",
+    "./css-min": "./dist/osiris-bootstrap.min.css",
+    "./scss": "./scss/osiris.scss",
+    "./scss/*": "./scss/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "scss/",
+    "dist/",
+    "README.md"
+  ],
+  "keywords": [
+    "bootstrap",
+    "bootstrap-5",
+    "bootstrap-theme",
+    "theme",
+    "osiris",
+    "dark",
+    "light",
+    "cyan",
+    "sass"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/richardblaha/osiris-themes.git",
+    "directory": "bootstrap"
+  },
+  "homepage": "https://richardblaha.github.io/osiris-themes/",
+  "bugs": {
+    "url": "https://github.com/richardblaha/osiris-themes/issues"
+  },
+  "peerDependencies": {
+    "bootstrap": "^5.3.0"
+  },
+  "devDependencies": {
+    "bootstrap": "^5.3.3",
+    "sass": "^1.77.0"
+  },
+  "scripts": {
+    "build": "sass --load-path=node_modules --quiet-deps --style=expanded --no-source-map scss/osiris.scss dist/osiris-bootstrap.css && sass --load-path=node_modules --quiet-deps --style=compressed --no-source-map scss/osiris.scss dist/osiris-bootstrap.min.css",
+    "lint": "bash ../scripts/check-tokens.sh",
+    "prepack": "npm run build"
+  }
+}

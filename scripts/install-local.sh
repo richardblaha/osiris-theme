@@ -3,7 +3,7 @@
 #
 #   scripts/install-local.sh <what> [--dark|--light]
 #
-#   what: vscode | gtk | gnome | plasma | wallpapers | grub | all
+#   what: vscode | gtk | gnome | plasma | icons | terminal | wallpapers | grub | all
 #
 # Run scripts/build.sh first. GRUB still needs root (delegates to sudo).
 set -euo pipefail
@@ -96,14 +96,46 @@ do_vscode() {
 
 do_grub() { sudo boot/grub/install.sh; }
 
+do_icons() {
+  [ -d "$BUILD_DIR/icons/Osiris" ] || die "no icon theme in $BUILD_DIR/icons — run: scripts/build.sh icons"
+  mkdir -p "$DATA/icons"
+  cp -rT "$BUILD_DIR/icons/Osiris" "$DATA/icons/Osiris"
+  have gtk-update-icon-cache && gtk-update-icon-cache -f -t "$DATA/icons/Osiris" 2>/dev/null || true
+  if have gsettings; then
+    gsettings set org.gnome.desktop.interface icon-theme "Osiris" || true
+  fi
+  if have kwriteconfig6; then
+    kwriteconfig6 --file kdeglobals --group Icons --key Theme "Osiris" || true
+  fi
+  log "icon theme 'Osiris' installed to $DATA/icons/Osiris + selected"
+}
+
+do_terminal() {
+  [ -d "$BUILD_DIR/terminal" ] || die "no terminal schemes in $BUILD_DIR/terminal — run: scripts/build.sh terminal"
+  # Ptyxis (current GNOME default terminal)
+  mkdir -p "$DATA/org.gnome.Ptyxis/palettes"
+  cp "$BUILD_DIR/terminal/ptyxis/osiris.palette" "$DATA/org.gnome.Ptyxis/palettes/"
+  # Konsole
+  mkdir -p "$DATA/konsole"
+  cp "$BUILD_DIR"/terminal/konsole/*.colorscheme "$DATA/konsole/"
+  # GNOME Terminal — merge the two profiles
+  if have dconf; then
+    bash "$BUILD_DIR/terminal/gnome-terminal/install.sh" "$([ "$MODE" = dark ] && echo --default || echo)" || \
+      warn "GNOME Terminal profile install failed"
+  fi
+  log "terminal schemes installed (Ptyxis palette 'Osiris', Konsole 'Osiris Dark/Light', GNOME Terminal profiles)"
+}
+
 case "$WHAT" in
   vscode) do_vscode ;;
   gtk) do_gtk ;;
   gnome) do_gtk; do_gnome ;;
   plasma) do_plasma ;;
+  icons) do_icons ;;
+  terminal) do_terminal ;;
   wallpapers) do_wallpapers ;;
   grub) do_grub ;;
-  desktop) do_gtk; do_gnome; do_plasma; do_wallpapers ;;
-  all) do_vscode || true; do_gtk; do_gnome; do_plasma; do_wallpapers ;;
+  desktop) do_gtk; do_gnome; do_plasma; do_icons; do_terminal; do_wallpapers ;;
+  all) do_vscode || true; do_gtk; do_gnome; do_plasma; do_icons; do_terminal; do_wallpapers ;;
   *) die "unknown target: $WHAT" ;;
 esac

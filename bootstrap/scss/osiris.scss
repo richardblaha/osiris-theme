@@ -1,0 +1,20 @@
+// ============================================================================
+// OSIRIS — Bootstrap 5 theme entry point
+//
+// Produces a full Bootstrap bundle with the OSIRIS palette baked in. Compile:
+//
+//   sass --load-path=node_modules scss/osiris.scss dist/osiris-bootstrap.css
+//
+// or @import this file from your own Sass build (with node_modules on the load
+// path). Everything is derived from ../assets/tokens.json.
+// ============================================================================
+
+// 1. OSIRIS overrides win over Bootstrap's !default values
+@import "variables";
+
+// 2. Bootstrap itself
+@import "bootstrap/scss/bootstrap";
+
+// 3. Dark color mode + signature touches, layered on the compiled output
+@import "dark";
+@import "signature";

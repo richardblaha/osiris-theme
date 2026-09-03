@@ -1,0 +1,36 @@
+// ============================================================================
+// OSIRIS — Bootstrap 5 signature touches
+// The solid-accent-bar motif carried over from the desktop shells and the
+// VS Code theme (DESIGN_SYSTEM §6 / §7). Cosmetic only; safe to drop.
+// ============================================================================
+
+// Active underline-nav item gets a 2px accent bar (like the editor tab / the
+// activity-bar indicator).
+.nav-underline .nav-link.active,
+.nav-underline .show > .nav-link {
+  border-bottom-width: 2px;
+  border-bottom-color: var(--#{$prefix}primary);
+}
+
+// Active tab: accent top edge.
+.nav-tabs .nav-link.active {
+  box-shadow: inset 0 2px 0 var(--#{$prefix}primary);
+}
+
+// Progress bar / spinner default to the primary accent.
+.progress {
+  --#{$prefix}progress-bar-bg: var(--#{$prefix}primary);
+}
+
+// Focus ring — 3px soft glow + 1px accent border (DESIGN_SYSTEM §6).
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+  border-color: var(--#{$prefix}primary);
+  box-shadow: 0 0 0 0.1875rem var(--#{$prefix}focus-ring-color);
+}
+
+.form-check-input:checked {
+  background-color: var(--#{$prefix}primary);
+  border-color: var(--#{$prefix}primary);
+}
