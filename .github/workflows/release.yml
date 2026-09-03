@@ -1,0 +1,78 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+
+  publish-pages:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y jq
+      - run: scripts/build.sh pages
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/pages
+      - id: deploy
+        uses: actions/deploy-pages@v4
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          pattern: "{vsix,deb,rpm}"
+
+      - name: Collect release assets
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          find artifacts -type f \( -name '*.vsix' -o -name '*.deb' -o -name '*.rpm' \) \
+            -exec cp -v {} dist/ \;
+          echo "---- release assets ----"
+          ls -la dist/
+
+      - name: Verify tag matches VERSION
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          file="$(cat VERSION)"
+          # allow v0.1.0 == 0.1.0 and pre-release tags like v0.1.0-alpha.1
+          case "$tag" in "$file"|"$file"-*) : ;; *)
+            echo "::error::tag $GITHUB_REF_NAME does not match VERSION ($file)"; exit 1 ;;
+          esac
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: dist/*
+          body: |
+            OSIRIS themes ${{ github.ref_name }}
+
+            **VS Code** — `osiris-theme-*.vsix` (Osiris Dark / Osiris Light)
+            **Debian/Ubuntu** — `osiris-theme-gtk`, `osiris-theme-plasma`,
+            `osiris-theme-grub`, `osiris-wallpapers`, `osiris-desktop-theme` (meta)
+            **Fedora/RHEL** — the matching `.rpm` set
+
+            Live preview / design system: https://richardblaha.github.io/osiris-themes/
+            See `CHANGELOG.md` for details.

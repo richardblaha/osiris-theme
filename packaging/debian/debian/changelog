@@ -1,0 +1,10 @@
+osiris-desktop-theme (0.1.0-1) unstable; urgency=medium
+
+  * Initial packaging.
+    - osiris-theme-gtk: GTK 3/4 + libadwaita + GNOME Shell (Osiris / Osiris-Light)
+    - osiris-theme-plasma: Plasma color schemes, Kvantum, Aurorae, desktop theme
+    - osiris-theme-grub: graphical GRUB2 boot theme + post-install wiring
+    - osiris-wallpapers: Abstract Bloom + Ancient Egypt Sci-Fi, static + dynamic
+    - osiris-desktop-theme: metapackage
+
+ -- OSIRIS <osiris@example.org>  Wed, 03 Sep 2026 12:00:00 +0000

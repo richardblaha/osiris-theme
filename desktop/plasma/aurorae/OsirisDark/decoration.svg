@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150">
+  <!-- Aurorae decoration sheet. Object ids drive the 9-slice title/border render.
+       Flat OSIRIS look: #0d1117 titlebar, 1px #21262d border, 6px top corners. -->
+  <defs>
+    <g id="active">
+      <!-- centre -->
+      <rect id="center" x="50" y="50" width="50" height="50" fill="#0d1117"/>
+      <!-- edges -->
+      <rect id="top" x="50" y="0" width="50" height="50" fill="#0d1117"/>
+      <rect id="bottom" x="50" y="100" width="50" height="50" fill="#161b22"/>
+      <rect id="left" x="0" y="50" width="50" height="50" fill="#161b22"/>
+      <rect id="right" x="100" y="50" width="50" height="50" fill="#161b22"/>
+      <!-- corners: rounded top, square bottom -->
+      <path id="topleft" d="M0 50 V6 A6 6 0 0 1 6 0 H50 V50 Z" fill="#0d1117"/>
+      <path id="topright" d="M150 50 V6 A6 6 0 0 0 144 0 H100 V50 Z" fill="#0d1117"/>
+      <rect id="bottomleft" x="0" y="100" width="50" height="50" fill="#161b22"/>
+      <rect id="bottomright" x="100" y="100" width="50" height="50" fill="#161b22"/>
+      <!-- 1px border overlay along the inner edge -->
+      <rect id="border-top" x="50" y="0" width="50" height="1" fill="#21262d"/>
+    </g>
+    <g id="inactive">
+      <rect id="center-inactive" x="50" y="50" width="50" height="50" fill="#0d1117"/>
+      <rect id="top-inactive" x="50" y="0" width="50" height="50" fill="#0d1117"/>
+      <rect id="bottom-inactive" x="50" y="100" width="50" height="50" fill="#161b22"/>
+      <rect id="left-inactive" x="0" y="50" width="50" height="50" fill="#161b22"/>
+      <rect id="right-inactive" x="100" y="50" width="50" height="50" fill="#161b22"/>
+      <path id="topleft-inactive" d="M0 50 V6 A6 6 0 0 1 6 0 H50 V50 Z" fill="#0d1117"/>
+      <path id="topright-inactive" d="M150 50 V6 A6 6 0 0 0 144 0 H100 V50 Z" fill="#0d1117"/>
+      <rect id="bottomleft-inactive" x="0" y="100" width="50" height="50" fill="#161b22"/>
+      <rect id="bottomright-inactive" x="100" y="100" width="50" height="50" fill="#161b22"/>
+    </g>
+  </defs>
+  <use xlink:href="#active"/>
+</svg>

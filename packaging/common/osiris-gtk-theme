@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# osiris-gtk-theme — apply / revert the OSIRIS GTK + libadwaita theme for the
+# current user. Installed by the osiris-theme-gtk package.
+#
+#   osiris-gtk-theme --apply [--light|--dark]
+#   osiris-gtk-theme --revert
+set -euo pipefail
+
+SHARE="/usr/share/themes"
+CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"
+MODE="dark"
+ACTION="${1:---apply}"
+for a in "$@"; do case "$a" in --light) MODE=light;; --dark) MODE=dark;; esac; done
+NAME="Osiris"; [ "$MODE" = light ] && NAME="Osiris-Light"
+
+apply() {
+  [ -d "$SHARE/$NAME" ] || { echo "$SHARE/$NAME not found — is osiris-theme-gtk installed?" >&2; exit 1; }
+  mkdir -p "$CONFIG/gtk-4.0" "$CONFIG/gtk-3.0"
+  # libadwaita opt-in (apps that follow the system accent still pick these up)
+  cp -f "$SHARE/$NAME/gtk-4.0/gtk.css"    "$CONFIG/gtk-4.0/gtk.css"
+  [ -f "$SHARE/$NAME/gtk-4.0/colors.css" ] && cp -f "$SHARE/$NAME/gtk-4.0/colors.css" "$CONFIG/gtk-4.0/colors.css"
+  cp -f "$SHARE/$NAME/gtk-3.0/gtk.css"    "$CONFIG/gtk-3.0/gtk.css"
+  if command -v gsettings >/dev/null 2>&1; then
+    gsettings set org.gnome.desktop.interface gtk-theme "$NAME" || true
+    gsettings set org.gnome.desktop.interface color-scheme \
+      "$([ "$MODE" = light ] && echo prefer-light || echo prefer-dark)" || true
+    gsettings writable org.gnome.shell.extensions.user-theme name >/dev/null 2>&1 && \
+      gsettings set org.gnome.shell.extensions.user-theme name "$NAME" || true
+  fi
+  echo "applied $NAME"
+}
+
+revert() {
+  rm -f "$CONFIG/gtk-4.0/gtk.css" "$CONFIG/gtk-4.0/colors.css" "$CONFIG/gtk-3.0/gtk.css"
+  if command -v gsettings >/dev/null 2>&1; then
+    gsettings reset org.gnome.desktop.interface gtk-theme || true
+    gsettings writable org.gnome.shell.extensions.user-theme name >/dev/null 2>&1 && \
+      gsettings set org.gnome.shell.extensions.user-theme name "" || true
+  fi
+  echo "reverted"
+}
+
+case "$ACTION" in
+  --apply) apply ;;
+  --revert) revert ;;
+  *) echo "usage: osiris-gtk-theme --apply [--light|--dark] | --revert" >&2; exit 2 ;;
+esac

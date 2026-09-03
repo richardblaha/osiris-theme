@@ -1,0 +1,52 @@
+#!/usr/bin/make -f
+# OSIRIS desktop theme — debhelper rules.
+# The heavy lifting lives in scripts/build.sh; here we just run it and fan the
+# build/ output out into debian/tmp for the per-package *.install globs.
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+DESTDIR = debian/tmp
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	scripts/build.sh tokens gtk gnome plasma grub wallpapers
+
+override_dh_auto_install:
+	# --- GTK / GNOME Shell ---
+	install -d $(DESTDIR)/usr/share/themes
+	cp -rT build/themes/Osiris        $(DESTDIR)/usr/share/themes/Osiris
+	cp -rT build/themes/Osiris-Light  $(DESTDIR)/usr/share/themes/Osiris-Light
+	install -d $(DESTDIR)/usr/bin
+	install -m0755 packaging/common/osiris-gtk-theme $(DESTDIR)/usr/bin/osiris-gtk-theme
+
+	# --- KDE Plasma / Qt ---
+	install -d $(DESTDIR)/usr/share/color-schemes
+	cp build/plasma/color-schemes/*.colors $(DESTDIR)/usr/share/color-schemes/
+	install -d $(DESTDIR)/usr/share/Kvantum
+	cp -rT build/plasma/Kvantum/OsirisDark  $(DESTDIR)/usr/share/Kvantum/OsirisDark
+	cp -rT build/plasma/Kvantum/OsirisLight $(DESTDIR)/usr/share/Kvantum/OsirisLight
+	install -d $(DESTDIR)/usr/share/aurorae/themes
+	cp -rT build/plasma/aurorae/OsirisDark $(DESTDIR)/usr/share/aurorae/themes/OsirisDark
+	install -d $(DESTDIR)/usr/share/plasma/desktoptheme
+	cp -rT build/plasma/desktoptheme/Osiris $(DESTDIR)/usr/share/plasma/desktoptheme/Osiris
+
+	# --- GRUB ---
+	install -d $(DESTDIR)/usr/share/grub/themes/osiris
+	cp -rT build/grub/osiris $(DESTDIR)/usr/share/grub/themes/osiris
+
+	# --- Wallpapers ---
+	install -d $(DESTDIR)/usr/share/backgrounds/osiris
+	cp -rT build/wallpapers/backgrounds/osiris $(DESTDIR)/usr/share/backgrounds/osiris
+	install -d $(DESTDIR)/usr/share/gnome-background-properties
+	cp build/wallpapers/gnome-background-properties/osiris.xml $(DESTDIR)/usr/share/gnome-background-properties/
+	install -d $(DESTDIR)/usr/share/wallpapers
+	cp -r build/wallpapers/kde/Osiris-* $(DESTDIR)/usr/share/wallpapers/
+
+override_dh_auto_test:
+	scripts/check-tokens.sh
+
+# themes carry no ELF binaries; skip the usual strip/shlibdeps passes
+override_dh_strip:
+override_dh_shlibdeps:
+override_dh_makeshlibs:

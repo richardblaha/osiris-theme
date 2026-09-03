@@ -1,0 +1,240 @@
+/* ============================================================================
+   OSIRIS — shared GTK widget rules (GTK 3 + GTK 4 / libadwaita)
+   Consumes the @define-color palette from colors-{dark,light}.css.
+   Mirrors the component contract in docs/DESIGN_SYSTEM.md §7.
+   ========================================================================== */
+
+* {
+  outline-color: @osiris_accent;
+  -gtk-secondary-caret-color: @osiris_secondary;
+}
+
+/* ---- Window / headerbar ------------------------------------------------- */
+window, .background { background-color: @osiris_bg_window; color: @osiris_fg; }
+
+headerbar,
+.titlebar,
+.csd headerbar {
+  background-color: @osiris_bg_titlebar;
+  color: @osiris_fg;
+  border-bottom: 1px solid @osiris_border_subtle;
+  box-shadow: none;
+}
+headerbar .title { font-weight: 600; }
+headerbar button.toggle:checked { color: @osiris_accent; }
+
+/* ---- Buttons ---------------------------------------------------------- */
+button {
+  background-color: @osiris_bg_input;
+  color: @osiris_fg;
+  border: 1px solid @osiris_border_strong;
+  border-radius: 3px;
+  padding: 6px 12px;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+button:hover { background-color: @osiris_bg_hover; }
+button:active,
+button:checked {
+  background-color: @osiris_accent_soft;
+  border-color: @osiris_accent;
+  color: @osiris_fg;
+}
+button:focus-visible {
+  outline: 1px solid @osiris_accent;
+  outline-offset: -1px;
+  box-shadow: 0 0 0 3px @osiris_accent_soft;
+}
+button.suggested-action {
+  background-color: @osiris_accent;
+  color: @osiris_accent_fg;
+  border-color: transparent;
+}
+button.suggested-action:hover { background-image: image(alpha(white, 0.08)); }
+button.destructive-action {
+  background-color: @osiris_error;
+  color: #ffffff;
+  border-color: transparent;
+}
+button.flat {
+  background-color: transparent;
+  border-color: transparent;
+}
+button.flat:hover { background-color: @osiris_bg_hover; }
+button:disabled { opacity: 0.45; }
+
+/* ---- Entries / text inputs ------------------------------------------- */
+entry, .entry, spinbutton, textview text {
+  background-color: @osiris_bg_input;
+  color: @osiris_fg;
+  border: 1px solid @osiris_border_strong;
+  border-radius: 3px;
+  padding: 6px 8px;
+  caret-color: @osiris_accent;
+}
+entry:focus-within,
+spinbutton:focus-within,
+.entry:focus-within {
+  border-color: @osiris_accent;
+  box-shadow: 0 0 0 3px @osiris_accent_soft;
+}
+entry image { color: @osiris_fg_dim; }
+entry.error { border-color: @osiris_error; }
+entry.warning { border-color: @osiris_warning; }
+entry placeholder, entry text placeholder { color: @osiris_fg_muted; }
+
+/* ---- Dropdowns / combo / popover menus ------------------------------ */
+combobox button, dropdown > button {
+  background-color: @osiris_bg_input;
+  border: 1px solid @osiris_border_strong;
+}
+popover > contents,
+popover.background > contents,
+.menu, menu {
+  background-color: @osiris_bg_card;
+  color: @osiris_fg;
+  border: 1px solid @osiris_border_strong;
+  border-radius: 6px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  padding: 4px;
+}
+menuitem, .menu menuitem, popover modelbutton {
+  border-radius: 3px;
+  padding: 6px 10px;
+}
+menuitem:hover,
+menuitem:selected,
+popover modelbutton:hover {
+  background-color: @osiris_accent_soft;
+  color: @osiris_fg;
+}
+
+/* ---- Notebook tabs -------------------------------------------------- */
+notebook > header {
+  background-color: @osiris_bg_card;
+  border-color: @osiris_border_subtle;
+}
+notebook > header > tabs > tab {
+  color: @osiris_fg_dim;
+  padding: 6px 12px;
+  border: none;
+  background-color: transparent;
+  transition: color 150ms ease, background-color 150ms ease;
+}
+notebook > header > tabs > tab:hover { background-color: @osiris_bg_hover; }
+notebook > header > tabs > tab:checked {
+  color: @osiris_fg;
+  box-shadow: inset 0 2px 0 @osiris_accent;
+}
+
+/* ---- Lists / sidebars / treeview --------------------------------- */
+list, .view, treeview.view {
+  background-color: @osiris_bg_view;
+  color: @osiris_fg;
+}
+row:hover, treeview.view:hover { background-color: @osiris_bg_hover; }
+row:selected,
+treeview.view:selected,
+.view:selected,
+list row:selected {
+  background-color: @osiris_accent_soft;
+  color: @osiris_fg;
+}
+.sidebar, placessidebar list {
+  background-color: @osiris_bg_window;
+  border-right: 1px solid @osiris_border_subtle;
+}
+.sidebar row:selected { background-color: @osiris_accent_soft; }
+separator { background-color: @osiris_border_subtle; min-width: 1px; min-height: 1px; }
+
+/* ---- Checkbox / radio ------------------------------------------- */
+check, radio {
+  background-color: @osiris_bg_input;
+  border: 1px solid @osiris_border_strong;
+  border-radius: 3px;
+  min-width: 15px;
+  min-height: 15px;
+}
+radio { border-radius: 100%; }
+check:checked, radio:checked {
+  background-color: @osiris_accent;
+  border-color: @osiris_accent;
+  color: @osiris_accent_fg;
+}
+check:focus-visible, radio:focus-visible { box-shadow: 0 0 0 3px @osiris_accent_soft; }
+
+/* ---- Switch (toggle) ------------------------------------------- */
+switch {
+  background-color: @osiris_border_strong;
+  border-radius: 999px;
+  border: none;
+  min-width: 38px;
+  min-height: 22px;
+}
+switch:checked { background-color: @osiris_accent; }
+switch slider {
+  background-color: @osiris_fg;
+  border-radius: 100%;
+  min-width: 18px;
+  min-height: 18px;
+  margin: 2px;
+}
+switch:checked slider { background-color: @osiris_accent_fg; }
+
+/* ---- Scale / slider ------------------------------------------- */
+scale trough {
+  background-color: @osiris_border_strong;
+  border-radius: 999px;
+  min-height: 4px;
+}
+scale highlight { background-color: @osiris_accent; border-radius: 999px; }
+scale slider {
+  background-color: @osiris_accent;
+  border-radius: 100%;
+  min-width: 14px;
+  min-height: 14px;
+}
+
+/* ---- Progress / spinner / levelbar --------------------------- */
+progressbar progress, levelbar block.filled {
+  background-color: @osiris_secondary;
+  border-radius: 999px;
+}
+progressbar trough, levelbar trough {
+  background-color: @osiris_bg_input;
+  border-radius: 999px;
+}
+spinner { color: @osiris_accent; }
+
+/* ---- Scrollbars --------------------------------------------- */
+scrollbar { background-color: transparent; }
+scrollbar slider {
+  background-color: alpha(@osiris_border_strong, 0.7);
+  border-radius: 999px;
+  min-width: 8px;
+  min-height: 8px;
+}
+scrollbar slider:hover { background-color: @osiris_fg_muted; }
+
+/* ---- Notifications / infobar / toasts ----------------------- */
+.app-notification, infobar, .osd, toast {
+  background-color: @osiris_bg_card;
+  color: @osiris_fg;
+  border: 1px solid @osiris_border_strong;
+  border-radius: 3px;
+  border-left: 3px solid @osiris_accent;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+infobar.warning { border-left-color: @osiris_warning; }
+infobar.error   { border-left-color: @osiris_error; }
+
+/* ---- Tooltips ---------------------------------------------- */
+tooltip {
+  background-color: @osiris_bg_card;
+  color: @osiris_fg;
+  border: 1px solid @osiris_border_strong;
+  border-radius: 6px;
+}
+
+/* ---- Selection / links ----------------------------------- */
+selection { background-color: @osiris_accent_soft; color: @osiris_fg; }
+*:link, button.link { color: @osiris_accent; }

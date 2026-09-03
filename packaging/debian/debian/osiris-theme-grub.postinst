@@ -1,0 +1,36 @@
+#!/bin/sh
+set -e
+
+THEME_SRC="/usr/share/grub/themes/osiris"
+GRUB_DEFAULT="/etc/default/grub"
+
+case "$1" in
+  configure)
+    # locate the live GRUB directory
+    GRUB_DIR="/boot/grub"
+    [ -d /boot/grub2 ] && GRUB_DIR="/boot/grub2"
+    DEST="$GRUB_DIR/themes/osiris"
+
+    mkdir -p "$DEST"
+    cp -rT "$THEME_SRC" "$DEST"
+
+    if [ -f "$GRUB_DEFAULT" ]; then
+      if grep -q '^GRUB_THEME=' "$GRUB_DEFAULT"; then
+        sed -i "s#^GRUB_THEME=.*#GRUB_THEME=\"$DEST/theme.txt\"#" "$GRUB_DEFAULT"
+      else
+        echo "GRUB_THEME=\"$DEST/theme.txt\"" >> "$GRUB_DEFAULT"
+      fi
+      grep -q '^GRUB_GFXMODE=' "$GRUB_DEFAULT" || \
+        echo 'GRUB_GFXMODE=1920x1080,auto' >> "$GRUB_DEFAULT"
+    fi
+
+    if command -v update-grub >/dev/null 2>&1; then
+      update-grub || true
+    elif command -v grub2-mkconfig >/dev/null 2>&1; then
+      grub2-mkconfig -o "$GRUB_DIR/grub.cfg" || true
+    fi
+    ;;
+esac
+
+#DEBHELPER#
+exit 0

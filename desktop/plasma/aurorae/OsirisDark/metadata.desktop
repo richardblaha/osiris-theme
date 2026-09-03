@@ -1,0 +1,18 @@
+[Desktop Entry]
+Name=Osiris Dark
+Comment=OSIRIS dual-accent window decoration — flat, 6px top corners, cyan focus, rose close-hover
+Type=Service
+X-KDE-ServiceTypes=KDecoration
+
+[X-KDE-Aurorae]
+X-KDE-Aurorae-CornerRadius=6
+X-KDE-Aurorae-ButtonSpacing=6
+X-KDE-Aurorae-ButtonMarginTop=6
+X-KDE-Aurorae-PaddingTop=1
+X-KDE-Aurorae-PaddingBottom=1
+X-KDE-Aurorae-PaddingLeft=1
+X-KDE-Aurorae-PaddingRight=1
+X-KDE-Aurorae-Shadow=true
+
+[X-KDE-Library]
+X-KDE-Version=1

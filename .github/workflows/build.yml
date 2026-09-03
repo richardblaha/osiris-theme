@@ -1,0 +1,112 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+    outputs:
+      version:
+        description: Version being built
+        value: ${{ jobs.meta.outputs.version }}
+
+permissions:
+  contents: read
+
+jobs:
+  meta:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: v
+        run: echo "version=$(cat VERSION)" >> "$GITHUB_OUTPUT"
+
+  tokens:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y jq
+      - run: bash scripts/check-tokens.sh
+
+  vsix:
+    needs: tokens
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: sudo apt-get update && sudo apt-get install -y librsvg2-bin jq
+      - run: npm install --global @vscode/vsce
+      - run: scripts/build.sh vscode
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsix
+          path: dist/*.vsix
+          if-no-files-found: error
+
+  deb:
+    needs: tokens
+    runs-on: ubuntu-latest
+    container: debian:bookworm
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build deps
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            build-essential debhelper devscripts dpkg-dev \
+            make jq python3 python3-pil librsvg2-bin fonts-firacode grub-common ca-certificates
+      - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - run: packaging/debian/build-debs.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deb
+          path: dist/*.deb
+          if-no-files-found: error
+
+  rpm:
+    needs: tokens
+    runs-on: ubuntu-latest
+    container: fedora:40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build deps
+        run: |
+          dnf install -y rpm-build make jq python3 python3-pillow \
+            librsvg2-tools grub2-tools tar gzip
+      - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - run: packaging/rpm/build-rpms.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rpm
+          path: dist/*.rpm
+          if-no-files-found: error
+
+  pages-build:
+    needs: tokens
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y jq
+      - run: scripts/build.sh pages
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/pages
+
+  pages-deploy:
+    # only publish the live site from main (and from release.yml via workflow_call)
+    if: github.ref == 'refs/heads/main'
+    needs: pages-build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

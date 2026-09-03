@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <radialGradient id="glowA" cx="16%" cy="8%" r="55%">
+      <stop offset="0" stop-color="#00f2fe" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#00f2fe" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="86%" cy="94%" r="55%">
+      <stop offset="0" stop-color="#ff2a85" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#ff2a85" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#090c10"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#edge)"/>
+  <rect width="1920" height="1080" fill="url(#glowA)"/>
+  <rect width="1920" height="1080" fill="url(#glowB)"/>
+
+  <!-- faint grid -->
+  <g stroke="#21262d" stroke-width="1" opacity="0.5">
+    <path d="M0 270 H1920 M0 540 H1920 M0 810 H1920"/>
+    <path d="M480 0 V1080 M960 0 V1080 M1440 0 V1080"/>
+  </g>
+
+  <!-- OSIRIS mark, watermark scale -->
+  <g transform="translate(960 300)" opacity="0.9">
+    <polygon points="0,-120 -150,110 0,180" fill="#00f2fe"/>
+    <polygon points="0,-120 150,110 0,180" fill="#ff2a85"/>
+    <polygon points="-150,110 0,180 150,110 0,70" fill="#000000" opacity="0.35"/>
+    <line x1="0" y1="-120" x2="0" y2="180" stroke="#ffffff" stroke-width="4" opacity="0.55"/>
+  </g>
+
+  <text x="960" y="560" text-anchor="middle" fill="#e6edf3"
+        font-family="Fira Code, monospace" font-size="34" letter-spacing="14">OSIRIS</text>
+</svg>

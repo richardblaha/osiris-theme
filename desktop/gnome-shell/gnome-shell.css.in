@@ -1,0 +1,205 @@
+/* ============================================================================
+   OSIRIS - GNOME Shell theme (template).
+   scripts/lib/common.sh :: render_gnome_shell fills the placeholders from
+   assets/tokens.json per variant and writes <theme>/gnome-shell/gnome-shell.css.
+   Placeholder tokens (each wrapped in AT signs): ACCENT, ACCENT_FG, ACCENT_SOFT,
+   SECONDARY, SECONDARY_SOFT, PANEL, SURFACE, SURFACE_HOVER, BORDER, FG, FG_DIM,
+   SUCCESS, WARNING, ERROR.
+   ========================================================================== */
+
+stage {
+  font-family: "Inter", "Cantarell", sans-serif;
+  color: @FG@;
+  font-size: 10.5pt;
+}
+
+/* ---- Top panel ------------------------------------------------------- */
+#panel {
+  background-color: @PANEL@;
+  border-bottom: 1px solid @BORDER@;
+  font-weight: 500;
+  height: 28px;
+}
+#panel .panel-button {
+  color: @FG_DIM@;
+  border-radius: 3px;
+  transition-duration: 150ms;
+}
+#panel .panel-button:hover { color: @FG@; background-color: @SURFACE_HOVER@; }
+#panel .panel-button:active,
+#panel .panel-button:overview,
+#panel .panel-button:focus,
+#panel .panel-button:checked {
+  color: @ACCENT_FG@;
+  background-color: @ACCENT@;
+}
+#panel .panel-button.clock-display:hover .clock { background-color: transparent; }
+#panel .panel-button .system-status-icon,
+#panel .panel-button .app-menu-icon > StIcon { icon-size: 16px; }
+#panel #panelActivities.panel-button:checked,
+#panel #panelActivities.panel-button:active { box-shadow: inset 0 -2px 0 @SECONDARY@; }
+
+/* ---- Popups / menus ------------------------------------------------ */
+.popup-menu {
+  color: @FG@;
+  min-width: 15em;
+}
+.popup-menu-boxpointer, #calendarArea, .quick-settings, .aggregate-menu {
+  -arrow-border-radius: 6px;
+  -arrow-background-color: @SURFACE@;
+  -arrow-border-color: @BORDER@;
+  -arrow-border-width: 1px;
+}
+.popup-menu-content, .quick-settings {
+  background-color: @SURFACE@;
+  border: 1px solid @BORDER@;
+  border-radius: 6px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  padding: 6px;
+}
+.popup-menu-item { border-radius: 3px; padding: 8px 10px; spacing: 8px; }
+.popup-menu-item:hover, .popup-menu-item:focus, .popup-menu-item.selected {
+  background-color: @ACCENT_SOFT@;
+  color: @FG@;
+}
+.popup-menu-item:active { background-color: @ACCENT@; color: @ACCENT_FG@; }
+.popup-separator-menu-item .popup-separator-menu-item-separator,
+.popup-menu-item .toggle-switch { color: @BORDER@; }
+
+/* ---- Quick Settings toggles -------------------------------------- */
+.quick-toggle {
+  background-color: @SURFACE_HOVER@;
+  color: @FG@;
+  border-radius: 999px;
+}
+.quick-toggle:checked, .quick-slider .slider { color: @ACCENT@; }
+.quick-toggle:checked { background-color: @ACCENT@; color: @ACCENT_FG@; }
+.quick-settings-system-item .icon-button { border-radius: 999px; background-color: @SURFACE_HOVER@; }
+.quick-settings-system-item .icon-button:hover { background-color: @SURFACE_HOVER@; }
+
+/* ---- Toggle switch --------------------------------------------- */
+.toggle-switch { color: @BORDER@; }
+.toggle-switch:checked { color: @ACCENT@; }
+
+/* ---- Calendar / notifications --------------------------------- */
+.calendar, .datemenu-today-button, .message-list-sections, .world-clocks-button, .events-button {
+  background-color: @SURFACE@;
+  border: 1px solid @BORDER@;
+  border-radius: 6px;
+}
+.calendar-today {
+  background-color: @ACCENT@;
+  color: @ACCENT_FG@;
+  border-color: @ACCENT@;
+}
+.calendar-day-base:hover, .calendar-day-base:focus { background-color: @SURFACE_HOVER@; }
+.calendar-day-base.calendar-day-with-events { color: @SECONDARY@; font-weight: 700; }
+.message {
+  background-color: @SURFACE@;
+  border: 1px solid @BORDER@;
+  border-left: 3px solid @ACCENT@;
+  border-radius: 3px;
+}
+.message .message-title { color: @FG@; font-weight: 600; }
+.message .message-body { color: @FG_DIM@; }
+
+/* ---- On-screen displays (volume / brightness) ---------------- */
+.osd-window {
+  background-color: @SURFACE@;
+  border: 1px solid @BORDER@;
+  border-radius: 6px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+.osd-window .level-bar { background-color: @ACCENT@; border-radius: 999px; }
+.osd-window .level { background-color: @SURFACE_HOVER@; border-radius: 999px; }
+
+/* ---- Overview: search + dash -------------------------------- */
+#overviewGroup { background-color: @PANEL@; }
+.search-entry {
+  background-color: @SURFACE_HOVER@;
+  color: @FG@;
+  border: 1px solid @BORDER@;
+  border-radius: 999px;
+  padding: 7px 12px;
+}
+.search-entry:focus { border-color: @ACCENT@; box-shadow: 0 0 0 3px @ACCENT_SOFT@; }
+.search-section-content { background-color: @SURFACE@; border-radius: 6px; }
+.search-provider-icon:selected, .list-search-result:selected, .grid-search-result:selected {
+  background-color: @ACCENT_SOFT@;
+  border-radius: 6px;
+}
+#dash {
+  background-color: @PANEL@;
+  border: 1px solid @BORDER@;
+  border-radius: 12px 0 0 12px;
+}
+#dash .dash-item-container .app-well-app:hover .overview-icon,
+#dash .dash-item-container .app-well-app:focus .overview-icon {
+  background-color: @SURFACE_HOVER@;
+  border-radius: 6px;
+}
+#dash .app-well-app-running-dot { background-color: @ACCENT@; }
+.dash-separator { background-color: @BORDER@; }
+
+/* ---- App grid ---------------------------------------------- */
+.icon-grid .overview-icon { color: @FG@; border-radius: 6px; }
+.app-folder-dialog {
+  background-color: @SURFACE@;
+  border: 1px solid @BORDER@;
+  border-radius: 6px;
+}
+.page-indicator .page-indicator-icon { background-color: @FG_DIM@; }
+.page-indicator:checked .page-indicator-icon { background-color: @ACCENT@; }
+
+/* ---- Window / app switcher (Alt-Tab) ---------------------- */
+.switcher-popup { padding: 8px; }
+.switcher-list {
+  background-color: @SURFACE@;
+  border: 1px solid @BORDER@;
+  border-radius: 6px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+.switcher-list .item-box { border-radius: 6px; padding: 8px; }
+.switcher-list .item-box:selected {
+  background-color: @ACCENT_SOFT@;
+  border: 1px solid @ACCENT@;
+}
+.switcher-arrow { border-color: @FG_DIM@; }
+.switcher-arrow:highlighted { color: @ACCENT@; border-color: @ACCENT@; }
+
+/* ---- Workspace switcher ---------------------------------- */
+.workspace-switcher .ws-switcher-box:active,
+.ws-switcher-active-up, .ws-switcher-active-down { background-color: @ACCENT@; }
+
+/* ---- Modal dialogs (run, polkit, end-session) ----------- */
+.modal-dialog {
+  background-color: @SURFACE@;
+  border: 1px solid @BORDER@;
+  border-radius: 6px;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.65);
+}
+.modal-dialog .modal-dialog-linked-button {
+  background-color: @SURFACE_HOVER@;
+  color: @FG@;
+  border: none;
+  border-radius: 3px;
+}
+.modal-dialog .modal-dialog-linked-button:hover { background-color: @SURFACE_HOVER@; }
+.modal-dialog .modal-dialog-linked-button:default {
+  background-color: @ACCENT@;
+  color: @ACCENT_FG@;
+}
+.modal-dialog .modal-dialog-linked-button:default:hover { background-image: none; }
+.run-dialog .run-dialog-entry { border-color: @ACCENT@; }
+
+/* ---- Screen shield / lock screen ----------------------- */
+#lockDialogGroup { background-color: @PANEL@; }
+.unlock-dialog .modal-dialog-button-box .modal-dialog-linked-button:default { background-color: @ACCENT@; color: @ACCENT_FG@; }
+.screen-shield-clock { color: @FG@; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6); }
+
+/* ---- Tiling / drop zones ------------------------------ */
+.tile-preview { background-color: @ACCENT_SOFT@; border: 1px solid @ACCENT@; }
+
+/* ---- Misc pills / progress --------------------------- */
+.hotplug-notification-item:focus { background-color: @ACCENT_SOFT@; }
+.progress-bar { background-color: @SECONDARY@; }

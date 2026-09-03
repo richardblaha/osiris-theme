@@ -1,0 +1,39 @@
+/* ============================================================================
+   OSIRIS — GTK 3 specific rules.
+   The build (scripts/build.sh :: build_gtk) concatenates, in order:
+       gtk-common/colors-<variant>.css
+       gtk-common/widgets.css
+       gtk-3.0/gtk3.css
+   into  <theme>/gtk-3.0/gtk.css  (and a copy as gtk-dark.css for the dark theme).
+   ========================================================================== */
+
+/* Client-side-decoration window frame + shadow (DESIGN_SYSTEM §6 shadow.window) */
+decoration {
+  border-radius: 6px 6px 0 0;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.65),
+              0 8px 24px -8px rgba(0, 0, 0, 0.5);
+}
+decoration:backdrop { box-shadow: 0 12px 40px -16px rgba(0, 0, 0, 0.5); }
+
+/* Titlebar window buttons */
+headerbar button.titlebutton {
+  background: transparent;
+  border: none;
+  color: @osiris_fg_dim;
+}
+headerbar button.titlebutton:hover { background-color: @osiris_bg_hover; color: @osiris_fg; }
+headerbar button.titlebutton.close:hover { background-color: @osiris_secondary; color: #0a0a0a; }
+
+/* Nautilus / file-manager pathbar + Adwaita-style stack switcher */
+.path-bar button { border-radius: 3px; }
+stackswitcher button:checked { box-shadow: inset 0 -2px 0 @osiris_accent; }
+
+/* GNOME "app menu" / primary menu buttons */
+button.image-button { padding: 6px; }
+
+/* Selection in text views */
+textview text selection { background-color: @osiris_accent_soft; }
+
+/* Dim the backdrop (unfocused) window subtly */
+window:backdrop { background-color: @osiris_bg_window; }
+headerbar:backdrop { color: @osiris_fg_muted; }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="97" height="97" viewBox="0 0 97 97">
+  <!-- Generic dialog / applet background: #161b22, 6px radius, 1px #30363d border. -->
+  <g>
+    <rect id="center" x="48" y="48" width="1" height="1" fill="#161b22"/>
+    <rect id="top" x="48" y="8" width="1" height="40" fill="#161b22"/>
+    <rect id="bottom" x="48" y="49" width="1" height="40" fill="#161b22"/>
+    <rect id="left" x="8" y="48" width="40" height="1" fill="#161b22"/>
+    <rect id="right" x="49" y="48" width="40" height="1" fill="#161b22"/>
+    <path id="topleft" d="M0 48 V6 A6 6 0 0 1 6 0 H48 V48 Z" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+    <path id="topright" d="M97 48 V6 A6 6 0 0 0 91 0 H49 V48 Z" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+    <path id="bottomleft" d="M0 49 V91 A6 6 0 0 0 6 97 H48 V49 Z" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+    <path id="bottomright" d="M97 49 V91 A6 6 0 0 1 91 97 H49 V49 Z" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  </g>
+  <rect id="hint-top-margin" width="1" height="8" fill="none"/>
+  <rect id="hint-bottom-margin" width="1" height="8" fill="none"/>
+  <rect id="hint-left-margin" width="8" height="1" fill="none"/>
+  <rect id="hint-right-margin" width="8" height="1" fill="none"/>
+</svg>

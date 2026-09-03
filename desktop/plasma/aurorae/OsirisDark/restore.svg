@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs><g id="glyph">
+    <rect x="6.5" y="6.5" width="8" height="8" rx="1.4" stroke-width="1.5" fill="none"/>
+    <path d="M8 6.5 V4.8 A1.3 1.3 0 0 1 9.3 3.5 H15 A1.3 1.3 0 0 1 16.3 4.8 V10.5 A1.3 1.3 0 0 1 15 11.8 H13.3" stroke-width="1.5" fill="none"/>
+  </g></defs>
+  <g id="active"><use xlink:href="#glyph" stroke="#8b949e"/></g>
+  <g id="inactive"><use xlink:href="#glyph" stroke="#565f6d"/></g>
+  <g id="hover"><rect width="20" height="20" rx="3" fill="#21262d"/><use xlink:href="#glyph" stroke="#00f2fe"/></g>
+  <g id="pressed"><rect width="20" height="20" rx="3" fill="#00f2fe22"/><use xlink:href="#glyph" stroke="#00f2fe"/></g>
+  <g id="deactivated"><use xlink:href="#glyph" stroke="#30363d"/></g>
+</svg>

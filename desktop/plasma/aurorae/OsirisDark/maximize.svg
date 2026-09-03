@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs><g id="glyph"><rect x="5" y="5" width="10" height="10" rx="1.5" stroke-width="1.6" fill="none"/></g></defs>
+  <g id="active"><use xlink:href="#glyph" stroke="#8b949e"/></g>
+  <g id="inactive"><use xlink:href="#glyph" stroke="#565f6d"/></g>
+  <g id="hover"><rect width="20" height="20" rx="3" fill="#21262d"/><use xlink:href="#glyph" stroke="#00f2fe"/></g>
+  <g id="pressed"><rect width="20" height="20" rx="3" fill="#00f2fe22"/><use xlink:href="#glyph" stroke="#00f2fe"/></g>
+  <g id="deactivated"><use xlink:href="#glyph" stroke="#30363d"/></g>
+</svg>

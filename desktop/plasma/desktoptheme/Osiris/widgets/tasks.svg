@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <!-- Task bar buttons. Active task carries the OSIRIS 2px cyan underline. -->
+  <g id="normal">
+    <rect id="center" x="10" y="10" width="80" height="80" fill="#0d111700"/>
+  </g>
+  <g id="hover">
+    <rect id="center" x="10" y="10" width="80" height="80" rx="3" fill="#21262d"/>
+  </g>
+  <g id="focus">
+    <rect id="center" x="10" y="10" width="80" height="80" rx="3" fill="#00f2fe14"/>
+    <rect x="10" y="88" width="80" height="2" fill="#00f2fe"/>
+  </g>
+  <g id="attention">
+    <rect id="center" x="10" y="10" width="80" height="80" rx="3" fill="#ff2a8514"/>
+    <rect x="10" y="88" width="80" height="2" fill="#ff2a85"/>
+  </g>
+  <g id="minimized">
+    <rect id="center" x="10" y="10" width="80" height="80" rx="3" fill="#0d111700"/>
+  </g>
+</svg>

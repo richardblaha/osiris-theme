@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+<!--
+  OSIRIS "Abstract Bloom" — GNOME dynamic (time-of-day) wallpaper.
+  Day 07:00 -> dusk transition 19:00 (2h) -> Night -> dawn transition 06:00 (1h).
+  Paths are the packaged install location. scripts/install-local.sh rewrites
+  them to ~/.local/share/backgrounds/osiris for from-source installs.
+  @RES@ is substituted per resolution by scripts/generate-wallpapers.py.
+-->
+<background>
+  <starttime>
+    <year>2026</year><month>01</month><day>01</day>
+    <hour>07</hour><minute>00</minute><second>00</second>
+  </starttime>
+
+  <!-- Day -->
+  <static>
+    <duration>43200.0</duration>
+    <file>/usr/share/backgrounds/osiris/abstract/osiris-abstract-day-@RES@.png</file>
+  </static>
+
+  <!-- Day -> Night -->
+  <transition type="overlay">
+    <duration>7200.0</duration>
+    <from>/usr/share/backgrounds/osiris/abstract/osiris-abstract-day-@RES@.png</from>
+    <to>/usr/share/backgrounds/osiris/abstract/osiris-abstract-night-@RES@.png</to>
+  </transition>
+
+  <!-- Night -->
+  <static>
+    <duration>39600.0</duration>
+    <file>/usr/share/backgrounds/osiris/abstract/osiris-abstract-night-@RES@.png</file>
+  </static>
+
+  <!-- Night -> Day -->
+  <transition type="overlay">
+    <duration>3600.0</duration>
+    <from>/usr/share/backgrounds/osiris/abstract/osiris-abstract-night-@RES@.png</from>
+    <to>/usr/share/backgrounds/osiris/abstract/osiris-abstract-day-@RES@.png</to>
+  </transition>
+</background>

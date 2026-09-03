@@ -1,0 +1,15 @@
+{
+  "KPlugin": {
+    "Authors": [
+      { "Name": "OSIRIS" }
+    ],
+    "Category": "Plasma Theme",
+    "Description": "OSIRIS dual-accent Plasma desktop theme — flat panels, cyan active-task underline, rose badges.",
+    "Id": "Osiris",
+    "License": "MIT",
+    "Name": "Osiris",
+    "Version": "0.1.0",
+    "Website": "https://richardblaha.github.io/osiris-themes/"
+  },
+  "X-Plasma-API": "5.0"
+}

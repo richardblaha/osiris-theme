@@ -1,0 +1,70 @@
+{
+  "name": "osiris-theme",
+  "displayName": "Osiris Theme",
+  "description": "Dual-accent (cyan / rose) color theme for VS Code — dark & light — from the OSIRIS design system.",
+  "version": "0.1.0",
+  "publisher": "osiris-labs",
+  "license": "MIT",
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "osiris",
+    "theme",
+    "dark",
+    "light",
+    "cyan",
+    "magenta",
+    "fira code"
+  ],
+  "galleryBanner": {
+    "color": "#0d1117",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/richardblaha/osiris-themes.git",
+    "directory": "vscode"
+  },
+  "homepage": "https://richardblaha.github.io/osiris-themes/",
+  "bugs": {
+    "url": "https://github.com/richardblaha/osiris-themes/issues"
+  },
+  "contributes": {
+    "themes": [
+      {
+        "label": "Osiris Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/osiris-dark-color-theme.json"
+      },
+      {
+        "label": "Osiris Light",
+        "uiTheme": "vs",
+        "path": "./themes/osiris-light-color-theme.json"
+      }
+    ],
+    "configurationDefaults": {
+      "[Osiris Dark]": {
+        "editor.fontFamily": "'Fira Code', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace",
+        "editor.fontLigatures": true
+      },
+      "[Osiris Light]": {
+        "editor.fontFamily": "'Fira Code', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace",
+        "editor.fontLigatures": true
+      }
+    }
+  },
+  "scripts": {
+    "lint": "bash ../scripts/check-tokens.sh",
+    "package": "vsce package --no-dependencies --out osiris-theme.vsix",
+    "publish:ovsx": "ovsx publish osiris-theme.vsix"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.2.0",
+    "ovsx": "^0.9.5"
+  }
+}

@@ -1,0 +1,63 @@
+Source: osiris-desktop-theme
+Section: x11
+Priority: optional
+Maintainer: OSIRIS <osiris@example.org>
+Build-Depends:
+ debhelper-compat (= 13),
+ make,
+ jq,
+ python3,
+ python3-pil,
+ librsvg2-bin,
+ fonts-firacode,
+ grub-common,
+Standards-Version: 4.6.2
+Homepage: https://github.com/richardblaha/osiris-themes
+Rules-Requires-Root: no
+
+Package: osiris-theme-gtk
+Architecture: all
+Depends: ${misc:Depends}
+Recommends: gnome-shell-extension-prefs
+Description: OSIRIS dual-accent GTK 3/4 + GNOME Shell theme
+ Cyan/rose colour theme for GTK 3, GTK 4 / libadwaita and GNOME Shell, matching
+ the OSIRIS design system (docs/DESIGN_SYSTEM.md). Ships the "Osiris" (dark) and
+ "Osiris-Light" theme variants plus the `osiris-gtk-theme` helper that wires up
+ the libadwaita opt-in drop-in.
+
+Package: osiris-theme-plasma
+Architecture: all
+Depends: ${misc:Depends}
+Recommends: qt5-style-kvantum, qt6-style-kvantum
+Description: OSIRIS dual-accent KDE Plasma / Qt theme
+ Plasma colour schemes (Osiris / Osiris Light), Kvantum Qt themes
+ (OsirisDark / OsirisLight), the OsirisDark Aurorae window decoration and the
+ "Osiris" Plasma desktop theme.
+
+Package: osiris-theme-grub
+Architecture: all
+Depends: ${misc:Depends}, grub-common
+Description: OSIRIS graphical GRUB2 boot theme
+ 1920x1080 boot menu in the OSIRIS visual language — Fira Code, cyan selection,
+ rose countdown bar, generated boot-menu icons. The post-install hook copies the
+ theme into /boot/grub, sets GRUB_THEME and regenerates grub.cfg.
+
+Package: osiris-wallpapers
+Architecture: all
+Depends: ${misc:Depends}
+Description: OSIRIS wallpapers (Abstract Bloom + Ancient Egypt Sci-Fi)
+ Fixed Day/Night renders at 4 resolutions plus GNOME time-of-day dynamic XML and
+ KDE Plasma light/dark wallpaper packages. Installed under
+ /usr/share/backgrounds/osiris.
+
+Package: osiris-desktop-theme
+Architecture: all
+Depends:
+ ${misc:Depends},
+ osiris-theme-gtk (= ${source:Version}),
+ osiris-theme-plasma (= ${source:Version}),
+ osiris-theme-grub (= ${source:Version}),
+ osiris-wallpapers (= ${source:Version}),
+Description: OSIRIS desktop theme (metapackage)
+ Pulls in every OSIRIS theme component: GTK/GNOME, KDE Plasma/Qt, the GRUB boot
+ theme and the wallpapers.

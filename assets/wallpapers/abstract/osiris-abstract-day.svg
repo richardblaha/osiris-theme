@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3840" height="2160" viewBox="0 0 3840 2160">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4f7fb"/>
+      <stop offset="1" stop-color="#e7edf5"/>
+    </linearGradient>
+    <radialGradient id="c1" cx="28%" cy="26%" r="44%">
+      <stop offset="0" stop-color="#0969da" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#0969da" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="c2" cx="74%" cy="72%" r="46%">
+      <stop offset="0" stop-color="#e01a76" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#e01a76" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0969da" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#e01a76" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="60"/></filter>
+  </defs>
+
+  <rect width="3840" height="2160" fill="url(#bg)"/>
+  <rect width="3840" height="2160" fill="url(#c1)"/>
+  <rect width="3840" height="2160" fill="url(#c2)"/>
+
+  <g filter="url(#blur)" opacity="0.9">
+    <path d="M-200 1500 C 700 1100 1400 1900 2300 1350 S 3600 900 4200 1250 L 4200 2400 L -200 2400 Z" fill="#0969da" opacity="0.12"/>
+    <path d="M-200 900 C 600 1250 1500 500 2400 950 S 3500 1400 4200 950 L 4200 -200 L -200 -200 Z" fill="#e01a76" opacity="0.10"/>
+  </g>
+
+  <g opacity="0.5" stroke-width="3" fill="none">
+    <path d="M-100 1180 C 800 900 1400 1500 2200 1150 S 3400 780 4000 1080" stroke="url(#ribbon)"/>
+    <path d="M-100 1320 C 700 1100 1600 1700 2400 1300 S 3500 980 4000 1240" stroke="url(#ribbon)" opacity="0.5"/>
+  </g>
+
+  <g transform="translate(1920 1040)" opacity="0.95">
+    <polygon points="0,-150 -190,140 0,225" fill="#0969da"/>
+    <polygon points="0,-150 190,140 0,225" fill="#e01a76"/>
+    <polygon points="-190,140 0,225 190,140 0,90" fill="#000000" opacity="0.18"/>
+    <line x1="0" y1="-150" x2="0" y2="225" stroke="#ffffff" stroke-width="5" opacity="0.7"/>
+  </g>
+</svg>

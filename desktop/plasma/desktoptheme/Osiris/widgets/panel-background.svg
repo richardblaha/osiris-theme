@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 65 65">
+  <!-- Plasma 9-slice panel background. Flat #0d1117 with a 1px #21262d hairline. -->
+  <rect id="center" x="32" y="32" width="1" height="1" fill="#0d1117"/>
+  <rect id="top" x="32" y="0" width="1" height="32" fill="#0d1117"/>
+  <rect id="bottom" x="32" y="33" width="1" height="32" fill="#0d1117"/>
+  <rect id="left" x="0" y="32" width="32" height="1" fill="#0d1117"/>
+  <rect id="right" x="33" y="32" width="32" height="1" fill="#0d1117"/>
+  <rect id="topleft" x="0" y="0" width="32" height="32" fill="#0d1117"/>
+  <rect id="topright" x="33" y="0" width="32" height="32" fill="#0d1117"/>
+  <rect id="bottomleft" x="0" y="33" width="32" height="32" fill="#0d1117"/>
+  <rect id="bottomright" x="33" y="33" width="32" height="32" fill="#0d1117"/>
+  <rect id="hint-left-margin" x="0" y="0" width="6" height="1" fill="none"/>
+  <rect id="hint-right-margin" x="0" y="0" width="6" height="1" fill="none"/>
+  <rect id="hint-top-margin" x="0" y="0" width="1" height="4" fill="none"/>
+  <rect id="hint-bottom-margin" x="0" y="0" width="1" height="4" fill="none"/>
+</svg>

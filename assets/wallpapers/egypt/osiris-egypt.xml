@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+<!--
+  OSIRIS "Ancient Egypt Sci-Fi" — GNOME dynamic (time-of-day) wallpaper.
+  Same timeline as the Abstract variant. @RES@ substituted per resolution.
+-->
+<background>
+  <starttime>
+    <year>2026</year><month>01</month><day>01</day>
+    <hour>07</hour><minute>00</minute><second>00</second>
+  </starttime>
+
+  <static>
+    <duration>43200.0</duration>
+    <file>/usr/share/backgrounds/osiris/egypt/osiris-egypt-day-@RES@.png</file>
+  </static>
+
+  <transition type="overlay">
+    <duration>7200.0</duration>
+    <from>/usr/share/backgrounds/osiris/egypt/osiris-egypt-day-@RES@.png</from>
+    <to>/usr/share/backgrounds/osiris/egypt/osiris-egypt-night-@RES@.png</to>
+  </transition>
+
+  <static>
+    <duration>39600.0</duration>
+    <file>/usr/share/backgrounds/osiris/egypt/osiris-egypt-night-@RES@.png</file>
+  </static>
+
+  <transition type="overlay">
+    <duration>3600.0</duration>
+    <from>/usr/share/backgrounds/osiris/egypt/osiris-egypt-night-@RES@.png</from>
+    <to>/usr/share/backgrounds/osiris/egypt/osiris-egypt-day-@RES@.png</to>
+  </transition>
+</background>

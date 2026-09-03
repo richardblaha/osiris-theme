@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OSIRIS — VS Code Theme Preview</title>
+<meta name="description" content="Interaktivní designová reference ekosystému OSIRIS — barevná paleta, typografie, komponenty a stavy pro všechna témata (VS Code, GTK, Qt, GNOME Shell, GRUB)." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="page">
+
+  <div class="page-header">
+    <div class="brand">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <polygon points="100,30 20,130 100,170" fill="#00f2fe"/>
+        <polygon points="100,30 180,130 100,170" fill="#ff2a85"/>
+        <polygon points="20,130 100,170 180,130 100,110" fill="#000000" opacity="0.35"/>
+        <line x1="100" y1="30" x2="100" y2="170" stroke="#ffffff" stroke-width="3" opacity="0.6"/>
+      </svg>
+      <div class="brand-text">
+        <h1><span class="accent">OSIRIS</span> <span class="theme-word">THEME</span></h1>
+        <p>Design System Reference &middot; Interactive Preview &middot; osiris-themes</p>
+      </div>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:12px;">
+      <button type="button" class="cmdk-trigger" data-act="cmdk-open" onclick="toggleCmdk(true)">
+        <span class="chevron">&gt;</span> Paleta příkazů <span class="kbd">Ctrl+Shift+P</span>
+      </button>
+      <div class="toggle" role="group" aria-label="Přepnout téma">
+        <button type="button" class="active" data-act="theme" data-theme-btn="dark" onclick="setTheme('dark')">
+          <span class="dot dark"></span> DARK
+        </button>
+        <button type="button" data-act="theme" data-theme-btn="light" onclick="setTheme('light')">
+          <span class="dot light"></span> LIGHT
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= IDE WINDOW ================= -->
+  <div class="ide-window">
+
+    <!-- Titlebar -->
+    <div class="titlebar">
+      <div class="titlebar-menu">
+        <svg viewBox="0 0 200 200" width="14" height="14" style="margin-right:6px;flex:none;"><polygon points="100,30 20,130 100,170" fill="#00f2fe"/><polygon points="100,30 180,130 100,170" fill="#ff2a85"/></svg>
+        <span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Run</span>
+      </div>
+      <div class="titlebar-title">osiris — Studio Code</div>
+      <div class="win-controls" aria-hidden="true">
+        <button type="button" class="wc-min" title="Minimalizovat"><span class="ico ico-min"></span></button>
+        <button type="button" class="wc-max" title="Maximalizovat"><span class="ico ico-max"></span></button>
+        <button type="button" class="wc-close" title="Zavřít"><span class="ico ico-close"></span></button>
+      </div>
+    </div>
+
+    <div class="ide-body">
+
+      <!-- Activity Bar -->
+      <div class="activitybar">
+        <div class="group">
+          <div class="act-item active" data-act="view" data-view="explorer" title="Explorer" onclick="setView(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h6l2 2h8v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>
+          </div>
+          <div class="act-item" data-act="view" data-view="search" title="Search" onclick="setView(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="20" y1="20" x2="15.2" y2="15.2"/></svg>
+          </div>
+          <div class="act-item" data-act="view" data-view="scm" title="Source Control" onclick="setView(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="6" r="2.3"/><circle cx="6" cy="18" r="2.3"/><circle cx="18" cy="9" r="2.3"/><path d="M6 8.3V15.7"/><path d="M6 8.3C6 12 9 12 12 12h4.2"/></svg>
+            <span class="badge">3</span>
+          </div>
+          <div class="act-item" data-act="view" data-view="debug" title="Run and Debug" onclick="setView(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M10 8.5l6 3.5-6 3.5z" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <div class="act-item" data-act="view" data-view="extensions" title="Extensions" onclick="setView(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 4a2 2 0 1 1 4 0v1.2h2A1.8 1.8 0 0 1 21.8 7v2a2 2 0 1 0 0 4v2a1.8 1.8 0 0 1-1.8 1.8h-2A2 2 0 1 1 14 20.8v-2H12a1.8 1.8 0 0 1-1.8-1.8v-2a2 2 0 1 0 0-4V9A1.8 1.8 0 0 1 12 7.2h2z"/></svg>
+            <span class="badge">2</span>
+          </div>
+        </div>
+        <div class="group">
+          <div class="act-item" data-act="gear" title="Settings" onclick="toggleGear(event)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.5a7.9 7.9 0 0 0 0-3l2-1.5-2-3.4-2.4 1a8 8 0 0 0-2.6-1.5L14 2h-4l-.4 2.6a8 8 0 0 0-2.6 1.5l-2.4-1-2 3.4 2 1.5a7.9 7.9 0 0 0 0 3l-2 1.5 2 3.4 2.4-1a8 8 0 0 0 2.6 1.5L10 22h4l.4-2.6a8 8 0 0 0 2.6-1.5l2.4 1 2-3.4z"/></svg>
+          </div>
+          <div class="act-item profile" title="Account">
+            <svg viewBox="0 0 24 24" width="24" height="24"><rect width="24" height="24" fill="#0d1117"/><polygon points="12,7 6,17 12,20" fill="#00f2fe"/><polygon points="12,7 18,17 12,20" fill="#ff2a85"/></svg>
+          </div>
+        </div>
+
+        <!-- Gear / Settings menu -->
+        <div class="gear-menu" id="gearMenu">
+          <button type="button" data-act="cmdk-open" onclick="toggleCmdk(true); toggleGear(event, true)"><span class="lbl">Paleta příkazů</span><span class="kb">Ctrl+Shift+P</span></button>
+          <button type="button"><span class="lbl">Nastavení</span><span class="kb">Ctrl+,</span></button>
+          <button type="button"><span class="lbl">Klávesové zkratky</span><span class="kb">Ctrl+K Ctrl+S</span></button>
+          <hr>
+          <button type="button"><span class="lbl">Motivy barev</span><span class="kb">&rsaquo;</span></button>
+          <button type="button"><span class="lbl">Konfigurace rozšíření</span><span class="kb">&rsaquo;</span></button>
+          <hr>
+          <button type="button"><span class="lbl">Zkontrolovat aktualizace</span></button>
+        </div>
+      </div>
+
+      <!-- Side Bar -->
+      <div class="sidebar">
+
+        <!-- Explorer -->
+        <div class="sidebar-view active" data-view="explorer">
+          <div class="sidebar-title">Explorer</div>
+          <div class="sidebar-scroll">
+          <div class="sidebar-section">
+            <div class="sidebar-section-head">&#9662; Open Editors</div>
+            <div class="file-row indent2">
+              <svg class="icon-ts" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+              <span class="name">main.ts</span>
+            </div>
+            <div class="file-row indent2">
+              <svg class="icon-css" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+              <span class="name">theme.css</span>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-head">&#9662; OSIRIS <span style="text-transform:none; opacity:.6;">(workspace)</span></div>
+
+            <div class="file-row folder">&#9662; <svg class="icon-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg><span class="name">assets</span></div>
+            <div class="file-row indent2"><svg viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="var(--text-secondary)" stroke="none"/><path d="M21 15l-5-5-9 9"/></svg><span class="name">osiris-logo.svg</span></div>
+
+            <div class="file-row folder">&#9662; <svg class="icon-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg><span class="name">public</span></div>
+            <div class="file-row indent2 selected"><svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg><span class="name">index.html</span></div>
+
+            <div class="file-row folder">&#9662; <svg class="icon-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg><span class="name">src</span></div>
+
+            <div class="file-row indent2 folder">&#9662; <svg class="icon-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg><span class="name">components</span></div>
+            <div class="file-row indent3"><span class="git-flag M">M</span><svg class="icon-ts" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg><span class="name">StatusBar.tsx</span></div>
+            <div class="file-row indent3"><span class="git-flag U">U</span><svg class="icon-ts" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg><span class="name">ActivityBar.tsx</span></div>
+            <div class="file-row indent3"><svg class="icon-ts" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg><span class="name">Editor.tsx</span></div>
+
+            <div class="file-row indent2 selected"><svg class="icon-ts" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg><span class="name">main.ts</span></div>
+            <div class="file-row indent2"><span class="git-flag A">A</span><svg class="icon-css" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg><span class="name">theme.css</span></div>
+
+            <div class="file-row"><span class="git-flag M">M</span><svg class="icon-json" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3a3 3 0 0 0-3 3v3a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3a3 3 0 0 0 3 3M16 3a3 3 0 0 1 3 3v3a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3a3 3 0 0 1-3 3"/></svg><span class="name">package.json</span></div>
+            <div class="file-row"><svg class="icon-json" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3a3 3 0 0 0-3 3v3a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3a3 3 0 0 0 3 3M16 3a3 3 0 0 1 3 3v3a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3a3 3 0 0 1-3 3"/></svg><span class="name">theme.json</span></div>
+            <div class="file-row"><svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg><span class="name">README.md</span></div>
+          </div>
+          </div>
+        </div>
+
+        <!-- Search -->
+        <div class="sidebar-view" data-view="search">
+          <div class="sidebar-title">Search</div>
+          <div class="search-box-wrap">
+            <div class="search-input">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="20" y1="20" x2="15.2" y2="15.2"/></svg>
+              <input type="text" value="engine.accent" readonly>
+              <div class="search-flags">
+                <span title="Rozlišovat velikost">Aa</span>
+                <span class="on" title="Celé slovo">ab</span>
+                <span title="Regulární výraz">.*</span>
+              </div>
+            </div>
+            <div class="search-input">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
+              <input type="text" value="engine.paintAccent" readonly>
+            </div>
+          </div>
+          <div class="search-summary">6 výsledků ve 3 souborech</div>
+          <div class="sidebar-scroll">
+            <div class="search-file-group">
+              <div class="search-file-head">
+                <svg class="icon-ts" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                main.ts <span class="count">3</span>
+              </div>
+              <div class="search-match"><span class="ln-no">11</span>const <span class="hl">engine.accent</span> = new ThemeEngine(…)</div>
+              <div class="search-match"><span class="ln-no">14</span><span class="hl">engine.accent</span>("primary", "#00f2fe")</div>
+              <div class="search-match"><span class="ln-no">16</span><span class="hl">engine.accent</span>("secondary", "#ff2a85")</div>
+            </div>
+            <div class="search-file-group">
+              <div class="search-file-head">
+                <svg class="icon-ts" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                Editor.tsx <span class="count">2</span>
+              </div>
+              <div class="search-match"><span class="ln-no">41</span>import { <span class="hl">engine.accent</span> } from …</div>
+              <div class="search-match"><span class="ln-no">58</span>onClick={() =&gt; <span class="hl">engine.accent</span>(scope)}</div>
+            </div>
+            <div class="search-file-group">
+              <div class="search-file-head">
+                <svg class="icon-json" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3a3 3 0 0 0-3 3v3a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3a3 3 0 0 0 3 3M16 3a3 3 0 0 1 3 3v3a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3a3 3 0 0 1-3 3"/></svg>
+                theme.json <span class="count">1</span>
+              </div>
+              <div class="search-match"><span class="ln-no">9</span>"<span class="hl">engine.accent</span>Primary": "#00f2fe"</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Source Control -->
+        <div class="sidebar-view" data-view="scm">
+          <div class="sidebar-title">Source Control <span class="hint">osiris</span></div>
+          <div class="scm-commit-box">
+            <textarea readonly>Sync duálního akcentového systému (cyan/magenta) napříč komponentami</textarea>
+            <div class="scm-commit-btn">&#10003; Commit (3)</div>
+          </div>
+          <div class="scm-sync-line">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+            <b>main</b> &middot; 2&#8593; 1&#8595; vůči origin
+          </div>
+          <div class="sidebar-scroll">
+            <div class="sidebar-section">
+              <div class="sidebar-section-head">&#9662; Staged Changes <span style="text-transform:none;opacity:.6;">(2)</span></div>
+              <div class="file-row"><span class="git-flag A">A</span><svg class="icon-css" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg><span class="name">theme.css</span></div>
+              <div class="file-row"><span class="git-flag A">A</span><svg class="icon-json" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3a3 3 0 0 0-3 3v3a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3a3 3 0 0 0 3 3M16 3a3 3 0 0 1 3 3v3a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3a3 3 0 0 1-3 3"/></svg><span class="name">theme.json</span></div>
+            </div>
+            <div class="sidebar-section">
+              <div class="sidebar-section-head">&#9662; Changes <span style="text-transform:none;opacity:.6;">(3)</span></div>
+              <div class="file-row"><span class="git-flag M">M</span><svg class="icon-ts" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg><span class="name">StatusBar.tsx</span></div>
+              <div class="file-row"><span class="git-flag U">U</span><svg class="icon-ts" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg><span class="name">ActivityBar.tsx</span></div>
+              <div class="file-row"><span class="git-flag M">M</span><svg class="icon-json" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3a3 3 0 0 0-3 3v3a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3a3 3 0 0 0 3 3M16 3a3 3 0 0 1 3 3v3a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3a3 3 0 0 1-3 3"/></svg><span class="name">package.json</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Run & Debug -->
+        <div class="sidebar-view" data-view="debug">
+          <div class="sidebar-title">Run and Debug</div>
+          <div class="debug-toolbar">
+            <button class="run" title="Continue"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l12 7-12 7z"/></svg></button>
+            <button title="Step Over"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="18" r="2.5"/><path d="M6 12V7a2 2 0 0 1 2-2h9M13 2l4 3-4 3"/></svg></button>
+            <button title="Step Into"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="18" r="2.5"/><path d="M6 12V5M3 9l3 3 3-3"/></svg></button>
+            <button title="Step Out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="18" r="2.5"/><path d="M6 12V5M3 8l3-3 3 3"/></svg></button>
+            <button title="Restart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 11a8 8 0 1 0-2.6 5.9"/><path d="M20 5v6h-6"/></svg></button>
+            <button class="stop" title="Stop"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1.5"/></svg></button>
+          </div>
+          <div class="sidebar-scroll">
+            <div class="sidebar-section">
+              <div class="sidebar-section-head">&#9662; Variables</div>
+              <div class="debug-tree-row"><span class="k">signal</span><span class="v">Signal</span></div>
+              <div class="debug-tree-row"><span class="k">signal.id</span><span class="v">"N87"</span></div>
+              <div class="debug-tree-row"><span class="k">signal.strength</span><span class="v num">0.94</span></div>
+              <div class="debug-tree-row"><span class="k">signal.verified</span><span class="v bool">true</span></div>
+              <div class="debug-tree-row"><span class="k">engine</span><span class="v">ThemeEngine</span></div>
+            </div>
+            <div class="sidebar-section">
+              <div class="sidebar-section-head">&#9662; Watch</div>
+              <div class="debug-tree-row"><span class="k">signal.strength &gt; 0.7</span><span class="v bool">true</span></div>
+            </div>
+            <div class="sidebar-section">
+              <div class="sidebar-section-head">&#9662; Call Stack</div>
+              <div class="debug-tree-row"><span class="k">renderChannel</span><span class="v">main.ts:14</span></div>
+              <div class="debug-tree-row"><span class="k">&lt;anonymous&gt;</span><span class="v">main.ts:26</span></div>
+            </div>
+            <div class="sidebar-section">
+              <div class="sidebar-section-head">&#9662; Breakpoints</div>
+              <div class="bp-row"><span class="bp-dot"></span>main.ts : 14</div>
+              <div class="bp-row"><span class="bp-dot"></span>Editor.tsx : 58</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Extensions -->
+        <div class="sidebar-view" data-view="extensions">
+          <div class="sidebar-title">Extensions</div>
+          <div class="search-box-wrap" style="padding-bottom:2px;">
+            <div class="search-input">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="20" y1="20" x2="15.2" y2="15.2"/></svg>
+              <input type="text" value="@installed osiris" readonly>
+            </div>
+          </div>
+          <div class="sidebar-scroll">
+            <div class="ext-card">
+              <div class="ext-icon" style="background:linear-gradient(135deg,#00f2fe,#ff2a85);">OS</div>
+              <div class="ext-body">
+                <div class="ext-name-row"><span class="ext-name">Osiris Theme</span></div>
+                <div class="ext-publisher">osiris-labs</div>
+                <div class="ext-desc">Duální akcentový cyan/magenta color theme s podporou Fira Code ligatur.</div>
+                <div class="ext-action"><span class="ext-installed">&#10003; Nainstalováno</span></div>
+              </div>
+            </div>
+            <div class="ext-card">
+              <div class="ext-icon" style="background:#3178c6;">TS</div>
+              <div class="ext-body">
+                <div class="ext-name-row"><span class="ext-name">TypeScript Nightly</span></div>
+                <div class="ext-publisher">Microsoft</div>
+                <div class="ext-desc">Nejnovější TypeScript jazykové služby přímo v editoru.</div>
+                <div class="ext-action"><span class="ext-installed">&#10003; Nainstalováno</span></div>
+              </div>
+            </div>
+            <div class="ext-card">
+              <div class="ext-icon" style="background:#6f42c1;">GL</div>
+              <div class="ext-body">
+                <div class="ext-name-row"><span class="ext-name">GitLens</span></div>
+                <div class="ext-publisher">GitKraken</div>
+                <div class="ext-desc">Zobrazí autora a historii u každého řádku kódu.</div>
+                <div class="ext-action"><span class="ext-btn">Install</span></div>
+              </div>
+            </div>
+            <div class="ext-card" style="border-bottom:none;">
+              <div class="ext-icon" style="background:#d29922;">FI</div>
+              <div class="ext-body">
+                <div class="ext-name-row"><span class="ext-name">Fira Code Ligatures</span></div>
+                <div class="ext-publisher">osiris-labs</div>
+                <div class="ext-desc">Doplňkové sady ligatur pro operátory a šipky.</div>
+                <div class="ext-action"><span class="ext-btn">Install</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Editor Area -->
+      <div class="editor-area">
+        <div class="tabs">
+          <div class="tab" data-act="editor-tab" data-editor="code" onclick="setEditorTab(this)">
+            <svg class="icon-css" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+            theme.css
+            <span class="close">&#10005;</span>
+          </div>
+          <div class="tab active" data-act="editor-tab" data-editor="code" onclick="setEditorTab(this)">
+            <svg class="icon-ts" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+            main.ts
+            <span class="close">&#10005;</span>
+          </div>
+          <div class="tab" data-act="editor-tab" data-editor="code" onclick="setEditorTab(this)">
+            <svg class="icon-json" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3a3 3 0 0 0-3 3v3a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3a3 3 0 0 0 3 3M16 3a3 3 0 0 1 3 3v3a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3a3 3 0 0 1-3 3"/></svg>
+            theme.json
+            <span class="dirty-dot"></span>
+          </div>
+          <div class="tab" data-act="editor-tab" data-editor="settings" onclick="setEditorTab(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.5a7.9 7.9 0 0 0 0-3l2-1.5-2-3.4-2.4 1a8 8 0 0 0-2.6-1.5L14 2h-4l-.4 2.6a8 8 0 0 0-2.6 1.5l-2.4-1-2 3.4 2 1.5a7.9 7.9 0 0 0 0 3l-2 1.5 2 3.4 2.4-1a8 8 0 0 0 2.6 1.5L10 22h4l.4-2.6a8 8 0 0 0 2.6-1.5l2.4 1 2-3.4z"/></svg>
+            Settings
+          </div>
+        </div>
+
+        <div class="editor-view active" data-editor="code">
+        <div class="breadcrumbs">
+          <span class="crumb">src</span>
+          <span class="sep">&rsaquo;</span>
+          <span class="crumb">sample</span>
+          <span class="sep">&rsaquo;</span>
+          <span class="crumb file">
+            <svg class="icon-ts" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>main.ts
+          </span>
+        </div>
+
+        <div class="code-wrap">
+          <div class="find-widget">
+            <input type="text" value="engine" readonly>
+            <span class="count">2 z 4</span>
+            <div class="divider"></div>
+            <span class="ic" title="Rozlišovat velikost">Aa</span>
+            <span class="ic" title="Celé slovo">ab</span>
+            <span class="ic" title="Regulární výraz">.*</span>
+            <div class="divider"></div>
+            <span class="ic" title="Předchozí">&#8593;</span>
+            <span class="ic" title="Další">&#8595;</span>
+            <div class="divider"></div>
+            <span class="ic" title="Zavřít">&#10005;</span>
+          </div>
+          <div class="code-scroll">
+            <div class="gutter" id="gutter"></div>
+            <div class="code" id="code-content"><span class="ln"><span class="c-comment">// OSIRIS theme — sample render loop</span></span><span class="ln"><span class="c-keyword">import</span> <span class="c-punct">{</span> <span class="c-var">ThemeEngine</span> <span class="c-punct">}</span> <span class="c-keyword">from</span> <span class="c-string">"./engine"</span><span class="c-punct">;</span></span><span class="ln"></span><span class="ln"><span class="c-keyword">interface</span> <span class="c-type">Signal</span> <span class="c-punct">{</span></span><span class="ln">  <span class="c-prop">id</span><span class="c-punct">:</span> <span class="c-type">string</span><span class="c-punct">;</span></span><span class="ln">  <span class="c-prop">strength</span><span class="c-punct">:</span> <span class="c-type">number</span><span class="c-punct">;</span></span><span class="ln">  <span class="c-prop">verified</span><span class="c-punct">:</span> <span class="c-type">boolean</span><span class="c-punct">;</span></span><span class="ln"><span class="c-punct">}</span></span><span class="ln"></span><span class="ln"><span class="c-keyword">export</span> <span class="c-keyword">function</span> <span class="c-fn">renderChannel</span><span class="c-punct">(</span><span class="c-var">signal</span><span class="c-punct">:</span> <span class="c-type">Signal</span><span class="c-punct">)</span><span class="c-punct">:</span> <span class="c-type">void</span> <span class="c-punct">{</span></span><span class="ln highlight">  <span class="c-keyword">const</span> <span class="c-var">engine</span> <span class="c-punct">=</span> <span class="c-keyword">new</span> <span class="c-fn">ThemeEngine</span><span class="c-punct">(</span><span class="c-string">"osiris-dark"</span><span class="c-punct">)</span><span class="c-punct">;</span></span><span class="ln"></span><span class="ln">  <span class="c-keyword">if</span> <span class="c-punct">(</span><span class="c-var">signal</span><span class="c-punct">.</span><span class="c-prop">verified</span> <span class="c-punct">&amp;&amp;</span> <span class="c-var">signal</span><span class="c-punct">.</span><span class="c-prop">strength</span> <span class="c-punct">&gt;</span> <span class="c-num">0.7</span><span class="c-punct">)</span> <span class="c-punct">{</span></span><span class="ln">    <span class="c-var">engine</span><span class="c-punct">.</span><span class="intellisense-anchor"><span class="intellisense-popup"><span class="is-list"><span class="is-row sel"><span class="is-tag m">M</span>accent(scope, color)</span><span class="is-row"><span class="is-tag m">M</span>paint(config)</span><span class="is-row"><span class="is-tag m">M</span>dispose()</span><span class="is-row"><span class="is-tag p">P</span>id</span><span class="is-row"><span class="is-tag p">P</span>strength</span></span><span class="is-doc"><span class="sig">(method) ThemeEngine.<span class="p1">accent</span>(<span class="p2">scope</span>: string, <span class="p2">color</span>: string): void</span>Nastaví primární nebo sekundární akcentovou barvu pro danou UI oblast.</span></span></span><span class="c-fn">accent</span><span class="c-punct">(</span><span class="c-string">"primary"</span><span class="c-punct">,</span> <span class="c-string">"#00f2fe"</span><span class="c-punct">)</span><span class="c-punct">;</span></span><span class="ln">  <span class="c-punct">}</span> <span class="c-keyword">else</span> <span class="c-punct">{</span></span><span class="ln">    <span class="c-var">engine</span><span class="c-punct">.</span><span class="c-fn">accent</span><span class="c-punct">(</span><span class="c-string">"secondary"</span><span class="c-punct">,</span> <span class="c-string">"#ff2a85"</span><span class="c-punct">)</span><span class="c-punct">;</span></span><span class="ln">  <span class="c-punct">}</span></span><span class="ln"></span><span class="ln">  <span class="c-var">engine</span><span class="c-punct">.</span><span class="c-fn">paint</span><span class="c-punct">(</span><span class="c-punct">{</span></span><span class="ln">    <span class="c-prop">id</span><span class="c-punct">:</span> <span class="c-var">signal</span><span class="c-punct">.</span><span class="c-prop">id</span><span class="c-punct">,</span></span><span class="ln">    <span class="c-prop">tabs</span><span class="c-punct">:</span> <span class="c-num">3</span><span class="c-punct">,</span></span><span class="ln">    <span class="c-prop">ligatures</span><span class="c-punct">:</span> <span class="c-keyword">true</span><span class="c-punct">,</span></span><span class="ln">  <span class="c-punct">}</span><span class="c-punct">)</span><span class="c-punct">;</span></span><span class="ln"><span class="c-punct">}</span></span><span class="ln"></span><span class="ln"><span class="c-comment">// -&gt; renderChannel({ id: "N87", strength: 0.94, verified: true });</span></span></div>
+          </div>
+          <div class="minimap" aria-hidden="true" id="minimap"></div>
+        </div>
+        </div>
+
+        <!-- Settings editor view -->
+        <div class="editor-view" data-editor="settings">
+          <div class="settings-header">
+            <div class="search-input settings-search">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="20" y1="20" x2="15.2" y2="15.2"/></svg>
+              <input type="text" placeholder="Hledat v nastavení" value="">
+            </div>
+            <div class="settings-header-actions">
+              <span class="ic" title="Otevřít settings.json">{ }</span>
+            </div>
+          </div>
+
+          <div class="settings-body">
+
+            <div class="settings-group">
+              <div class="settings-group-title">Editor: Font</div>
+
+              <div class="setting-row">
+                <div class="setting-label">Editor: Font Family <span class="modified-dot" title="Upraveno"></span></div>
+                <div class="setting-desc">Řídí rodinu písma editoru. Ovlivňuje šířku i podporu ligatur.</div>
+                <div class="setting-control">
+                  <input type="text" class="text-control" value="'Fira Code', ui-monospace, monospace">
+                </div>
+              </div>
+
+              <div class="setting-row two-col">
+                <div>
+                  <div class="setting-label">Editor: Font Size</div>
+                  <div class="setting-desc">Velikost písma v pixelech.</div>
+                  <div class="setting-control">
+                    <input type="number" class="number-control" value="14" min="8" max="32">
+                  </div>
+                </div>
+                <div>
+                  <div class="setting-label">Editor: Line Height</div>
+                  <div class="setting-desc">Výška řádku jako násobek velikosti písma.</div>
+                  <div class="setting-control range-row">
+                    <input type="range" class="range-control" min="1" max="2" step="0.1" value="1.5">
+                    <span class="range-value">1.5</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="setting-row checkbox-row">
+                <label class="chk">
+                  <input type="checkbox" checked>
+                  <span>Editor: Font Ligatures</span>
+                </label>
+                <div class="setting-desc">Povoluje typografické ligatury definované ve fontu Fira Code (např. <code>=&gt;</code>, <code>!=</code>).</div>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <div class="settings-group-title">Editor: Vzhled</div>
+
+              <div class="setting-row">
+                <div class="setting-label">Workbench: Color Theme</div>
+                <div class="setting-desc">Určuje barevné téma použité v celém rozhraní.</div>
+                <div class="setting-control">
+                  <div class="select-wrap">
+                    <select class="select-control">
+                      <option selected>Osiris Dark</option>
+                      <option>Osiris Light</option>
+                      <option>Osiris High Contrast</option>
+                      <option>Osiris Dimmed</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="setting-row">
+                <div class="setting-label">Editor: Cursor Style</div>
+                <div class="setting-desc">Řídí vzhled kurzoru v editoru.</div>
+                <div class="setting-control radio-group">
+                  <label class="rad"><input type="radio" name="cursorStyle" checked><span>Line</span></label>
+                  <label class="rad"><input type="radio" name="cursorStyle"><span>Block</span></label>
+                  <label class="rad"><input type="radio" name="cursorStyle"><span>Underline</span></label>
+                </div>
+              </div>
+
+              <div class="setting-row checkbox-row">
+                <label class="chk">
+                  <input type="checkbox" checked>
+                  <span>Editor: Minimap &ndash; Enabled</span>
+                </label>
+                <div class="setting-desc">Zobrazí zmenšený náhled kódu na pravé straně editoru.</div>
+              </div>
+
+              <div class="setting-row checkbox-row">
+                <label class="chk">
+                  <input type="checkbox">
+                  <span>Editor: Word Wrap</span>
+                </label>
+                <div class="setting-desc">Zalomí řádky přesahující šířku editoru.</div>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <div class="settings-group-title">Soubory</div>
+
+              <div class="setting-row switch-row">
+                <div>
+                  <div class="setting-label">Files: Auto Save</div>
+                  <div class="setting-desc">Automaticky ukládá změny po opuštění editoru.</div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="switch-track"><span class="switch-thumb"></span></span>
+                </label>
+              </div>
+
+              <div class="setting-row">
+                <div class="setting-label">Workbench: Custom CSS</div>
+                <div class="setting-desc">Vlastní CSS pravidla aplikovaná přes rozšíření Custom CSS and JS Loader.</div>
+                <div class="setting-control">
+                  <textarea class="textarea-control" placeholder="/* .monaco-editor { border-radius: 6px; } */"></textarea>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel -->
+    <div class="panel">
+      <div class="panel-tabs">
+        <div class="left">
+          <div class="ptab problems active">Problems <span class="count">10</span></div>
+          <div class="ptab">Output</div>
+          <div class="ptab">Terminal</div>
+          <div class="ptab">Search</div>
+        </div>
+        <div class="panel-right">
+          <span>&#9650;</span><span>&#10530;</span><span>&#10005;</span>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="problem-row">
+          <svg class="err" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+          <span><span class="file">main.ts</span> <span class="loc">[13, 25]</span> &middot; Property <span style="color:var(--editor-property)">'strength'</span> is possibly <span style="color:var(--editor-type)">undefined</span>.</span>
+        </div>
+        <div class="problem-row">
+          <svg class="warn" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 1 21h22z"/></svg>
+          <span><span class="file">theme.css</span> <span class="loc">[4, 3]</span> &middot; Unknown custom property <span style="color:var(--editor-property)">--bg-statusbr</span>, did you mean <span style="color:var(--editor-property)">--bg-statusbar</span>?</span>
+        </div>
+        <div class="problem-row">
+          <svg class="err" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+          <span><span class="file">Editor.tsx</span> <span class="loc">[41, 9]</span> &middot; Cannot find module <span style="color:var(--editor-string)">'./minimap'</span>.</span>
+        </div>
+        <div class="terminal-line" style="margin-top:10px;">
+          <span class="prompt">osiris &rsaquo;</span> npm run build <span class="ok">&#10003;</span> compiled in <span style="color:var(--editor-number)">412ms</span>
+        </div>
+        <div class="terminal-line">
+          <span class="prompt">osiris &rsaquo;</span> watching <span class="path">src/**/*.ts</span> for changes…
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="statusbar">
+      <div class="side">
+        <div class="item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="9" r="2"/><path d="M6 8v8M6 8c0 4 3 4 6 4h4.2"/></svg>
+          main
+        </div>
+        <div class="item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        </div>
+        <div class="item badge-count">&#10005; 10  &#9888; 4</div>
+      </div>
+      <div class="side">
+        <div class="item">Ln 13, Col 1</div>
+        <div class="item">Spaces: 2</div>
+        <div class="item">UTF-8</div>
+        <div class="item">LF</div>
+        <div class="item">TypeScript</div>
+        <div class="item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/><path d="M12 2v10"/></svg>
+          Osiris Dark
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification toasts -->
+    <div class="toast-stack" id="toastStack">
+      <div class="toast">
+        <svg class="t-icon" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12l2.5 2.5L16 9"/></svg>
+        <div class="t-body">
+          <div class="t-title">Osiris Theme aktivováno</div>
+          <div class="t-msg">Barevné schéma bylo úspěšně aplikováno na 214 tokenů.</div>
+        </div>
+        <span class="t-close" data-act="toast-close">&#10005;</span>
+      </div>
+      <div class="toast warn">
+        <svg class="t-icon" viewBox="0 0 24 24" fill="none" stroke="#d29922" stroke-width="2"><path d="M12 2 1 21h22z"/><line x1="12" y1="9" x2="12" y2="14"/><circle cx="12" cy="17" r="0.6" fill="#d29922"/></svg>
+        <div class="t-body">
+          <div class="t-title">1 rozšíření vyžaduje restart</div>
+          <div class="t-msg">GitLens — dokončete instalaci opětovným načtením okna.</div>
+        </div>
+        <span class="t-close" data-act="toast-close">&#10005;</span>
+      </div>
+    </div>
+
+    <!-- Command Palette -->
+    <div class="cmdk-backdrop" id="cmdkBackdrop">
+      <div class="cmdk-box">
+        <div class="cmdk-input-row">
+          <span class="chevron">&gt;</span>
+          <input type="text" value="" placeholder="Napište příkaz…" readonly>
+        </div>
+        <div class="cmdk-list">
+          <div class="cmdk-item active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/><path d="M12 2v10"/></svg>
+            Preferences: Motiv barev — Osiris Dark
+            <span class="kb">Ctrl+K Ctrl+T</span>
+          </div>
+          <div class="cmdk-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+            Soubor: Rychlé otevření main.ts
+            <span class="kb">Ctrl+P</span>
+          </div>
+          <div class="cmdk-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h6l2 2h8v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>
+            Zobrazit: Otevřít Explorer
+            <span class="kb">Ctrl+Shift+E</span>
+          </div>
+          <div class="cmdk-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 4a2 2 0 1 1 4 0v1.2h2A1.8 1.8 0 0 1 21.8 7v2a2 2 0 1 0 0 4v2a1.8 1.8 0 0 1-1.8 1.8h-2A2 2 0 1 1 14 20.8v-2H12a1.8 1.8 0 0 1-1.8-1.8v-2a2 2 0 1 0 0-4V9A1.8 1.8 0 0 1 12 7.2h2z"/></svg>
+            Rozšíření: Zobrazit nainstalovaná
+            <span class="kb">Ctrl+Shift+X</span>
+          </div>
+          <div class="cmdk-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 5l12 7-12 7z"/></svg>
+            Ladění: Spustit main.ts
+            <span class="kb">F5</span>
+          </div>
+          <div class="cmdk-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg>
+            Terminál: Nový integrovaný terminál
+            <span class="kb">Ctrl+`</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="footnote">
+    Design tokeny (<b>--accent-primary</b>, <b>--accent-secondary</b>, <b>--bg-*</b>, <b>--text-*</b>) jsou definované jako CSS proměnné v <b>:root</b> a přepisované v blocích <b>[data-theme="dark"]</b> / <b>[data-theme="light"]</b> — připravené k extrakci do <b>assets/tokens.json</b> a odtud do všech témat OSIRIS.
+  </p>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

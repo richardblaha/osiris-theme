@@ -1,0 +1,13 @@
+{
+  "$comment": "Template for the KDE Plasma wallpaper image package. generate-wallpapers.py copies this to <pkg>/metadata.json and fills contents/images/ (day) + contents/images_dark/ (night); Plasma 5.25+ switches automatically with the desktop colour scheme.",
+  "KPlugin": {
+    "Authors": [ { "Name": "OSIRIS" } ],
+    "License": "MIT",
+    "Name": "Osiris — Abstract Bloom",
+    "Id": "Osiris-Abstract",
+    "Version": "0.1.0",
+    "Website": "https://richardblaha.github.io/osiris-themes/"
+  },
+  "X-KDE-PluginInfo-Category": "Wallpaper",
+  "X-Plasma-API": "5.0"
+}

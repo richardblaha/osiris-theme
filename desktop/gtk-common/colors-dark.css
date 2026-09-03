@@ -1,0 +1,68 @@
+/* OSIRIS — GTK named colours (dark). Generated from assets/tokens.json. */
+
+@define-color osiris_accent          #00f2fe;
+@define-color osiris_accent_fg       #04151a;
+@define-color osiris_accent_soft     alpha(#00f2fe, 0.14);
+@define-color osiris_secondary       #ff2a85;
+@define-color osiris_secondary_fg    #ffffff;
+@define-color osiris_secondary_soft  alpha(#ff2a85, 0.14);
+
+@define-color osiris_bg_titlebar     #0d1117;
+@define-color osiris_bg_window       #161b22;
+@define-color osiris_bg_view         #0d1117;
+@define-color osiris_bg_card         #161b22;
+@define-color osiris_bg_hover        #21262d;
+@define-color osiris_bg_selection    #21262d;
+@define-color osiris_bg_input        #21262d;
+
+@define-color osiris_border_subtle   #21262d;
+@define-color osiris_border_strong   #30363d;
+
+@define-color osiris_fg              #e6edf3;
+@define-color osiris_fg_dim          #8b949e;
+@define-color osiris_fg_muted        #565f6d;
+
+@define-color osiris_success         #3fb950;
+@define-color osiris_warning         #d29922;
+@define-color osiris_error           #ff5555;
+
+/* libadwaita / GTK core aliases */
+@define-color accent_color            @osiris_accent;
+@define-color accent_bg_color         @osiris_accent;
+@define-color accent_fg_color         @osiris_accent_fg;
+@define-color destructive_color       @osiris_error;
+@define-color destructive_bg_color    @osiris_error;
+@define-color destructive_fg_color    #ffffff;
+@define-color success_color           @osiris_success;
+@define-color warning_color           @osiris_warning;
+@define-color error_color             @osiris_error;
+
+@define-color window_bg_color         @osiris_bg_window;
+@define-color window_fg_color         @osiris_fg;
+@define-color view_bg_color           @osiris_bg_view;
+@define-color view_fg_color           @osiris_fg;
+@define-color headerbar_bg_color      @osiris_bg_titlebar;
+@define-color headerbar_fg_color      @osiris_fg;
+@define-color headerbar_border_color  @osiris_border_subtle;
+@define-color headerbar_backdrop_color @osiris_bg_titlebar;
+@define-color headerbar_shade_color   alpha(#010409, 0.36);
+@define-color card_bg_color           @osiris_bg_card;
+@define-color card_fg_color           @osiris_fg;
+@define-color popover_bg_color        @osiris_bg_card;
+@define-color popover_fg_color        @osiris_fg;
+@define-color dialog_bg_color         @osiris_bg_card;
+@define-color dialog_fg_color         @osiris_fg;
+@define-color sidebar_bg_color        @osiris_bg_window;
+@define-color sidebar_fg_color        @osiris_fg;
+@define-color sidebar_border_color    @osiris_border_subtle;
+@define-color sidebar_backdrop_color  @osiris_bg_window;
+
+@define-color theme_bg_color          @osiris_bg_window;
+@define-color theme_fg_color          @osiris_fg;
+@define-color theme_base_color        @osiris_bg_view;
+@define-color theme_text_color        @osiris_fg;
+@define-color theme_selected_bg_color @osiris_accent;
+@define-color theme_selected_fg_color @osiris_accent_fg;
+@define-color insensitive_bg_color    @osiris_bg_window;
+@define-color insensitive_fg_color    @osiris_fg_muted;
+@define-color borders                 @osiris_border_strong;
