@@ -47,7 +47,7 @@ jobs:
           path: dist/*.vsix
           if-no-files-found: error
 
-  npm:
+  web:
     needs: tokens
     runs-on: ubuntu-latest
     steps:
@@ -57,20 +57,14 @@ jobs:
           node-version: 20
       - run: sudo apt-get update && sudo apt-get install -y jq zip
       - run: scripts/build.sh vitepress bootstrap browsers themes
+      # one artifact — uploading several in the same job intermittently 403s on finalize
       - uses: actions/upload-artifact@v4
         with:
-          name: npm
-          path: dist/*.tgz
-          if-no-files-found: error
-      - uses: actions/upload-artifact@v4
-        with:
-          name: browsers
-          path: dist/*.zip
-          if-no-files-found: error
-      - uses: actions/upload-artifact@v4
-        with:
-          name: themes
-          path: dist/osiris-gnome-theme-*.tar.gz
+          name: web
+          path: |
+            dist/*.tgz
+            dist/*.zip
+            dist/*.tar.gz
           if-no-files-found: error
 
   deb:
