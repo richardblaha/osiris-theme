@@ -11,6 +11,9 @@
 #   vitepress   -> dist/osiris-vitepress-theme-<ver>.tgz  (needs: npm)
 #   bootstrap   -> dist/osiris-bootstrap-theme-<ver>.tgz  (needs: npm)
 #   npm         vitepress + bootstrap
+#   appicons    -> assets/icons/app/     (.ico / .icns / multi-res .png / hicolor)
+#   watermarks  -> assets/watermarks/*.png  (letterpress 1x/2x rasters)
+#   brand       appicons + watermarks
 #   icons       -> build/icons/Osiris/   (XDG icon theme: index.theme + scalable/ + sizes)
 #   terminal    -> build/terminal/       (GNOME Terminal / Ptyxis / Konsole schemes)
 #   browsers    -> dist/osiris-{chromium,firefox}-{dark,light}-<ver>.zip
@@ -85,6 +88,31 @@ build_icons() {
   # a lowercase-name copy some tools expect
   [ -d "$d/Osiris" ] && ln -sfn Osiris "$d/osiris" 2>/dev/null || true
   log "  -> $d/Osiris"
+}
+
+# ---------------------------------------------------------------------------
+# Application icons (.ico / .icns / multi-res .png / freedesktop hicolor tree)
+# from the master mark. Committed under assets/icons/app/; regenerate with
+# `make appicons` after editing vscode/icon.svg.
+build_appicons() {
+  log "generating application icons"
+  have python3 || die "python3 required for the application icons"
+  python3 scripts/lib/gen_appicons.py assets/icons/app vscode/icon.svg
+  log "  -> assets/icons/app/{osiris.ico,osiris.icns,png/,hicolor/}"
+}
+
+# ---------------------------------------------------------------------------
+# Letterpress watermark rasters (1x / 2x) from assets/watermarks/*.svg —
+# empty-editor / workbench backgrounds. Committed next to the SVGs.
+build_watermarks() {
+  log "rasterising letterpress watermarks"
+  for svg in assets/watermarks/*.svg; do
+    [ -e "$svg" ] || continue
+    local base="${svg%.svg}"
+    rasterise_svg "$svg" "$base.png"     512 512
+    rasterise_svg "$svg" "$base@2x.png" 1024 1024
+    log "  -> $base{,@2x}.png"
+  done
 }
 
 # ---------------------------------------------------------------------------
@@ -296,7 +324,7 @@ build_grub() {
 
   # fonts
   mkdir -p "$g"
-  if have grub-mkfont && [ -d "$BUILD_DIR/fonts" ]; then
+  if have grub-mkfont && ensure_fira_ttf; then
     for s in 13 14 16 18; do
       grub-mkfont -s "$s" -o "$g/firacode-$s.pf2" "$BUILD_DIR/fonts/FiraCode-Regular.ttf" 2>/dev/null || true
     done
@@ -328,6 +356,10 @@ build_pages() {
   local s="$BUILD_DIR/pages"
   rm -rf "$s"; mkdir -p "$s"
   cp -r docs/preview/. "$s/"
+  # bundled Fira Code — docs/preview/styles.css @font-face resolves to here
+  mkdir -p "$s/assets/fonts/fira-code"
+  cp assets/fonts/fira-code/*.woff2 "$s/assets/fonts/fira-code/"
+  cp assets/fonts/fira-code/LICENSE "$s/assets/fonts/fira-code/"
   cp docs/DESIGN_SYSTEM.md "$s/DESIGN_SYSTEM.md"
   cp assets/tokens.json "$s/tokens.json"
   touch "$s/.nojekyll"
@@ -335,10 +367,11 @@ build_pages() {
 }
 
 # ---------------------------------------------------------------------------
-for tgt in tokens vscode vitepress bootstrap icons terminal browsers gtk gnome plasma sourceview themes grub wallpapers pages; do
+for tgt in tokens vscode vitepress bootstrap appicons watermarks icons terminal browsers gtk gnome plasma sourceview themes grub wallpapers pages; do
   case "$tgt" in
     gtk|gnome|plasma|sourceview) want "$tgt" || want desktop || continue ;;
     vitepress|bootstrap)         want "$tgt" || want npm || continue ;;
+    appicons|watermarks)         want "$tgt" || want brand || continue ;;
     *)                           want "$tgt" || continue ;;
   esac
   "build_$tgt"

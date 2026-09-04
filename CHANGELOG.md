@@ -3,7 +3,38 @@
 All notable changes to `osiris-theme` are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](https://semver.org/).
 
-## [Unreleased]
+## [0.1.1] — 2026-09-04
+
+### Added
+- **Application icons** — `assets/icons/app/`: `osiris.ico` (Windows,
+  16–256 px), `osiris.icns` (macOS, 16–512 px + @2x), `png/osiris-<n>.png`
+  (16/32/48/64/128/256/512/1024) and a freedesktop `hicolor/` tree, all
+  generated from `vscode/icon.svg` by `scripts/lib/gen_appicons.py`
+  (`make appicons`). Consumable directly by `electron-builder` / distro
+  packagers.
+- **Letterpress watermarks** — `assets/watermarks/letterpress-{dark,light}.svg`
+  (debossed OSIRIS mark for empty-editor / workbench backgrounds) with 1x/2x
+  PNG rasters (`make watermarks`).
+- **Bundled Fira Code** — `assets/fonts/fira-code/` ships the Fira Code webfont
+  (variable + 5 static weights, **SIL OFL-1.1**, `LICENSE` alongside).
+  `@font-face` wired into `docs/preview/styles.css`, `vitepress/theme/osiris.css`
+  and `bootstrap/scss/_fonts.scss` (the npm packages carry their own copy);
+  `scripts/lib/fetch-fira-code.sh` refreshes the pinned release. The GRUB build
+  now sources the Fira Code TTF from the system or upstream (`ensure_fira_ttf`)
+  instead of silently falling back to `unicode.pf2`.
+
+### Changed
+- **VS Code extension publisher** `osiris-labs` → **`osiris-ide`** — the
+  first-party publisher. The built-in identifier is now
+  `osiris-ide.osiris-theme` (`vscode/package.json`, `vscode/README.md`,
+  `docs/preview/`).
+- **VS Code default theme** — the extension now contributes
+  `workbench.colorTheme: "Osiris Dark"` (plus `preferredDark/LightColorTheme`)
+  as a real global `configurationDefaults` value, so *Osiris Dark* activates on
+  install on a fresh profile instead of relying only on the scoped
+  `[Osiris Dark]` entries.
+
+## [0.1.0] — 2026-09-04
 
 ### Added
 - **Design system**

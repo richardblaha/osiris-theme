@@ -9,6 +9,9 @@
 // path). Everything is derived from ../assets/tokens.json.
 // ============================================================================
 
+// 0. Bundled Fira Code @font-face (SIL OFL-1.1) — see scss/_fonts.scss
+@import "fonts";
+
 // 1. OSIRIS overrides win over Bootstrap's !default values
 @import "variables";
 

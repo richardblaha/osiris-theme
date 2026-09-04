@@ -9,7 +9,8 @@ DIST_DIR   := dist
 BUILD      := scripts/build.sh
 
 .DEFAULT_GOAL := help
-.PHONY: help all tokens vscode vitepress bootstrap npm icons terminal browsers \
+.PHONY: help all tokens vscode vitepress bootstrap npm appicons watermarks brand \
+        icons terminal browsers \
         gtk gnome sourceview themes plasma desktop grub wallpapers pages deb rpm \
         dist install-local clean distclean lint
 
@@ -32,6 +33,14 @@ bootstrap: ## Compile + pack osiris-bootstrap-theme (dist/*.tgz) (needs: npm)
 	@$(BUILD) bootstrap
 
 npm: vitepress bootstrap ## Both npm packages -> dist/*.tgz
+
+appicons: ## App icons .ico/.icns/.png -> assets/icons/app/ (needs: python3 + rsvg)
+	@$(BUILD) appicons
+
+watermarks: ## Letterpress watermark rasters -> assets/watermarks/*.png (needs: rsvg)
+	@$(BUILD) watermarks
+
+brand: appicons watermarks ## App icons + watermark rasters (committed brand assets)
 
 icons: ## Generate the XDG icon theme (build/icons/Osiris/) (needs: python3)
 	@$(BUILD) icons

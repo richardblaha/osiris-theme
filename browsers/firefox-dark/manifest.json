@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "OSIRIS Dark",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "OSIRIS dual-accent browser theme — cyan/rose on a GitHub-flavoured near-black ramp. Firefox.",
   "browser_specific_settings": {
     "gecko": {

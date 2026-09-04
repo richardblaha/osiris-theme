@@ -1,0 +1,21 @@
+// ============================================================================
+// OSIRIS — bundled Fira Code (SIL OFL-1.1)
+// Shipped in this package at `fonts/FiraCode-VF.woff2`. `$font-family-monospace`
+// (see `_variables.scss`) names "Fira Code" first; this makes the package
+// self-contained. If your app already loads Fira Code, this @font-face is a
+// harmless no-op (same family name) — or set `$osiris-bundle-fira: false`.
+// ============================================================================
+
+$osiris-bundle-fira: true !default;
+$osiris-fira-path: "../fonts" !default;
+
+@if $osiris-bundle-fira {
+  @font-face {
+    font-family: "Fira Code";
+    src: url("#{$osiris-fira-path}/FiraCode-VF.woff2") format("woff2-variations"),
+         url("#{$osiris-fira-path}/FiraCode-VF.woff2") format("woff2");
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+  }
+}

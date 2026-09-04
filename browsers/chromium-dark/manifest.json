@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "OSIRIS Dark",
   "short_name": "OSIRIS Dark",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "OSIRIS dual-accent browser theme — cyan/rose on a GitHub-flavoured near-black ramp. Chromium / Chrome / Edge.",
   "theme": {
     "colors": {

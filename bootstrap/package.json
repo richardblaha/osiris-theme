@@ -1,6 +1,6 @@
 {
   "name": "osiris-bootstrap-theme",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Dual-accent (cyan / rose) theme for Bootstrap 5 — dark & light color modes — from the OSIRIS design system.",
   "license": "MIT",
   "main": "dist/osiris-bootstrap.css",
@@ -17,6 +17,7 @@
   "files": [
     "scss/",
     "dist/",
+    "fonts/",
     "README.md"
   ],
   "keywords": [

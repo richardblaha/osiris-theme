@@ -47,7 +47,9 @@ tokens.json ──┬─→ vscode/themes/*.json            → osiris-theme.vsi
 osiris-theme/
 ├── assets/
 │   ├── tokens.json              # ← single source of truth
-│   ├── icons/                   # master OSIRIS mark
+│   ├── icons/                   # master OSIRIS mark + app/ (.ico/.icns/.png/hicolor)
+│   ├── fonts/fira-code/         # bundled Fira Code webfont (SIL OFL-1.1)
+│   ├── watermarks/              # letterpress marks — SVG + 1x/2x PNG
 │   └── wallpapers/
 │       ├── abstract/            # Bloom / Fluid — day.svg, night.svg, *.xml, kde-metadata.json
 │       └── egypt/               # Ancient Egypt Sci-Fi — same set
@@ -198,4 +200,7 @@ Release with all artifacts attached, `npm publish`es the two npm packages
 
 ## License
 
-MIT (see [`LICENSE`](LICENSE)). Fira Code is OFL-1.1.
+MIT (see [`LICENSE`](LICENSE)). The bundled **Fira Code** webfont
+([`assets/fonts/fira-code/`](assets/fonts/fira-code/)) is **SIL OFL-1.1** — its
+`LICENSE` sits next to the font files and in
+[`packaging/debian/debian/copyright`](packaging/debian/debian/copyright).

@@ -2,6 +2,8 @@
 *.png binary
 *.woff2 binary
 *.pf2 binary
+*.ico binary
+*.icns binary
 scripts/*.sh text eol=lf
 boot/grub/install.sh text eol=lf
 packaging/**/rules text eol=lf

@@ -2,8 +2,8 @@
   "name": "osiris-theme",
   "displayName": "Osiris Theme",
   "description": "Dual-accent (cyan / rose) color theme for VS Code — dark & light — from the OSIRIS design system.",
-  "version": "0.1.0",
-  "publisher": "osiris-labs",
+  "version": "0.1.1",
+  "publisher": "osiris-ide",
   "license": "MIT",
   "icon": "icon.png",
   "engines": {
@@ -66,6 +66,9 @@
       }
     ],
     "configurationDefaults": {
+      "workbench.colorTheme": "Osiris Dark",
+      "workbench.preferredDarkColorTheme": "Osiris Dark",
+      "workbench.preferredLightColorTheme": "Osiris Light",
       "[Osiris Dark]": {
         "editor.fontFamily": "'Fira Code', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace",
         "editor.fontLigatures": true

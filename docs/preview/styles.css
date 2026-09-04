@@ -4,6 +4,18 @@
    are the canonical source for assets/tokens.json and docs/DESIGN_SYSTEM.md.
    ========================================================================== */
 
+/* Fira Code (SIL OFL-1.1) — bundled in assets/fonts/fira-code/ and staged into
+   the Pages build by `scripts/build.sh pages`. Opening this file straight from
+   docs/preview/ (file://) falls back to a system Fira Code / ui-monospace. */
+@font-face{
+  font-family:'Fira Code';
+  src:url('assets/fonts/fira-code/FiraCode-VF.woff2') format('woff2-variations'),
+      url('assets/fonts/fira-code/FiraCode-VF.woff2') format('woff2');
+  font-weight:300 700;
+  font-style:normal;
+  font-display:swap;
+}
+
 /* ============ DESIGN TOKENS ============ */
 :root{
   --font-mono: 'Fira Code', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;

@@ -16,7 +16,18 @@
 
 /* ---------------------------------------------------------------------------
    Fonts — tokens.font
+   Fira Code ships inside this package (theme/fonts/, SIL OFL-1.1). Consumers who
+   already load Fira Code can ignore this @font-face — the family name is the same.
    --------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Fira Code";
+  src: url("./fonts/FiraCode-VF.woff2") format("woff2-variations"),
+       url("./fonts/FiraCode-VF.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --vp-font-family-base: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
     Ubuntu, sans-serif;

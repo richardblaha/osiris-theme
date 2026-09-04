@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="OSIRIS watermark">
+  <title>OSIRIS — letterpress watermark (dark)</title>
+  <!--
+    Debossed OSIRIS mark for empty-editor / workbench backgrounds on the dark
+    ramp (#0d1117 / #161b22). The mark itself is barely there; the pressed edges
+    (dark bevel above, faint highlight below) carry the shape. Rasterised 1x/2x
+    by scripts/build.sh (assets/watermarks/letterpress-dark{,@2x}.png).
+  -->
+  <defs>
+    <filter id="lp" x="-25%" y="-25%" width="150%" height="150%">
+      <feOffset in="SourceAlpha" dx="0" dy="-2.5" result="a"/>
+      <feFlood flood-color="#01040a" flood-opacity="0.75"/>
+      <feComposite in2="a" operator="in" result="bevel"/>
+      <feOffset in="SourceAlpha" dx="0" dy="2.5" result="b"/>
+      <feFlood flood-color="#ffffff" flood-opacity="0.05"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="bevel"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#lp)" transform="translate(106 106) scale(1.5)">
+    <polygon points="100,30 20,130 100,170" fill="#0d1117" fill-opacity="0.6"/>
+    <polygon points="100,30 180,130 100,170" fill="#0b0e14" fill-opacity="0.6"/>
+    <polygon points="20,130 100,170 180,130 100,110" fill="#000000" fill-opacity="0.28"/>
+    <line x1="100" y1="30" x2="100" y2="170" stroke="#ffffff" stroke-opacity="0.05" stroke-width="3"/>
+  </g>
+</svg>

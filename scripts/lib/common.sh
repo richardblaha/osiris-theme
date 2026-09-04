@@ -46,6 +46,34 @@ rasterise_svg() {
   fi
 }
 
+# Populate $BUILD_DIR/fonts/FiraCode-{Regular,Medium}.ttf for grub-mkfont.
+# Tries, in order: files already there → system fonts-firacode → the pinned
+# upstream release. Returns non-zero (build falls back to unicode.pf2) only when
+# all three fail.
+FIRA_CODE_VERSION="${FIRA_CODE_VERSION:-6.2}"
+ensure_fira_ttf() {
+  local d="$BUILD_DIR/fonts" style sys
+  mkdir -p "$d"
+  if [ ! -f "$d/FiraCode-Regular.ttf" ]; then
+    for style in Regular Medium; do
+      sys="$(fc-list 2>/dev/null | grep -oiE '/[^:]*FiraCode-'"$style"'\.ttf' | head -1 || true)"
+      [ -f "$sys" ] || sys="$(find /usr/share/fonts /usr/local/share/fonts "$HOME/.local/share/fonts" \
+              -name "FiraCode-$style.ttf" 2>/dev/null | head -1 || true)"
+      [ -f "$sys" ] && cp "$sys" "$d/FiraCode-$style.ttf" || true
+    done
+  fi
+  if [ ! -f "$d/FiraCode-Regular.ttf" ] && have curl && have unzip; then
+    local tmp; tmp="$(mktemp -d)"
+    if curl -fsSL -o "$tmp/f.zip" \
+        "https://github.com/tonsky/FiraCode/releases/download/${FIRA_CODE_VERSION}/Fira_Code_v${FIRA_CODE_VERSION}.zip" \
+        2>/dev/null && unzip -q -o "$tmp/f.zip" -d "$tmp" 2>/dev/null; then
+      cp "$tmp"/ttf/FiraCode-Regular.ttf "$tmp"/ttf/FiraCode-Medium.ttf "$d/" 2>/dev/null || true
+    fi
+    rm -rf "$tmp"
+  fi
+  [ -f "$d/FiraCode-Regular.ttf" ]
+}
+
 # Expand @TOKEN@ placeholders in the GNOME Shell template for one variant.
 render_gnome_shell() {
   local variant="$1" infile="$2" outfile="$3"

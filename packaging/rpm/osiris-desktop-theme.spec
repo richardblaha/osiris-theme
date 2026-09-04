@@ -3,7 +3,7 @@
 # version comes from `rpmbuild --define "version X"` (packaging/rpm/build-rpms.sh
 # reads it from the repo VERSION file); this default keeps a bare `rpmbuild -bb`
 # working too.
-%{!?version: %global version 0.1.0}
+%{!?version: %global version 0.1.1}
 
 Name:           osiris-desktop-theme
 Version:        %{version}
@@ -215,5 +215,11 @@ fi
 %{_datadir}/wallpapers/Osiris-Egypt
 
 %changelog
+* Fri Sep 04 2026 OSIRIS <osiris@example.org> - 0.1.1-1
+- Bundle Fira Code (SIL OFL-1.1); GRUB .pf2 build sources the TTF from the
+  system or upstream instead of falling back to unicode.pf2.
+- Add the application icon set (.ico/.icns/multi-res .png + hicolor tree) and
+  the letterpress watermark rasters.
+
 * Wed Sep 03 2026 OSIRIS <osiris@example.org> - 0.1.0-1
 - Initial packaging (gtk, plasma, icon-theme, grub, wallpapers, metapackage).

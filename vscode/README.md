@@ -28,12 +28,26 @@ The icon themes are generated from
 
 ## Install
 
-- **Marketplace / Open VSX:** search for *Osiris Theme* by `osiris-labs`.
+- **Marketplace / Open VSX:** search for *Osiris Theme* by `osiris-ide`
+  (extension id `osiris-ide.osiris-theme`).
 - **From a release:** download `osiris-theme-<version>.vsix` from
   [Releases](https://github.com/richardblaha/osiris-theme/releases) and run
   `code --install-extension osiris-theme-<version>.vsix`.
 
 Then: **Preferences: Color Theme → Osiris Dark / Osiris Light**.
+
+*Osiris Dark* is also declared as the extension's default `workbench.colorTheme`,
+so on a fresh profile it activates on install without picking it by hand.
+
+### Font
+
+The colour themes set `editor.fontFamily` to **Fira Code** with ligatures. VS Code
+cannot load a font from an extension, so install Fira Code yourself —
+`fonts-firacode` (Debian/Ubuntu), `brew install --cask font-fira-code` (macOS),
+or the [official release](https://github.com/tonsky/FiraCode/releases). The
+family falls back to `ui-monospace` / the platform monospace when it is absent.
+The repo bundles the webfont (`assets/fonts/fira-code/`, SIL OFL-1.1) for the
+docs site and the npm themes.
 
 ## Development
 

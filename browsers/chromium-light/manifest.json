@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "OSIRIS Light",
   "short_name": "OSIRIS Light",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "OSIRIS dual-accent browser theme — blue/rose on a GitHub-flavoured white ramp. Chromium / Chrome / Edge.",
   "theme": {
     "colors": {
