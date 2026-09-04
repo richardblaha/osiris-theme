@@ -1,7 +1,7 @@
 # OSIRIS theme for Bootstrap 5
 
 Dual-accent Bootstrap 5 build with the
-[OSIRIS design system](https://richardblaha.github.io/osiris-themes/) palette
+[OSIRIS design system](https://richardblaha.github.io/osiris-theme/) palette
 baked in — both color modes.
 
 - **Light** — blue `#0969da` / rose `#e01a76` on white / `#f6f8fa`.

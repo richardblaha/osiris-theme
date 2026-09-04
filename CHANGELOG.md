@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `osiris-themes` are documented here.
+All notable changes to `osiris-theme` are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](https://semver.org/).
 
 ## [Unreleased]

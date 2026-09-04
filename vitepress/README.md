@@ -1,7 +1,7 @@
 # OSIRIS theme for VitePress
 
 Dual-accent stylesheet that skins the [VitePress](https://vitepress.dev) default
-theme with the [OSIRIS design system](https://richardblaha.github.io/osiris-themes/).
+theme with the [OSIRIS design system](https://richardblaha.github.io/osiris-theme/).
 
 - **Dark** — cyan `#00f2fe` / rose `#ff2a85` on a `#0d1117 / #161b22` ramp.
 - **Light** — blue `#0969da` / rose `#e01a76` on white / `#f6f8fa`.

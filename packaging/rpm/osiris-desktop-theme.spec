@@ -10,7 +10,7 @@ Version:        %{version}
 Release:        1%{?dist}
 Summary:        OSIRIS dual-accent desktop theme (metapackage)
 License:        MIT
-URL:            https://github.com/richardblaha/osiris-themes
+URL:            https://github.com/richardblaha/osiris-theme
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 

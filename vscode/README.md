@@ -1,7 +1,7 @@
 # Osiris Theme for VS Code
 
 Dual-accent theme suite built from the
-[OSIRIS design system](https://richardblaha.github.io/osiris-themes/) — one
+[OSIRIS design system](https://richardblaha.github.io/osiris-theme/) — one
 extension, three contributions:
 
 | Contribution | Ids |
@@ -30,7 +30,7 @@ The icon themes are generated from
 
 - **Marketplace / Open VSX:** search for *Osiris Theme* by `osiris-labs`.
 - **From a release:** download `osiris-theme-<version>.vsix` from
-  [Releases](https://github.com/richardblaha/osiris-themes/releases) and run
+  [Releases](https://github.com/richardblaha/osiris-theme/releases) and run
   `code --install-extension osiris-theme-<version>.vsix`.
 
 Then: **Preferences: Color Theme → Osiris Dark / Osiris Light**.

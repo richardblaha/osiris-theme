@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: osiris-themes
-Source: https://github.com/richardblaha/osiris-themes
+Upstream-Name: osiris-theme
+Source: https://github.com/richardblaha/osiris-theme
 
 Files: *
 Copyright: 2026 OSIRIS contributors

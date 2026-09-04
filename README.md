@@ -8,7 +8,7 @@ Qt, GRUB2, VitePress, Bootstrap 5, Chromium & Firefox, and wallpapers — all
 generated from a single set of design tokens and shipped as `.vsix`, npm
 packages, browser `.zip`s, `.deb` and `.rpm`.
 
-[Live preview & design system →](https://richardblaha.github.io/osiris-themes/)
+[Live preview & design system →](https://richardblaha.github.io/osiris-theme/)
 
 </div>
 
@@ -44,7 +44,7 @@ tokens.json ──┬─→ vscode/themes/*.json            → osiris-theme.vsi
 ## Repository layout
 
 ```text
-osiris-themes/
+osiris-theme/
 ├── assets/
 │   ├── tokens.json              # ← single source of truth
 │   ├── icons/                   # master OSIRIS mark
@@ -91,7 +91,7 @@ osiris-themes/
 ### VS Code
 
 Download `osiris-theme-<ver>.vsix` from
-[Releases](https://github.com/richardblaha/osiris-themes/releases):
+[Releases](https://github.com/richardblaha/osiris-theme/releases):
 
 ```sh
 code --install-extension osiris-theme-<ver>.vsix
@@ -115,7 +115,7 @@ See [`vitepress/`](vitepress/) and [`bootstrap/`](bootstrap/) for wiring.
 ### Browsers
 
 Grab `osiris-<engine>-<variant>-<ver>.zip` from
-[Releases](https://github.com/richardblaha/osiris-themes/releases), or load the
+[Releases](https://github.com/richardblaha/osiris-theme/releases), or load the
 folder directly:
 
 - **Chromium / Chrome / Edge** — `chrome://extensions` → Developer mode → **Load
@@ -170,7 +170,7 @@ sudo dnf install ./osiris-desktop-theme-<ver>.noarch.rpm
 ### Other distros (Arch, openSUSE, NixOS, …)
 
 Download `osiris-gnome-theme-<ver>.tar.gz` from
-[Releases](https://github.com/richardblaha/osiris-themes/releases) — it bundles
+[Releases](https://github.com/richardblaha/osiris-theme/releases) — it bundles
 the GTK 3/4 + GNOME Shell + Metacity theme (`Osiris` + `Osiris-Light`) and the
 GtkSourceView schemes with an install README:
 

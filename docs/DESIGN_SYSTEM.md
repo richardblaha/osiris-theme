@@ -33,10 +33,10 @@ keyword syntax, progress).
 | Accent · secondary soft | `rgba(255,42,133,0.14)` | `rgba(224,26,118,0.10)` |
 
 > Relationship to `@osiris/branding` in the main IDE repo: that package uses the
-> pure-hue legacy pair `#00FFFF` / `#FF00FF` on `#121212`. `osiris-themes`
+> pure-hue legacy pair `#00FFFF` / `#FF00FF` on `#121212`. `osiris-theme`
 > supersedes it with the toned pair above (softer on the eyes, AA-contrast
 > verified) and the `#0d1117 / #161b22` neutral ramp. New builds should consume
-> `osiris-themes`; the legacy values remain only for backwards compatibility.
+> `osiris-theme`; the legacy values remain only for backwards compatibility.
 
 ---
 

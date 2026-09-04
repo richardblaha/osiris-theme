@@ -12,7 +12,7 @@ Build-Depends:
  fonts-firacode,
  grub-common,
 Standards-Version: 4.6.2
-Homepage: https://github.com/richardblaha/osiris-themes
+Homepage: https://github.com/richardblaha/osiris-theme
 Rules-Requires-Root: no
 
 Package: osiris-theme-gtk

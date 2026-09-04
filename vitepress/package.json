@@ -27,12 +27,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/richardblaha/osiris-themes.git",
+    "url": "https://github.com/richardblaha/osiris-theme.git",
     "directory": "vitepress"
   },
-  "homepage": "https://richardblaha.github.io/osiris-themes/",
+  "homepage": "https://richardblaha.github.io/osiris-theme/",
   "bugs": {
-    "url": "https://github.com/richardblaha/osiris-themes/issues"
+    "url": "https://github.com/richardblaha/osiris-theme/issues"
   },
   "peerDependencies": {
     "vitepress": "^1.0.0"

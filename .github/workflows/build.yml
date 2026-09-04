@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
   workflow_call:
     outputs:
@@ -123,7 +123,7 @@ jobs:
     # publish the live site only from the default branch.
     # Non-fatal: needs "Settings → Pages → Source: GitHub Actions" enabled once;
     # until then this step 404s and is allowed to.
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     needs: pages-build
     runs-on: ubuntu-latest
     continue-on-error: true

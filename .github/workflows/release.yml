@@ -95,7 +95,7 @@ jobs:
               + Metacity (dark + light) plus the GtkSourceView schemes, with an
               install README.
 
-            Live preview / design system → https://richardblaha.github.io/osiris-themes/
+            Live preview / design system → https://richardblaha.github.io/osiris-theme/
 
   publish-npm:
     needs: [build, release]

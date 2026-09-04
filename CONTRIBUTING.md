@@ -1,4 +1,4 @@
-# Contributing to osiris-themes
+# Contributing to osiris-theme
 
 ## The golden rule: one source of truth
 
@@ -70,8 +70,8 @@ make install-local # build + drop themes into ~/.local/share and switch
 ## Commits & releases
 
 - Conventional-ish commit subjects (`feat(gtk): …`, `fix(grub): …`, `docs: …`).
-- Every push to `master` and every PR runs `build.yml` (token guard + a full
-  build of every artifact); `master` also redeploys the Pages preview.
+- Every push to `main` and every PR runs `build.yml` (token guard + a full
+  build of every artifact); `main` also redeploys the Pages preview.
 
 ### Cutting a release
 
