@@ -17,6 +17,7 @@
 #   icons       -> build/icons/Osiris/   (XDG icon theme: index.theme + scalable/ + sizes)
 #   terminal    -> build/terminal/       (GNOME Terminal / Ptyxis / Konsole schemes)
 #   browsers    -> dist/osiris-{chromium,firefox}-{dark,light}-<ver>.zip
+#   forgejo     -> dist/osiris-forgejo-<ver>.zip   (Forgejo / Gitea CSS themes)
 #   gtk         -> build/themes/Osiris{,-Light}/gtk-{3.0,4.0}/ + metacity-1/
 #   gnome       -> build/themes/Osiris{,-Light}/gnome-shell/
 #   sourceview  -> build/sourceview/Osiris{,-Light}.xml  (GtkSourceView style schemes)
@@ -142,6 +143,19 @@ build_browsers() {
     done
   )
   log "  -> $DIST_DIR/osiris-{chromium,firefox}-{dark,light}-$VERSION.zip"
+}
+
+# ---------------------------------------------------------------------------
+build_forgejo() {
+  log "packaging Forgejo / Gitea themes"
+  have zip || die "'zip' required to package the Forgejo themes"
+  local d="$BUILD_DIR/forgejo"
+  rm -rf "$d"; mkdir -p "$d" "$DIST_DIR"
+  cp forgejo/theme-osiris-*.css forgejo/FiraCode-VF.woff2 forgejo/FiraCode-LICENSE \
+     forgejo/README.md "$d/"
+  rm -f "$DIST_DIR/osiris-forgejo-$VERSION.zip"
+  ( cd "$d" && zip -qr "$DIST_DIR/osiris-forgejo-$VERSION.zip" . -x '.*' )
+  log "  -> $DIST_DIR/osiris-forgejo-$VERSION.zip"
 }
 
 # ---------------------------------------------------------------------------
@@ -367,7 +381,7 @@ build_pages() {
 }
 
 # ---------------------------------------------------------------------------
-for tgt in tokens vscode vitepress bootstrap appicons watermarks icons terminal browsers gtk gnome plasma sourceview themes grub wallpapers pages; do
+for tgt in tokens vscode vitepress bootstrap appicons watermarks icons terminal browsers forgejo gtk gnome plasma sourceview themes grub wallpapers pages; do
   case "$tgt" in
     gtk|gnome|plasma|sourceview) want "$tgt" || want desktop || continue ;;
     vitepress|bootstrap)         want "$tgt" || want npm || continue ;;

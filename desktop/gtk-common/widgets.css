@@ -9,6 +9,13 @@
   -gtk-secondary-caret-color: @osiris_secondary;
 }
 
+/* One typeface — Fira Code everywhere (tokens.font). Remove this rule to defer
+   to the system UI font. */
+* {
+  font-family: "Fira Code", ui-monospace, monospace;
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+
 /* ---- Window / headerbar ------------------------------------------------- */
 window, .background { background-color: @osiris_bg_window; color: @osiris_fg; }
 

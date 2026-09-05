@@ -16,7 +16,8 @@ Workflow for a palette change:
    `docs/DESIGN_SYSTEM.md` to match.
 3. Re-derive downstream: edit the affected theme files (including
    `vitepress/theme/osiris.css`, `bootstrap/scss/_variables.scss` +
-   `bootstrap/scss/_dark.scss`, and `browsers/*/manifest.json`), or for the
+   `bootstrap/scss/_dark.scss`, `forgejo/theme-osiris-{dark,light}.css`, and
+   `browsers/*/manifest.json`), or for the
    templated ones just `make desktop icons terminal browsers`. The GtkSourceView
    schemes, the Metacity decoration and the terminal palettes are all fully
    generated from tokens — no hand-editing. (Terminal ANSI colours live in
@@ -41,6 +42,7 @@ glyph to `iconography/glyphs.json`, wire it in `iconography/map/*.json`,
 | `vscode/` | VS Code extension — colour + file + product icon themes |
 | `vitepress/` | npm `osiris-vitepress-theme` — VitePress default-theme override |
 | `bootstrap/` | npm `osiris-bootstrap-theme` — Bootstrap 5 Sass build |
+| `forgejo/` | Forgejo / Gitea CSS themes — dark / light / auto |
 | `browsers/` | Chromium (MV3) + Firefox (MV2) theme manifests |
 | `desktop/` | GTK / GNOME Shell / Metacity / GtkSourceView / KDE Plasma / terminal sources |
 | `boot/grub/` | GRUB2 theme |
@@ -57,6 +59,7 @@ make npm           # -> dist/osiris-{vitepress,bootstrap}-theme-<ver>.tgz  (need
 make icons         # -> build/icons/Osiris/            (XDG icon theme; needs: python3)
 make terminal      # -> build/terminal/                (GNOME Terminal / Ptyxis / Konsole)
 make browsers      # -> dist/osiris-{chromium,firefox}-{dark,light}-<ver>.zip  (needs: zip)
+make forgejo       # -> dist/osiris-forgejo-<ver>.zip   (Forgejo / Gitea CSS themes; needs: zip)
 make sourceview    # -> build/sourceview/Osiris{,-Light}.xml   (GNOME editor schemes)
 make themes        # -> dist/osiris-gnome-theme-<ver>.tar.gz    (GTK+Shell+Metacity bundle)
 make desktop       # -> build/themes/ (gtk + gnome-shell + metacity), sourceview, plasma

@@ -69,6 +69,15 @@
       "workbench.colorTheme": "Osiris Dark",
       "workbench.preferredDarkColorTheme": "Osiris Dark",
       "workbench.preferredLightColorTheme": "Osiris Light",
+      "editor.fontFamily": "'Fira Code', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace",
+      "editor.fontLigatures": true,
+      "editor.inlayHints.fontFamily": "'Fira Code', ui-monospace, monospace",
+      "terminal.integrated.fontFamily": "'Fira Code', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace",
+      "scm.inputFontFamily": "'Fira Code', ui-monospace, monospace",
+      "debug.console.fontFamily": "'Fira Code', ui-monospace, monospace",
+      "chat.editor.fontFamily": "'Fira Code', ui-monospace, monospace",
+      "notebook.output.fontFamily": "'Fira Code', ui-monospace, monospace",
+      "markdown.preview.fontFamily": "'Fira Code', ui-monospace, -apple-system, 'Segoe UI', sans-serif",
       "[Osiris Dark]": {
         "editor.fontFamily": "'Fira Code', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace",
         "editor.fontLigatures": true

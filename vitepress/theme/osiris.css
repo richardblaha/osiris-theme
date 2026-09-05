@@ -29,8 +29,9 @@
 }
 
 :root {
-  --vp-font-family-base: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Ubuntu, sans-serif;
+  /* One typeface — Fira Code for UI, prose and code alike (tokens.font). */
+  --vp-font-family-base: "Fira Code", ui-monospace, SFMono-Regular, Menlo,
+    Consolas, -apple-system, "Segoe UI", Ubuntu, sans-serif;
   --vp-font-family-mono: "Fira Code", ui-monospace, SFMono-Regular, Menlo,
     Consolas, monospace;
   font-feature-settings: "liga" 1, "calt" 1; /* Fira Code ligatures */

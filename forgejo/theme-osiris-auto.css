@@ -1,0 +1,9 @@
+/* ============================================================================
+   OSIRIS — Forgejo / Gitea theme (auto)
+   Follows the OS light/dark preference: the light theme is the baseline, the
+   dark theme is layered on under `prefers-color-scheme: dark`. Same pattern as
+   Forgejo's own `forgejo-auto`.
+   ========================================================================== */
+
+@import "theme-osiris-light.css";
+@import "theme-osiris-dark.css" (prefers-color-scheme: dark);

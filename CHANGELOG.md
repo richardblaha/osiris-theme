@@ -3,6 +3,31 @@
 All notable changes to `osiris-theme` are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](https://semver.org/).
 
+## [0.1.2] — 2026-09-06
+
+### Added
+- **Forgejo / Gitea** — `forgejo/theme-osiris-{dark,light,auto}.css`: dual-accent
+  CSS themes that `@import` the stock Forgejo theme and re-point the
+  OSIRIS-relevant `--color-*` design tokens (primary/secondary ramps, target
+  surfaces, status + diff colours, named label colours, the rose secondary
+  accent on `@mention`/search hits, and the signature accent rule under the top
+  nav). Bundles Fira Code (`FiraCode-VF.woff2`, SIL OFL-1.1) and points
+  `--fonts-proportional` / `--fonts-monospace` at it. Packaged as
+  `dist/osiris-forgejo-<ver>.zip` (`make forgejo`); install into
+  `$FORGEJO_CUSTOM/public/assets/css/` and list in `app.ini` `[ui] THEMES`.
+
+### Changed
+- **Typography — Fira Code is now the single OSIRIS typeface** (`tokens.font`):
+  UI chrome, body text and code all render in Fira Code, not just monospace
+  contexts. `font.ui` now leads with Fira Code (sans tail kept only as a
+  CJK/emoji fallback). Re-derived into `vitepress/theme/osiris.css`
+  (`--vp-font-family-base`), `bootstrap/scss/_variables.scss`
+  (`$font-family-sans-serif`), `desktop/gnome-shell/gnome-shell.css.in` (`stage`)
+  and `desktop/gtk-common/widgets.css` (global `font-family`). `docs/preview/`
+  was already fully monospace. Qt/Plasma has no themeable font hook — set it in
+  `kdeglobals` (documented in `docs/DESIGN_SYSTEM.md` §8). `check-tokens.sh` now
+  guards it.
+
 ## [0.1.1] — 2026-09-04
 
 ### Added

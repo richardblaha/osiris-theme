@@ -1,0 +1,223 @@
+/* ============================================================================
+   OSIRIS — Forgejo / Gitea theme (light)
+   Derived from assets/tokens.json. Maps the OSIRIS dual-accent system (blue
+   primary #0969da + rose secondary #e01a76 on white / #f6f8fa) onto Forgejo's
+   --color-* design tokens.
+
+   Rides on top of the stock Forgejo light theme — see theme-osiris-dark.css for
+   the install notes.
+   ========================================================================== */
+
+@import "theme-forgejo-light.css";
+
+/* One typeface — Fira Code for UI, prose and code alike (tokens.font).
+   Ships next to this file; copy FiraCode-VF.woff2 into the same
+   public/assets/css/ directory. SIL OFL-1.1 (see FiraCode-LICENSE). */
+@font-face {
+  font-family: "Fira Code";
+  src: url("FiraCode-VF.woff2") format("woff2-variations"),
+       url("FiraCode-VF.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+
+  /* Fira Code everywhere — proportional text follows, code stays mono. The
+     tails remain only as fallbacks for glyphs Fira Code lacks (CJK, emoji). */
+  --fonts-proportional: "Fira Code", ui-monospace, SFMono-Regular, Menlo,
+    Consolas, -apple-system, "Segoe UI", "Noto Sans", Roboto, sans-serif;
+  --fonts-monospace: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
+  font-feature-settings: "liga" 1, "calt" 1;
+
+  /* --- Primary — accent.primary.light (blue) ----------------------------- */
+  --color-primary: #0969da;
+  --color-primary-contrast: #ffffff;          /* text.inverse.light */
+  --color-primary-dark-1: #0860c9;
+  --color-primary-dark-2: #0757ba;
+  --color-primary-dark-3: #0550ae;
+  --color-primary-dark-4: #04408a;
+  --color-primary-light-1: #1f7ce0;
+  --color-primary-light-2: #3d8ee8;
+  --color-primary-light-3: #79b8ff;
+  --color-primary-light-4: #a5d0ff;
+  --color-primary-light-5: #cae1ff;
+  --color-primary-light-6: #ddeeff;
+  --color-primary-light-7: #f0f6ff;
+  --color-primary-alpha-10: #0969da19;
+  --color-primary-alpha-20: #0969da33;
+  --color-primary-alpha-30: #0969da4b;
+  --color-primary-alpha-40: #0969da66;
+  --color-primary-alpha-50: #0969da80;
+  --color-primary-alpha-60: #0969da99;
+  --color-primary-alpha-70: #0969dab3;
+  --color-primary-alpha-80: #0969dacc;
+  --color-primary-alpha-90: #0969dae1;
+  --color-primary-hover: var(--color-primary-dark-2);
+  --color-primary-active: var(--color-primary-dark-4);
+
+  /* --- Secondary — the neutral ramp (borders, chips, button surfaces) ----- */
+  --color-secondary: #d0d7de;                  /* border.strong */
+  --color-secondary-dark-1: #c2cbd3;
+  --color-secondary-dark-2: #afb8c1;
+  --color-secondary-dark-3: #9aa4ae;
+  --color-secondary-dark-4: #8c959f;
+  --color-secondary-dark-5: #6e7781;
+  --color-secondary-dark-6: #57606a;
+  --color-secondary-dark-7: #57606a;
+  --color-secondary-dark-8: #424a53;
+  --color-secondary-dark-9: #424a53;
+  --color-secondary-dark-10: #32383f;
+  --color-secondary-dark-11: #32383f;
+  --color-secondary-dark-12: #24292f;
+  --color-secondary-dark-13: #24292f;
+  --color-secondary-light-1: #eaeef2;          /* border.subtle */
+  --color-secondary-light-2: #f0f3f6;
+  --color-secondary-light-3: #f6f8fa;
+  --color-secondary-light-4: #ffffff;
+  --color-secondary-alpha-10: #d0d7de19;
+  --color-secondary-alpha-20: #d0d7de33;
+  --color-secondary-alpha-30: #d0d7de4b;
+  --color-secondary-alpha-40: #d0d7de66;
+  --color-secondary-alpha-50: #d0d7de80;
+  --color-secondary-alpha-60: #d0d7de99;
+  --color-secondary-alpha-70: #d0d7deb3;
+  --color-secondary-alpha-80: #d0d7decc;
+  --color-secondary-alpha-90: #d0d7dee1;
+  --color-secondary-hover: var(--color-secondary-dark-2);
+  --color-secondary-active: var(--color-secondary-dark-4);
+
+  /* --- Named colours (labels, markup) — state.*.light ------------------- */
+  --color-red: #cf222e;
+  --color-orange: #9a6700;
+  --color-yellow: #9a6700;
+  --color-olive: #91a313;
+  --color-green: #1a7f37;
+  --color-teal: #1b7c83;
+  --color-blue: #0969da;
+  --color-violet: #8250df;
+  --color-purple: #8250df;
+  --color-pink: #e01a76;
+  --color-brown: #a47252;
+  --color-grey: #57606a;
+  --color-black: #1f2328;
+  --color-red-light: #e5534b;
+  --color-orange-light: #bb8009;
+  --color-yellow-light: #bb8009;
+  --color-green-light: #2c974b;
+  --color-teal-light: #3192a6;
+  --color-purple-light: #a475f9;
+  --color-pink-light: #e5559e;
+  --color-grey-light: #8c959f;
+  --color-black-light: #57606a;
+
+  /* --- Status surfaces — state.*.light ---------------------------------- */
+  --color-error-border: #ffcecb;
+  --color-error-bg: #ffebe9;
+  --color-error-bg-active: #ffcecb;
+  --color-error-bg-hover: #ffd8d3;
+  --color-error-text: #82071e;
+  --color-success-border: #aceebb;
+  --color-success-bg: #dafbe1;
+  --color-success-text: #0f5323;
+  --color-warning-border: #f5d9a8;
+  --color-warning-bg: #fff8c5;
+  --color-warning-text: #7a5c00;
+  --color-info-border: #b6e3ff;
+  --color-info-bg: #ddf4ff;
+  --color-info-text: #0550ae;
+
+  /* --- Diff — GitHub-flavoured light ----------------------------------- */
+  --color-diff-removed-word-bg: #ff818266;
+  --color-diff-added-word-bg: #abf2bc;
+  --color-diff-removed-row-bg: #ffebe9;
+  --color-diff-moved-row-bg: #fff8c5;
+  --color-diff-added-row-bg: #e6ffec;
+  --color-diff-removed-row-border: #ffcecb;
+  --color-diff-moved-row-border: #f5d9a8;
+  --color-diff-added-row-border: #aceebb;
+
+  /* --- Target-based surfaces — themes.light.bg / border / text --------- */
+  --color-body: #ffffff;                        /* bg.editor */
+  --color-box-header: #f6f8fa;                  /* bg.sidebarHeader */
+  --color-box-body: #ffffff;
+  --color-box-body-highlight: #eaeef2;
+  --color-text-dark: #010409;
+  --color-text: #1f2328;                        /* text.primary */
+  --color-text-light: #57606a;                  /* text.secondary */
+  --color-text-light-1: #57606a;
+  --color-text-light-2: #6e7781;
+  --color-text-light-3: #8c959f;                /* text.muted */
+  --color-footer: #f6f8fa;
+  --color-timeline: #d0d7de;
+  --color-input-text: #1f2328;
+  --color-input-background: #ffffff;
+  --color-input-toggle-background: #ffffff;
+  --color-input-border: #d0d7de;               /* border.strong */
+  --color-input-border-hover: #8c959f;
+  --color-header-wrapper: #f6f8fa;              /* bg.sidebar */
+  --color-header-wrapper-transparent: #f6f8fa00;
+  --color-light-border: #d0d7de;
+  --color-hover: #eaeef2;                       /* bg.hover */
+  --color-active: #dde7f3;                      /* bg.selection */
+  --color-menu: #ffffff;
+  --color-card: #ffffff;
+  --fancy-card-bg: #f6f8fa;
+  --fancy-card-border: #d0d7de;
+  --color-markup-code-block: #f6f8fa;
+  --color-markup-code-inline: #eaeef2;
+  --color-button: #f6f8fa;
+  --color-code-bg: #f6f8fa;
+  --color-secondary-bg: #f6f8fa;
+  --color-expand-button: #eaeef2;
+  --color-placeholder-text: #8c959f;
+  --color-editor-line-highlight: #f6f8fa;
+  --color-nav-bg: #ffffff;                      /* titlebar — carries the accent bar below */
+  --color-nav-hover-bg: #eaeef2;
+  --color-secondary-nav-bg: #ffffff;
+  --color-label-text: #1f2328;
+  --color-label-bg: #eaeef2;
+  --color-label-hover-bg: #d0d7de;
+  --color-label-active-bg: #afb8c1;
+  --color-label-bg-alt: #d0d7de;
+  --color-selection-bg: #dde7f3;                /* bg.selection */
+  --color-selection-fg: #1f2328;
+
+  /* --- Secondary accent — rose #e01a76 -------------------------------- */
+  --color-highlight-fg: #e01a76;                /* @mention + code-search hit */
+  --color-highlight-bg: #e01a7618;             /* accent.secondarySoft.light */
+
+  accent-color: var(--color-primary);
+  --color-caret: var(--color-primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Signature touches — the solid accent bar carried over from the shells.
+   --------------------------------------------------------------------------- */
+
+/* 2px blue rule under the top navigation (the OSIRIS status-bar move) */
+#navbar,
+.full.height.navbar {
+  box-shadow: inset 0 -2px 0 0 var(--color-primary);
+}
+
+/* Rose underline on the active / hovered top-nav item */
+#navbar .item.active,
+#navbar .item:hover {
+  box-shadow: inset 0 -2px 0 0 var(--color-highlight-fg);
+}
+
+/* Accent focus ring — DESIGN_SYSTEM §6 (1px accent border + 3px soft glow) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.ui.button:focus-visible {
+  outline: 1px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px var(--color-primary-alpha-30);
+}

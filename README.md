@@ -37,6 +37,7 @@ tokens.json ──┬─→ vscode/themes/*.json            → osiris-theme.vsi
               ├─→ boot/grub/*                      → /boot/grub/themes/osiris
               ├─→ vitepress/theme/osiris.css       → npm: osiris-vitepress-theme
               ├─→ bootstrap/scss/*                 → npm: osiris-bootstrap-theme
+              ├─→ forgejo/theme-osiris-*.css       → Forgejo / Gitea (osiris-forgejo-<ver>.zip)
               ├─→ browsers/*/manifest.json         → Chromium / Chrome / Edge / Firefox
               └─→ assets/wallpapers/*              → /usr/share/backgrounds/osiris
 ```
@@ -64,6 +65,7 @@ osiris-theme/
 ├── vscode/                      # VS Code extension — colour + file + product icon themes
 ├── vitepress/                   # npm: osiris-vitepress-theme (default-theme override)
 ├── bootstrap/                   # npm: osiris-bootstrap-theme (Bootstrap 5, Sass)
+├── forgejo/                     # Forgejo / Gitea CSS themes — dark / light / auto
 ├── browsers/                    # chromium-{dark,light} + firefox-{dark,light} manifests
 ├── desktop/
 │   ├── gtk-common/              # @define-color palettes + shared widget rules
@@ -113,6 +115,27 @@ npm i    osiris-bootstrap-theme   # Bootstrap 5 build (dark + light color modes)
 ```
 
 See [`vitepress/`](vitepress/) and [`bootstrap/`](bootstrap/) for wiring.
+
+### Forgejo / Gitea
+
+Grab `osiris-forgejo-<ver>.zip` from
+[Releases](https://github.com/richardblaha/osiris-theme/releases) (or the files
+in [`forgejo/`](forgejo/)) and drop them into your instance:
+
+```sh
+install -Dm644 theme-osiris-*.css "$FORGEJO_CUSTOM/public/assets/css/"
+```
+
+Then list them in `app.ini` and restart:
+
+```ini
+[ui]
+THEMES = forgejo-auto,forgejo-light,forgejo-dark,osiris-auto,osiris-dark,osiris-light
+DEFAULT_THEME = osiris-auto
+```
+
+Users switch under **Avatar → Settings → Appearance**. See
+[`forgejo/README.md`](forgejo/README.md) for Docker and details.
 
 ### Browsers
 

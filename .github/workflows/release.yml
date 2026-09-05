@@ -85,6 +85,8 @@ jobs:
               `.tgz` and published to <https://www.npmjs.com/>.
             - Browsers: `osiris-{chromium,firefox}-{dark,light}-*.zip` — Manifest V3
               (Chromium/Chrome/Edge) and V2 (Firefox) themes.
+            - Forgejo / Gitea: `osiris-forgejo-*.zip` — `osiris-{dark,light,auto}`
+              CSS themes for `custom/public/assets/css/`.
 
             ### Linux desktop
             - Debian/Ubuntu `.deb`: `osiris-theme-gtk`, `osiris-theme-plasma`,

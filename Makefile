@@ -10,7 +10,7 @@ BUILD      := scripts/build.sh
 
 .DEFAULT_GOAL := help
 .PHONY: help all tokens vscode vitepress bootstrap npm appicons watermarks brand \
-        icons terminal browsers \
+        icons terminal browsers forgejo \
         gtk gnome sourceview themes plasma desktop grub wallpapers pages deb rpm \
         dist install-local clean distclean lint
 
@@ -18,7 +18,7 @@ help: ## Show this help
 	@grep -hE '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | \
 	  awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
 
-all: tokens vscode npm icons terminal browsers desktop grub wallpapers pages ## Build every artifact into build/
+all: tokens vscode npm icons terminal browsers forgejo desktop grub wallpapers pages ## Build every artifact into build/
 
 tokens: ## Verify palette drift (assets/tokens.json vs themes/docs)
 	@$(BUILD) tokens
@@ -50,6 +50,9 @@ terminal: ## Generate GNOME Terminal / Ptyxis / Konsole schemes (build/terminal/
 
 browsers: ## Package Chromium + Firefox themes (dist/*.zip)
 	@$(BUILD) browsers
+
+forgejo: ## Package the Forgejo / Gitea CSS themes (dist/osiris-forgejo-<ver>.zip)
+	@$(BUILD) forgejo
 
 gtk: ## Assemble GTK 3/4 + Metacity themes (build/themes/)
 	@$(BUILD) gtk
@@ -85,7 +88,7 @@ deb: desktop icons terminal grub wallpapers ## Build all .deb packages into dist
 rpm: desktop icons terminal grub wallpapers ## Build all .rpm packages into dist/
 	@packaging/rpm/build-rpms.sh
 
-dist: vscode npm browsers themes deb rpm ## Everything that ships in a GitHub Release -> dist/
+dist: vscode npm browsers forgejo themes deb rpm ## Everything that ships in a GitHub Release -> dist/
 	@ls -la $(DIST_DIR)
 
 install-local: desktop icons terminal wallpapers ## Build + install themes into $$HOME (no root)

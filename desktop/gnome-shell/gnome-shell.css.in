@@ -14,7 +14,8 @@
 
 /* ---- Global -------------------------------------------------------- */
 stage {
-  font-family: "Inter", "Cantarell", sans-serif;
+  /* One typeface — Fira Code across the whole shell (tokens.font). */
+  font-family: "Fira Code", "Cantarell", monospace, sans-serif;
   color: @FG@;
   font-size: 10.5pt;
 }

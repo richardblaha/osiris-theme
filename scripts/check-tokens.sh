@@ -40,6 +40,8 @@ PREVIEW="$ROOT/docs/preview/styles.css"
 VITEPRESS="$ROOT/vitepress/theme/osiris.css"
 BOOTSTRAP_VARS="$ROOT/bootstrap/scss/_variables.scss"
 BOOTSTRAP_DARK="$ROOT/bootstrap/scss/_dark.scss"
+FORGEJO_DARK="$ROOT/forgejo/theme-osiris-dark.css"
+FORGEJO_LIGHT="$ROOT/forgejo/theme-osiris-light.css"
 FF_DARK="$ROOT/browsers/firefox-dark/manifest.json"
 FF_LIGHT="$ROOT/browsers/firefox-light/manifest.json"
 ICON_DS="$ROOT/docs/ICONOGRAPHY.md"
@@ -93,6 +95,51 @@ for path in \
 do
   key="${path%%:*}"; want="${path##*:}"
   check "bootstrap $key" "$want" "$BOOTSTRAP_DARK"
+done
+
+# --- typography: Fira Code is the single OSIRIS face — UI, prose and code ---
+fira_ui="$(read_token '.font.ui')"
+fira_mono="$(read_token '.font.mono')"
+case "$fira_ui"   in "Fira Code, "*) ;; *) echo "  DRIFT .font.ui does not lead with 'Fira Code'"; fail=1 ;; esac
+case "$fira_mono" in "Fira Code, "*) ;; *) echo "  DRIFT .font.mono does not lead with 'Fira Code'"; fail=1 ;; esac
+for f in \
+  "$VITEPRESS" \
+  "$BOOTSTRAP_VARS" \
+  "$ROOT/docs/preview/styles.css" \
+  "$ROOT/desktop/gnome-shell/gnome-shell.css.in" \
+  "$ROOT/desktop/gtk-common/widgets.css" \
+  "$ROOT/forgejo/theme-osiris-dark.css" \
+  "$ROOT/forgejo/theme-osiris-light.css" \
+  "$ROOT/boot/grub/theme.txt" \
+  "$ROOT/vscode/package.json"
+do
+  check "font $(basename "$(dirname "$f")")/$(basename "$f")" "Fira Code" "$f"
+done
+if grep -qiE 'font-family:[^;]*\bInter\b' "$VITEPRESS" "$ROOT/desktop/gnome-shell/gnome-shell.css.in" 2>/dev/null \
+   || grep -qE '\$font-family-sans-serif:[^;]*"Inter"' "$BOOTSTRAP_VARS"; then
+  echo "  DRIFT a themeable UI font still leads with Inter — should be Fira Code"
+  fail=1
+fi
+
+# --- forgejo (one variant per file: dark / light CSS override) ---
+for path in \
+  '.accent.primary.dark:#00f2fe' \
+  '.accent.secondary.dark:#ff2a85' \
+  '.themes.dark.bg.editor:#0d1117' \
+  '.themes.dark.bg.sidebar:#161b22' \
+  '.themes.dark.text.primary:#e6edf3'
+do
+  key="${path%%:*}"; want="${path##*:}"
+  check "forgejo-dark $key" "$want" "$FORGEJO_DARK"
+done
+for path in \
+  '.accent.primary.light:#0969da' \
+  '.accent.secondary.light:#e01a76' \
+  '.themes.light.bg.editor:#ffffff' \
+  '.themes.light.text.primary:#1f2328'
+do
+  key="${path%%:*}"; want="${path##*:}"
+  check "forgejo-light $key" "$want" "$FORGEJO_LIGHT"
 done
 
 # --- light ---

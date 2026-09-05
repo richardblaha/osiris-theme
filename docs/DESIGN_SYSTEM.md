@@ -152,9 +152,15 @@ active tab top edge uses `accent.secondary`; panel tab bottom edge uses
 
 ## 8. Typography
 
-- **Monospace (code, terminal, GRUB):** Fira Code with ligatures on.
+- **One typeface — Fira Code, everywhere** (ligatures on): UI chrome, body text,
+  code and the boot menu all render in it.
   `Fira Code, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace`.
-- **UI (shell, dialogs):** `Inter, -apple-system, "Segoe UI", Ubuntu, sans-serif`.
+- The `font.ui` stack appends `-apple-system, "Segoe UI", Ubuntu, sans-serif`
+  purely as a fallback for glyphs Fira Code does not cover (CJK, etc.).
+- **Qt / Plasma** has no themeable font hook — the colour scheme and Kvantum
+  style carry no font. Set it once in `kdeglobals`:
+  `kwriteconfig6 --file kdeglobals --group General --key font "Fira Code,10,-1,5,50,0,0,0,0,0"`
+  (and the `fixed` key likewise).
 - Section header casing: `UPPERCASE`, `letter-spacing: 0.08em`, `font-weight: 600`,
   `font-size: 11px`, colour `text.secondary`.
 - Code: `13px / 21px`. UI body: `12.5–13px`. Captions: `11–11.5px`.
