@@ -50,7 +50,12 @@ Never hand-tune a hex in a theme file or add a glyph straight into a target. `ma
 
 For an icon change: add the glyph to `iconography/glyphs.json`, reference it from
 `iconography/map/*.json`, `make tokens`, then `make icons vscode`. See
-[`docs/ICONOGRAPHY.md`](docs/ICONOGRAPHY.md).
+[`docs/ICONOGRAPHY.md`](docs/ICONOGRAPHY.md). The preview page's "Aplikační ikony" /
+"Ikony souborů" tabs read [`docs/preview/icons.js`](docs/preview/icons.js) — generated
+from the glyph source + maps + `tokens.icon` by
+[`scripts/lib/gen_preview_icons.py`](scripts/lib/gen_preview_icons.py) (run by
+`make pages`; committed so the page also works from `file://`). Regenerate and commit it
+with any glyph/map/palette change.
 
 ## Build
 

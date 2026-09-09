@@ -6,6 +6,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](ht
 ## [Unreleased]
 
 ### Added
+- **Preview page icon galleries** — `docs/preview/index.html` gains "Aplikační ikony"
+  and "Ikony souborů" tabs alongside the editor mock, rendering every app / category /
+  file-type association from `iconography/map/{xdg,filetypes}.json` in the OSIRIS palette.
+  Data generated into `docs/preview/icons.js` by `scripts/lib/gen_preview_icons.py`
+  (`make pages`).
 - **Self-hosted APT repository** on GitHub Pages —
   `https://richardblaha.github.io/osiris-theme/apt/` (suite `stable`, component
   `main`). `packaging/apt/build-apt-repo.sh` (`make apt`) lays out a signed

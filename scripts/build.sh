@@ -372,6 +372,12 @@ build_pages() {
   log "staging GitHub Pages site"
   local s="$BUILD_DIR/pages"
   rm -rf "$s"; mkdir -p "$s"
+  # refresh the icon-gallery data (committed too, so file:// preview still works)
+  if have python3; then
+    python3 scripts/lib/gen_preview_icons.py
+  else
+    warn "python3 missing — docs/preview/icons.js not regenerated (using committed copy)"
+  fi
   cp -r docs/preview/. "$s/"
   # bundled Fira Code — docs/preview/styles.css @font-face resolves to here
   mkdir -p "$s/assets/fonts/fira-code"

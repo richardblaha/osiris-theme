@@ -12,6 +12,71 @@
       btn.classList.toggle('active', btn.getAttribute('data-theme-btn') === mode);
     });
     try { localStorage.setItem('osiris-preview-theme', mode); } catch (e) { /* ignore */ }
+    if (galleriesRendered) renderGalleries(); // folder icons are theme-tinted
+  }
+
+  /* ---- Main tabs: Editor / Aplikační ikony / Ikony souborů --------------- */
+  var galleriesRendered = false;
+
+  function setMainTab(name) {
+    document.querySelectorAll('.main-tab').forEach(function (t) {
+      var on = t.getAttribute('data-main-tab') === name;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('[data-main-view]').forEach(function (v) {
+      v.hidden = v.getAttribute('data-main-view') !== name;
+    });
+    if (!galleriesRendered && (name === 'app-icons' || name === 'file-icons')) {
+      renderGalleries();
+      galleriesRendered = true;
+    }
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  function iconCard(item) {
+    var color = item.color;
+    if (!color) {
+      color = document.documentElement.getAttribute('data-theme') === 'light' ? item.light : item.dark;
+    }
+    var fr = item.evenodd ? ' fill-rule="evenodd" clip-rule="evenodd"' : '';
+    return '<div class="icon-card" title="' + esc(item.glyph) + '">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + item.d + '" fill="' + color + '"' + fr + '/></svg>' +
+      '<span class="lbl">' + esc(item.label) + '</span></div>';
+  }
+
+  function iconGroup(title, items) {
+    if (!items || !items.length) return '';
+    return '<div class="icon-group"><h3>' + esc(title) + '</h3><div class="icon-grid">' +
+      items.map(iconCard).join('') + '</div></div>';
+  }
+
+  function renderGalleries() {
+    var data = window.OSIRIS_PREVIEW_ICONS;
+    var app = document.getElementById('gallery-app');
+    var file = document.getElementById('gallery-file');
+    if (!data) {
+      var msg = '<div class="empty">icons.js se nenačetl — spusťte <b>make pages</b>.</div>';
+      if (app) app.innerHTML = msg;
+      if (file) file.innerHTML = msg;
+      return;
+    }
+    if (app) {
+      app.innerHTML =
+        iconGroup('Aplikace (' + data.app.apps.length + ')', data.app.apps) +
+        iconGroup('Kategorie nabídky (' + data.app.categories.length + ')', data.app.categories);
+    }
+    if (file) {
+      file.innerHTML =
+        iconGroup('Složky', data.file.folders) +
+        iconGroup('Podle přípony (' + data.file.extensions.length + ')', data.file.extensions) +
+        iconGroup('Podle názvu (' + data.file.filenames.length + ')', data.file.filenames);
+    }
   }
 
   /* ---- Activity Bar -> Side Bar view switching --------------------------- */
@@ -86,6 +151,9 @@
     document.querySelectorAll('[data-act="editor-tab"]').forEach(function (b) {
       b.addEventListener('click', function () { setEditorTab(b); });
     });
+    document.querySelectorAll('[data-act="main-tab"]').forEach(function (b) {
+      b.addEventListener('click', function () { setMainTab(b.getAttribute('data-main-tab')); });
+    });
     document.querySelectorAll('[data-act="gear"]').forEach(function (b) {
       b.addEventListener('click', function (e) { toggleGear(e); });
     });
@@ -130,6 +198,7 @@
   window.setTheme = setTheme;
   window.setView = setView;
   window.setEditorTab = setEditorTab;
+  window.setMainTab = setMainTab;
   window.toggleGear = toggleGear;
   window.toggleCmdk = toggleCmdk;
 })();
