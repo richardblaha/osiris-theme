@@ -26,7 +26,10 @@
 #   desktop     gtk + gnome + sourceview + plasma
 #   grub        -> build/grub/osiris/  (theme.txt + pixmaps + icons + fonts)
 #   wallpapers  -> build/wallpapers/   (PNGs + GNOME XML + KDE packages)
-#   pages       -> build/pages/        (docs/ site for GitHub Pages)
+#   pages       -> build/pages/        (docs/ site for GitHub Pages;
+#               OSIRIS_APT_REPO=1 also stages the APT repo under build/pages/apt/,
+#               from OSIRIS_APT_DEB_DIR or the latest gh release, signed with
+#               APT_GPG_KEY — see packaging/apt/build-apt-repo.sh)
 #   clean       rm -rf build/ dist/
 # ============================================================================
 set -euo pipefail
@@ -377,6 +380,18 @@ build_pages() {
   cp docs/DESIGN_SYSTEM.md "$s/DESIGN_SYSTEM.md"
   cp assets/tokens.json "$s/tokens.json"
   touch "$s/.nojekyll"
+
+  # APT repository under /apt/ — only in CI (OSIRIS_APT_REPO=1). Uses the local
+  # .deb dir when given (release build), else pulls the latest release via gh.
+  if [[ "${OSIRIS_APT_REPO:-0}" == "1" ]]; then
+    if packaging/apt/build-apt-repo.sh "$s/apt" ${OSIRIS_APT_DEB_DIR:+"$OSIRIS_APT_DEB_DIR"}; then
+      log "  -> $s/apt (APT repository)"
+    else
+      warn "APT repository step failed — Pages staged without it"
+      rm -rf "$s/apt"
+    fi
+  fi
+
   log "  -> $s (entry: index.html)"
 }
 

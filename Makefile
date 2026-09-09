@@ -11,7 +11,7 @@ BUILD      := scripts/build.sh
 .DEFAULT_GOAL := help
 .PHONY: help all tokens vscode vitepress bootstrap npm appicons watermarks brand \
         icons terminal browsers forgejo \
-        gtk gnome sourceview themes plasma desktop grub wallpapers pages deb rpm \
+        gtk gnome sourceview themes plasma desktop grub wallpapers pages deb rpm apt \
         dist install-local clean distclean lint wiki-sync
 
 help: ## Show this help
@@ -90,6 +90,9 @@ deb: desktop icons terminal grub wallpapers ## Build all .deb packages into dist
 
 rpm: desktop icons terminal grub wallpapers ## Build all .rpm packages into dist/
 	@packaging/rpm/build-rpms.sh
+
+apt: deb ## Build the signed APT repo from dist/*.deb -> build/apt/ (APT_GPG_KEY to sign; see docs/APT.md)
+	@packaging/apt/build-apt-repo.sh build/apt dist
 
 dist: vscode npm browsers forgejo themes deb rpm ## Everything that ships in a GitHub Release -> dist/
 	@ls -la $(DIST_DIR)

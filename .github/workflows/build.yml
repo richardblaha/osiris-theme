@@ -113,8 +113,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: sudo apt-get update && sudo apt-get install -y jq
-      - run: scripts/build.sh pages
+      - run: sudo apt-get update && sudo apt-get install -y jq dpkg-dev
+      # On main, rebuild the APT repo from the latest release so a docs-only
+      # deploy doesn't drop /apt/. Releases refresh it from fresh artifacts.
+      - name: Import APT signing key
+        if: github.ref == 'refs/heads/main'
+        env:
+          KEY: ${{ secrets.APT_GPG_PRIVATE_KEY }}
+        run: |
+          if [ -z "${KEY:-}" ]; then
+            echo "::warning::APT_GPG_PRIVATE_KEY not set — APT repo will be unsigned"
+            exit 0
+          fi
+          GNUPGHOME="$(mktemp -d)"; chmod 700 "$GNUPGHOME"
+          echo "GNUPGHOME=$GNUPGHOME" >> "$GITHUB_ENV"
+          printf '%s\n' "$KEY" | gpg --batch --import
+          fpr=$(gpg --list-secret-keys --with-colons | awk -F: '/^fpr:/{print $10; exit}')
+          echo "APT_GPG_KEY=$fpr" >> "$GITHUB_ENV"
+      - name: Stage site (+ APT repo on main)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OSIRIS_APT_REPO: ${{ github.ref == 'refs/heads/main' && '1' || '0' }}
+        run: scripts/build.sh pages
       - uses: actions/upload-pages-artifact@v3
         with:
           path: build/pages

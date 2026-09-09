@@ -1,7 +1,7 @@
 Source: osiris-desktop-theme
 Section: x11
 Priority: optional
-Maintainer: OSIRIS <osiris@example.org>
+Maintainer: Richard Bláha <richardblaha@gmail.com>
 Build-Depends:
  debhelper-compat (= 13),
  make,

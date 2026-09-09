@@ -3,6 +3,22 @@
 All notable changes to `osiris-theme` are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- **Self-hosted APT repository** on GitHub Pages —
+  `https://richardblaha.github.io/osiris-theme/apt/` (suite `stable`, component
+  `main`). `packaging/apt/build-apt-repo.sh` (`make apt`) lays out a signed
+  `pool/` + `dists/` tree from the `.deb` set; `release.yml` deploys it beside the
+  design-system preview and `build.yml` refreshes it from the latest release on
+  every `main` push. One-line install:
+  `curl -fsSL …/apt/setup.sh | sudo sh`. The `Release` file is GPG-signed once the
+  `APT_GPG_PRIVATE_KEY` repo secret is set; setup in `docs/APT.md`.
+
+### Changed
+- Debian `Maintainer` / `debian/changelog` trailer set to
+  `Richard Bláha <richardblaha@gmail.com>` (was the `osiris@example.org` placeholder).
+
 ## [0.1.3] — 2026-09-09
 
 ### Changed

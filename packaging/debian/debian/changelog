@@ -3,7 +3,7 @@ osiris-desktop-theme (0.1.3-1) unstable; urgency=medium
   * Transition to Papirus Icon Theme (Papirus-Dark, Papirus, breeze, gnome, hicolor).
   * Unified minimal border radius (2px) across GTK 3, GTK 4, and GNOME Shell.
 
- -- OSIRIS <osiris@example.org>  Wed, 09 Sep 2026 18:00:00 +0000
+ -- Richard Bláha <richardblaha@gmail.com>  Wed, 09 Sep 2026 18:00:00 +0000
 
 osiris-desktop-theme (0.1.1-1) unstable; urgency=medium
 
@@ -15,7 +15,7 @@ osiris-desktop-theme (0.1.1-1) unstable; urgency=medium
     scripts/lib/gen_appicons.py.
   * Letterpress OSIRIS watermark marks + 1x/2x rasters (assets/watermarks/).
 
- -- OSIRIS <osiris@example.org>  Fri, 04 Sep 2026 12:00:00 +0000
+ -- Richard Bláha <richardblaha@gmail.com>  Fri, 04 Sep 2026 12:00:00 +0000
 
 osiris-desktop-theme (0.1.0-1) unstable; urgency=medium
 
@@ -26,4 +26,4 @@ osiris-desktop-theme (0.1.0-1) unstable; urgency=medium
     - osiris-wallpapers: Abstract Bloom + Ancient Egypt Sci-Fi, static + dynamic
     - osiris-desktop-theme: metapackage
 
- -- OSIRIS <osiris@example.org>  Wed, 03 Sep 2026 12:00:00 +0000
+ -- Richard Bláha <richardblaha@gmail.com>  Wed, 03 Sep 2026 12:00:00 +0000

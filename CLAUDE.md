@@ -95,6 +95,14 @@ To cut a release: bump `VERSION`, move `CHANGELOG.md` `[Unreleased]` items under
 `VERSION` or `release.yml` fails fast; `-` in the tag ⇒ pre-release). `.github/workflows/build.yml`
 runs the token guard + a full build on every push to `main` and every PR.
 
+`release.yml` also publishes a **self-hosted APT repository** on GitHub Pages at
+`https://richardblaha.github.io/osiris-theme/apt/` (`packaging/apt/build-apt-repo.sh`,
+staged into `build/pages/apt/` by `scripts/build.sh pages` when `OSIRIS_APT_REPO=1`;
+`make apt` builds it locally from `dist/*.deb`). The `Release` file is GPG-signed with
+the `APT_GPG_PRIVATE_KEY` repo secret — until that is set the repo is unsigned and needs
+`[trusted=yes]`. `build.yml` rebuilds the same repo from the latest GitHub Release on every
+`main` push so a docs-only deploy never drops `/apt/`. See [`docs/APT.md`](docs/APT.md).
+
 ## Conventions
 
 - Conventional-ish commit subjects: `feat(gtk): …`, `fix(grub): …`, `docs: …`.
