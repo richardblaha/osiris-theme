@@ -39,15 +39,11 @@ Description: OSIRIS dual-accent KDE Plasma / Qt theme
 Package: osiris-icon-theme
 Architecture: all
 Depends: ${misc:Depends}, hicolor-icon-theme
-Recommends: adwaita-icon-theme
-Description: OSIRIS dual-accent icon theme (Material Symbols)
- Freedesktop icon theme in the Material Symbols visual language — cyan/rose on a
 Recommends: papirus-icon-theme, adwaita-icon-theme
 Description: OSIRIS dual-accent icon theme (Papirus)
  Freedesktop icon theme in the Papirus visual language — cyan/rose on a
  GitHub-flavoured ramp. Covers actions, apps, categories, devices, emblems,
  mimetypes, places and status, with GNOME↔KDE compatibility symlinks. Inherits
- Adwaita / Breeze / hicolor for anything unstyled. Installed as
  Papirus / Breeze / hicolor for anything unstyled. Installed as
  /usr/share/icons/Osiris.
 
