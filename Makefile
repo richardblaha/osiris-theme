@@ -12,7 +12,7 @@ BUILD      := scripts/build.sh
 .PHONY: help all tokens vscode vitepress bootstrap npm appicons watermarks brand \
         icons terminal browsers forgejo \
         gtk gnome sourceview themes plasma desktop grub wallpapers pages deb rpm \
-        dist install-local clean distclean lint
+        dist install-local clean distclean lint wiki-sync
 
 help: ## Show this help
 	@grep -hE '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | \
@@ -81,6 +81,9 @@ pages: ## Stage the docs/preview site for GitHub Pages (build/pages/)
 	@$(BUILD) pages
 
 lint: tokens ## Alias for `make tokens`
+
+wiki-sync: ## Sync wiki/ directory to GitHub Wiki repository (scripts/sync-wiki.sh)
+	@scripts/sync-wiki.sh
 
 deb: desktop icons terminal grub wallpapers ## Build all .deb packages into dist/
 	@packaging/debian/build-debs.sh

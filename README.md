@@ -3,12 +3,12 @@
 # OSIRIS Themes
 
 **One repository for the entire OSIRIS visual identity** — VS Code (color, file
-and product icons), a Material-Symbols icon theme, GTK, GNOME Shell, KDE Plasma /
+and product icons), a Papirus-based icon theme, GTK, GNOME Shell, KDE Plasma /
 Qt, GRUB2, VitePress, Bootstrap 5, Chromium & Firefox, and wallpapers — all
 generated from a single set of design tokens and shipped as `.vsix`, npm
 packages, browser `.zip`s, `.deb` and `.rpm`.
 
-[Live preview & design system →](https://richardblaha.github.io/osiris-theme/)
+[Live preview & design system →](https://richardblaha.github.io/osiris-theme/) &middot; [Project Wiki & Graphic Design Manual →](wiki/Home.md)
 
 </div>
 
@@ -58,9 +58,11 @@ osiris-theme/
 │   ├── preview/                 # interactive reference → GitHub Pages
 │   │   ├── index.html  styles.css  app.js
 │   ├── DESIGN_SYSTEM.md         # written spec (ramp, syntax, states, components)
-│   └── ICONOGRAPHY.md           # icon spec (Material Symbols grid, colour, XDG layout)
+│   └── ICONOGRAPHY.md           # icon spec (Papirus grid, colour, XDG layout)
+├── wiki/                        # Project Wiki & Graphic Design Manual (GitHub Wiki format)
+│   ├── Home.md  _Sidebar.md  Manual-grafickeho-designu.md  images/ ...
 ├── iconography/                 # icon single-source
-│   ├── glyphs.json              # ~145 Material-Symbols path primitives
+│   ├── glyphs.json              # ~145 Papirus-based path primitives
 │   └── map/                     # filetypes.json · xdg.json · producticons.json
 ├── vscode/                      # VS Code extension — colour + file + product icon themes
 ├── vitepress/                   # npm: osiris-vitepress-theme (default-theme override)
@@ -178,7 +180,7 @@ sudo apt install ./osiris-icon-theme_<ver>_all.deb ./osiris-theme-gtk_<ver>_all.
   a GNOME Terminal profile installer (`/usr/share/osiris/gnome-terminal/install.sh`).
   Apply the theme with `osiris-gtk-theme --apply` (or GNOME Tweaks → Appearance);
   pick the editor scheme in the app's preferences.
-- `osiris-icon-theme` — Material-Symbols icon set. Select **Osiris** in GNOME
+- `osiris-icon-theme` — Papirus-based icon set. Select **Osiris** in GNOME
   Tweaks → Appearance → Icons, or System Settings → Icons on KDE.
 - `osiris-theme-plasma` — set **System Settings → Colors → Osiris**, decoration
   **Osiris Dark**, the Kvantum style (full Qt coverage) and the **Osiris

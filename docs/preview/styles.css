@@ -23,8 +23,8 @@
   --accent-primary-soft: rgba(0,242,254,0.14);
   --accent-secondary: #ff2a85;
   --accent-secondary-soft: rgba(255,42,133,0.14);
-  --radius-sm: 3px;
-  --radius-md: 6px;
+  --radius-sm: 2px;
+  --radius-md: 2px;
   --shadow-window: 0 30px 80px -20px rgba(0,0,0,0.65), 0 8px 24px -8px rgba(0,0,0,0.5);
 }
 

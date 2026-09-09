@@ -9,7 +9,7 @@
 
 /* Client-side-decoration window frame + shadow (DESIGN_SYSTEM §6 shadow.window) */
 decoration {
-  border-radius: 6px 6px 0 0;
+  border-radius: 2px 2px 0 0;
   box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.65),
               0 8px 24px -8px rgba(0, 0, 0, 0.5);
 }
@@ -25,7 +25,7 @@ headerbar button.titlebutton:hover { background-color: @osiris_bg_hover; color: 
 headerbar button.titlebutton.close:hover { background-color: @osiris_secondary; color: #0a0a0a; }
 
 /* Nautilus / file-manager pathbar + Adwaita-style stack switcher */
-.path-bar button { border-radius: 3px; }
+.path-bar button { border-radius: 2px; }
 stackswitcher button:checked { box-shadow: inset 0 -2px 0 @osiris_accent; }
 
 /* GNOME "app menu" / primary menu buttons */

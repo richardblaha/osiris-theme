@@ -242,7 +242,7 @@ def gen_xdg(out: str) -> None:
     lines = [
         "[Icon Theme]",
         f"Name={xdg['displayName']}",
-        "Comment=OSIRIS dual-accent icon theme — Material Symbols language, cyan/rose on a GitHub-flavoured ramp",
+        "Comment=OSIRIS dual-accent icon theme — Papirus language, cyan/rose on a GitHub-flavoured ramp",
         f"Inherits={','.join(xdg['inherits'])}",
         "Example=folder-open",
         "FollowsColorScheme=false",

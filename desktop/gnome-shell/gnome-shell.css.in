@@ -31,7 +31,7 @@ stage {
   selection-background-color: @ACCENT@;
   selected-color: @ACCENT_FG@;
   border: 1px solid @BORDER@;
-  border-radius: 6px;
+  border-radius: 2px;
   padding: 7px 10px;
 }
 .entry:focus, StEntry:focus {
@@ -43,7 +43,7 @@ StEntry StLabel.hint-text { color: @FG_MUTED@; }
 .entry StIcon { color: @FG_DIM@; }
 
 /* sliders (quick settings, OSD, a11y) */
-.slider { color: @ACCENT@; -barlevel-height: 4px; -slider-handle-radius: 8px; }
+.slider { color: @ACCENT@; -barlevel-height: 4px; -slider-handle-radius: 2px; }
 .slider:hover { color: @ACCENT@; }
 
 /* check boxes / radio */
@@ -59,7 +59,7 @@ StScrollBar { padding: 0; }
 StScrollView StScrollBar { min-width: 8px; min-height: 8px; }
 StScrollBar StButton#vhandle, StScrollBar StButton#hhandle {
   background-color: @BORDER@;
-  border-radius: 999px;
+  border-radius: 2px;
   border: 3px solid transparent;
   background-clip: padding-box;
 }
@@ -70,7 +70,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
   background-color: @SURFACE@;
   color: @FG@;
   border: 1px solid @BORDER@;
-  border-radius: 6px;
+  border-radius: 2px;
   padding: 4px 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
@@ -85,7 +85,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 #panel:overview { background-color: transparent; border-color: transparent; }
 #panel .panel-button {
   color: @FG_DIM@;
-  border-radius: 6px;
+  border-radius: 2px;
   transition-duration: 150ms;
   -natural-hpadding: 8px;
   -minimum-hpadding: 6px;
@@ -122,7 +122,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .popup-menu { color: @FG@; min-width: 15em; }
 .popup-menu-boxpointer,
 #calendarArea, .quick-settings, .aggregate-menu, .candidate-popup-boxpointer {
-  -arrow-border-radius: 12px;
+  -arrow-border-radius: 2px;
   -arrow-background-color: @SURFACE@;
   -arrow-border-color: @BORDER@;
   -arrow-border-width: 1px;
@@ -131,11 +131,11 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .popup-menu-content, .quick-settings {
   background-color: @SURFACE@;
   border: 1px solid @BORDER@;
-  border-radius: 12px;
+  border-radius: 2px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
   padding: 8px;
 }
-.popup-menu-item { border-radius: 6px; padding: 8px 10px; spacing: 8px; color: @FG@; }
+.popup-menu-item { border-radius: 2px; padding: 8px 10px; spacing: 8px; color: @FG@; }
 .popup-menu-item:hover, .popup-menu-item:focus, .popup-menu-item.selected {
   background-color: @ACCENT_SOFT@;
   color: @FG@;
@@ -147,7 +147,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
   background-color: @SURFACE_HOVER@;
   border: none;
   box-shadow: none;
-  border-radius: 6px;
+  border-radius: 2px;
 }
 .popup-sub-menu .popup-menu-item:ltr { padding-left: 20px; }
 .popup-separator-menu-item .popup-separator-menu-item-separator,
@@ -160,7 +160,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .quick-toggle, .quick-menu-toggle {
   background-color: @SURFACE_HOVER@;
   color: @FG@;
-  border-radius: 999px;
+  border-radius: 2px;
   border: none;
 }
 .quick-toggle:hover, .quick-menu-toggle:hover { background-color: @SELECTION@; }
@@ -172,14 +172,14 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .quick-toggle:checked:hover { background-image: linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)); }
 .quick-toggle .quick-toggle-arrow, .quick-menu-toggle .quick-toggle-arrow {
   background-color: transparent;
-  border-radius: 999px;
+  border-radius: 2px;
 }
 .quick-toggle .quick-toggle-arrow:hover { background-color: @SURFACE_HOVER@; }
 .quick-slider .slider { color: @ACCENT@; }
 .quick-slider StIcon { color: @FG_DIM@; }
 .quick-settings-system-item .icon-button,
 .quick-settings-system-item .power-item {
-  border-radius: 999px;
+  border-radius: 2px;
   background-color: @SURFACE_HOVER@;
   color: @FG@;
 }
@@ -188,7 +188,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .quick-settings-system-item .icon-button.settings-app-button:active { background-color: @ACCENT@; }
 .quick-toggle-menu {
   background-color: @SURFACE_HOVER@;
-  border-radius: 12px;
+  border-radius: 2px;
   padding: 8px;
 }
 .quick-toggle-menu .popup-menu-item:checked,
@@ -211,7 +211,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .world-clocks-button, .events-button, .weather-button {
   background-color: @SURFACE@;
   border: 1px solid @BORDER@;
-  border-radius: 12px;
+  border-radius: 2px;
 }
 .datemenu-today-button:hover, .datemenu-today-button:focus,
 .world-clocks-button:hover, .events-button:hover, .weather-button:hover {
@@ -221,10 +221,10 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .datemenu-today-button .day-label { color: @FG_DIM@; }
 .calendar { padding: 8px; }
 .calendar .calendar-month-label { color: @FG@; font-weight: 700; }
-.calendar .pager-button { color: @FG_DIM@; border-radius: 999px; }
+.calendar .pager-button { color: @FG_DIM@; border-radius: 2px; }
 .calendar .pager-button:hover { background-color: @SURFACE_HOVER@; color: @FG@; }
 .calendar-day-heading { color: @FG_MUTED@; font-weight: 600; }
-.calendar-day-base { border-radius: 999px; color: @FG@; }
+.calendar-day-base { border-radius: 2px; color: @FG@; }
 .calendar-day-base:hover, .calendar-day-base:focus { background-color: @SURFACE_HOVER@; }
 .calendar-day-base.calendar-nonwork-day { color: @FG_DIM@; }
 .calendar-other-month-day { color: @FG_MUTED@; }
@@ -253,7 +253,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .message-list-placeholder StIcon { icon-size: 48px; color: @FG_MUTED@; }
 .message-list-clear-button, .dnd-button {
   color: @FG_DIM@;
-  border-radius: 999px;
+  border-radius: 2px;
   padding: 6px 12px;
 }
 .message-list-clear-button:hover { background-color: @SURFACE_HOVER@; color: @FG@; }
@@ -263,7 +263,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
   background-color: @SURFACE@;
   border: 1px solid @BORDER@;
   border-left: 3px solid @ACCENT@;
-  border-radius: 8px;
+  border-radius: 2px;
 }
 .message:hover { background-color: @SURFACE_HOVER@; }
 .message .message-title { color: @FG@; font-weight: 600; }
@@ -271,10 +271,10 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .message .message-secondary-bin > StLabel { color: @FG_MUTED@; }
 .message .message-close-button, .message .message-expand-button { color: @FG_DIM@; }
 .message .message-close-button:hover { color: @ERROR@; }
-.message-media-control { color: @FG_DIM@; border-radius: 999px; }
+.message-media-control { color: @FG_DIM@; border-radius: 2px; }
 .message-media-control:hover { background-color: @SURFACE_HOVER@; color: @FG@; }
 .message-media-control:insensitive { color: @FG_MUTED@; }
-.media-message-cover-icon { border-radius: 6px; }
+.media-message-cover-icon { border-radius: 2px; }
 .media-message-cover-icon .fallback { color: @FG_MUTED@; background-color: @SURFACE_HOVER@; }
 
 /* ---- Notification banners (top-of-screen) -------------------- */
@@ -283,7 +283,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
   color: @FG@;
   border: 1px solid @BORDER@;
   border-left: 3px solid @ACCENT@;
-  border-radius: 12px;
+  border-radius: 2px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
   width: 34em;
 }
@@ -294,7 +294,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
   background-color: @SURFACE_HOVER@;
   color: @FG@;
   border: none;
-  border-radius: 6px;
+  border-radius: 2px;
 }
 .notification-banner .notification-button:hover { background-color: @SELECTION@; }
 .notification-banner .notification-button:active { background-color: @ACCENT@; color: @ACCENT_FG@; }
@@ -305,12 +305,12 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
   background-color: @SURFACE@;
   color: @FG@;
   border: 1px solid @BORDER@;
-  border-radius: 16px;
+  border-radius: 2px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
 }
 .osd-window .osd-monitor-label { color: @FG_DIM@; }
-.osd-window .level-bar { background-color: @ACCENT@; border-radius: 999px; }
-.osd-window .level { background-color: @SURFACE_HOVER@; border-radius: 999px; }
+.osd-window .level-bar { background-color: @ACCENT@; border-radius: 2px; }
+.osd-window .level { background-color: @SURFACE_HOVER@; border-radius: 2px; }
 .osd-window StIcon { icon-size: 96px; color: @FG@; }
 
 /* ---- Overview: controls, search, dash ---------------------- */
@@ -323,7 +323,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
   background-color: @SURFACE_HOVER@;
   color: @FG@;
   border: 1px solid @BORDER@;
-  border-radius: 999px;
+  border-radius: 2px;
   padding: 7px 12px;
 }
 .search-entry:hover { border-color: @FG_MUTED@; }
@@ -332,13 +332,13 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .search-entry StLabel.hint-text { color: @FG_MUTED@; }
 
 #searchResultsBin { max-width: 1000px; }
-.search-section-content { background-color: @SURFACE@; border-radius: 12px; }
+.search-section-content { background-color: @SURFACE@; border-radius: 2px; }
 .search-section .search-section-separator { background-color: @BORDER@; }
-.list-search-result, .grid-search-result { color: @FG@; border-radius: 8px; }
+.list-search-result, .grid-search-result { color: @FG@; border-radius: 2px; }
 .list-search-result:hover, .grid-search-result:hover { background-color: @SURFACE_HOVER@; }
 .search-provider-icon:selected, .list-search-result:selected, .grid-search-result:selected {
   background-color: @ACCENT_SOFT@;
-  border-radius: 8px;
+  border-radius: 2px;
 }
 .list-search-result-title { color: @FG@; }
 .list-search-result-description { color: @FG_DIM@; }
@@ -347,15 +347,15 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 #dash {
   background-color: @PANEL@;
   border: 1px solid @BORDER@;
-  border-radius: 18px 0 0 18px;
+  border-radius: 2px 0 0 2px;
 }
-#dash .overview-icon { color: @FG@; border-radius: 8px; }
+#dash .overview-icon { color: @FG@; border-radius: 2px; }
 #dash .dash-item-container .app-well-app:hover .overview-icon,
 #dash .dash-item-container .app-well-app:focus .overview-icon,
 #dash .show-apps:hover .overview-icon,
 #dash .show-apps:focus .overview-icon {
   background-color: @SURFACE_HOVER@;
-  border-radius: 8px;
+  border-radius: 2px;
 }
 #dash .app-well-app:selected .overview-icon,
 #dash .app-well-app:checked .overview-icon { background-color: @ACCENT_SOFT@; }
@@ -366,7 +366,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .workspace-thumbnails { spacing: 8px; }
 .workspace-thumbnail-indicator {
   border: 3px solid @ACCENT@;
-  border-radius: 10px;
+  border-radius: 2px;
 }
 .workspace-thumbnails .placeholder { background-color: @ACCENT_SOFT@; }
 
@@ -374,7 +374,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
   background-color: @SURFACE@;
   color: @FG@;
   border: 1px solid @BORDER@;
-  border-radius: 999px;
+  border-radius: 2px;
   padding: 4px 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
@@ -382,15 +382,15 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
   background-color: @ERROR@;
   color: #ffffff;
   border: 2px solid @SURFACE@;
-  border-radius: 999px;
+  border-radius: 2px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 .window-close:hover { background-image: linear-gradient(rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12)); }
-.window-clone-border { border: 2px solid @ACCENT@; border-radius: 6px; }
+.window-clone-border { border: 2px solid @ACCENT@; border-radius: 2px; }
 
 /* ---- Overview: app grid + folders ------------------------- */
 .icon-grid { spacing: 12px; }
-.icon-grid .overview-icon { color: @FG@; border-radius: 8px; }
+.icon-grid .overview-icon { color: @FG@; border-radius: 2px; }
 .app-well-app:hover .overview-icon,
 .app-well-app:focus .overview-icon { background-color: @SURFACE_HOVER@; }
 .app-well-app:selected .overview-icon,
@@ -400,16 +400,16 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .app-folder-dialog {
   background-color: @SURFACE@;
   border: 1px solid @BORDER@;
-  border-radius: 16px;
+  border-radius: 2px;
   box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.65);
 }
 .app-folder-dialog .folder-name-container .folder-name-entry { min-width: 12em; }
 .page-indicators .page-indicator .page-indicator-icon,
-.page-indicator .page-indicator-icon { background-color: @FG_MUTED@; border-radius: 999px; }
+.page-indicator .page-indicator-icon { background-color: @FG_MUTED@; border-radius: 2px; }
 .page-indicator:checked .page-indicator-icon,
 .page-indicator:hover .page-indicator-icon { background-color: @ACCENT@; }
 .page-navigation-arrow { color: @FG_DIM@; }
-.page-navigation-arrow:hover { color: @ACCENT@; background-color: @SURFACE_HOVER@; border-radius: 999px; }
+.page-navigation-arrow:hover { color: @ACCENT@; background-color: @SURFACE_HOVER@; border-radius: 2px; }
 .app-view-controls .button, .app-grid .app-view-controls .button { color: @FG_DIM@; }
 
 /* ---- Window / app switcher (Alt-Tab, Alt-`) -------------- */
@@ -417,31 +417,31 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .switcher-list, .app-switcher-popup .switcher-list {
   background-color: @SURFACE@;
   border: 1px solid @BORDER@;
-  border-radius: 12px;
+  border-radius: 2px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
   padding: 8px;
 }
-.switcher-list .item-box { border-radius: 8px; padding: 8px; }
+.switcher-list .item-box { border-radius: 2px; padding: 8px; }
 .switcher-list .item-box:outlined { border: 1px solid @BORDER@; }
 .switcher-list .item-box:selected {
   background-color: @ACCENT_SOFT@;
   border: 1px solid @ACCENT@;
   color: @FG@;
 }
-.switcher-list .thumbnail-box .thumbnail { border-radius: 4px; }
+.switcher-list .thumbnail-box .thumbnail { border-radius: 2px; }
 .switcher-arrow { border-color: @FG_DIM@; }
 .switcher-arrow:highlighted { color: @ACCENT@; border-color: @ACCENT@; }
 .thumbnail-scroll-gradient-left, .thumbnail-scroll-gradient-right { width: 0; }
-.cycler-highlight { border: 3px solid @ACCENT@; border-radius: 6px; }
+.cycler-highlight { border: 3px solid @ACCENT@; border-radius: 2px; }
 
 /* ---- Workspace switcher popup --------------------------- */
 .workspace-switcher-group .workspace-switcher {
   background-color: @SURFACE@;
   border: 1px solid @BORDER@;
-  border-radius: 12px;
+  border-radius: 2px;
   padding: 8px;
 }
-.workspace-switcher .ws-switcher-box { background-color: @SURFACE_HOVER@; border-radius: 6px; }
+.workspace-switcher .ws-switcher-box { background-color: @SURFACE_HOVER@; border-radius: 2px; }
 .workspace-switcher .ws-switcher-box:active,
 .ws-switcher-active-up, .ws-switcher-active-down { background-color: @ACCENT@; }
 
@@ -450,7 +450,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
   background-color: @SURFACE@;
   color: @FG@;
   border: 1px solid @BORDER@;
-  border-radius: 16px;
+  border-radius: 2px;
   box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.65);
 }
 .modal-dialog .modal-dialog-content-box { color: @FG_DIM@; }
@@ -460,7 +460,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
   background-color: @SURFACE_HOVER@;
   color: @FG@;
   border: none;
-  border-radius: 8px;
+  border-radius: 2px;
   padding: 10px 16px;
 }
 .modal-dialog .modal-dialog-linked-button:hover,
@@ -507,9 +507,9 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .login-dialog-user-list .login-dialog-user-list-item:focus {
   background-color: @ACCENT@;
   color: @ACCENT_FG@;
-  border-radius: 8px;
+  border-radius: 2px;
 }
-.login-dialog-user-list .login-dialog-user-list-item:hover { background-color: @SURFACE_HOVER@; border-radius: 8px; }
+.login-dialog-user-list .login-dialog-user-list-item:hover { background-color: @SURFACE_HOVER@; border-radius: 2px; }
 .login-dialog-prompt-layout { padding: 8px 4em; }
 .login-dialog-prompt-entry { min-width: 22em; }
 .login-dialog-message-warning { color: @WARNING@; }
@@ -521,7 +521,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 #loginDialog .modal-dialog-button.login-dialog-button {
   background-color: @SURFACE_HOVER@;
   color: @FG@;
-  border-radius: 8px;
+  border-radius: 2px;
 }
 #loginDialog .modal-dialog-button.login-dialog-button:default { background-color: @ACCENT@; color: @ACCENT_FG@; }
 .user-widget.horizontal .user-widget-label,
@@ -533,22 +533,22 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .screenshot-ui-panel {
   background-color: @SURFACE@;
   border: 1px solid @BORDER@;
-  border-radius: 999px;
+  border-radius: 2px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
   padding: 12px;
   spacing: 12px;
 }
 .screenshot-ui-shot-cast-container {
   background-color: @SURFACE_HOVER@;
-  border-radius: 999px;
+  border-radius: 2px;
   padding: 4px;
 }
-.screenshot-ui-shot-cast-button { color: @FG_DIM@; border-radius: 999px; padding: 8px 14px; }
+.screenshot-ui-shot-cast-button { color: @FG_DIM@; border-radius: 2px; padding: 8px 14px; }
 .screenshot-ui-shot-cast-button:checked { background-color: @ACCENT@; color: @ACCENT_FG@; }
 .screenshot-ui-type-button, .screenshot-ui-show-pointer-button {
   background-color: @SURFACE_HOVER@;
   color: @FG@;
-  border-radius: 999px;
+  border-radius: 2px;
   border: none;
 }
 .screenshot-ui-type-button:checked, .screenshot-ui-show-pointer-button:checked {
@@ -565,18 +565,18 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .screencast-indicator, .screen-recording-indicator {
   background-color: @ERROR@;
   color: #ffffff;
-  border-radius: 999px;
+  border-radius: 2px;
 }
 
 /* ---- IME / candidate popup ---------------------------- */
 .candidate-popup-content {
   background-color: @SURFACE@;
   border: 1px solid @BORDER@;
-  border-radius: 8px;
+  border-radius: 2px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
   padding: 6px;
 }
-.candidate-box { border-radius: 6px; padding: 4px 8px; }
+.candidate-box { border-radius: 2px; padding: 4px 8px; }
 .candidate-box:selected, .candidate-box:hover { background-color: @ACCENT_SOFT@; }
 .candidate-box:selected { color: @FG@; }
 .candidate-page-button-box .candidate-page-button { color: @FG_DIM@; }
@@ -593,14 +593,14 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 .pad-osd-window {
   background-color: @SURFACE@;
   border: 1px solid @BORDER@;
-  border-radius: 12px;
+  border-radius: 2px;
 }
 .pad-osd-window .pad-osd-title-box .pad-osd-title-menu-box .button { color: @FG_DIM@; }
 
 .magnifier-zoom-region { border: 2px solid @ACCENT@; }
 .magnifier-zoom-region.full-screen { border-width: 0; }
 
-.welcome-dialog .welcome-dialog-image-frame { border: 1px solid @BORDER@; border-radius: 12px; }
+.welcome-dialog .welcome-dialog-image-frame { border: 1px solid @BORDER@; border-radius: 2px; }
 
 .hotplug-notification-item:focus { background-color: @ACCENT_SOFT@; }
 .hotplug-notification-item:hover { background-color: @SURFACE_HOVER@; }
@@ -613,7 +613,7 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
 #LookingGlassDialog {
   background-color: @SURFACE@;
   border: 1px solid @BORDER@;
-  border-radius: 12px;
+  border-radius: 2px;
   color: @FG@;
 }
 #LookingGlassDialog .lg-toolbar-button:checked { color: @ACCENT@; }

@@ -1,3 +1,10 @@
+osiris-desktop-theme (0.1.3-1) unstable; urgency=medium
+
+  * Transition to Papirus Icon Theme (Papirus-Dark, Papirus, breeze, gnome, hicolor).
+  * Unified minimal border radius (2px) across GTK 3, GTK 4, and GNOME Shell.
+
+ -- OSIRIS <osiris@example.org>  Wed, 09 Sep 2026 18:00:00 +0000
+
 osiris-desktop-theme (0.1.1-1) unstable; urgency=medium
 
   * Bundled Fira Code (SIL OFL-1.1) webfont under assets/fonts/fira-code/; the

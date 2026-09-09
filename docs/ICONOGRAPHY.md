@@ -15,10 +15,9 @@ exist, or if this document and `assets/tokens.json` disagree.
 
 ---
 
-## 1. Design language — Material Symbols
+## 1. Design language — Papirus Icon Theme
 
-OSIRIS icons follow **Google Material Symbols (Rounded)**: weight **400**,
-grade **0**, optical size **24**.
+OSIRIS icons follow the crisp, flat geometric visual language of the **[Papirus Icon Theme](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)** on a 24×24 grid with minimal corner rounding (`1px` outer / `0px` inner).
 
 | Token | Value | Meaning |
 |---|---|---|
@@ -30,8 +29,8 @@ grade **0**, optical size **24**.
 | `icon.keyline.verticalRect` | `16 × 20` | Portrait shapes (e.g. `file`, `phone`) |
 | `icon.keyline.horizontalRect` | `20 × 16` | Landscape shapes (e.g. `computer`) |
 | `icon.strokeEquivalent` | `2` | Nominal stroke / bar weight |
-| `icon.cornerRadius.outer` | `2` | Outer corner rounding |
-| `icon.cornerRadius.inner` | `1` | Inner corner rounding |
+| `icon.cornerRadius.outer` | `1` | Outer corner rounding |
+| `icon.cornerRadius.inner` | `0` | Inner corner rounding |
 
 Glyphs are **filled geometric paths**, one `<path fill="currentColor">` where
 possible, `fill-rule="evenodd"` for shapes with holes (`"evenodd": true` in the
@@ -108,7 +107,7 @@ Mapping lives in [`iconography/map/producticons.json`](../iconography/map/produc
 
 ## 5. Linux — XDG icon theme
 
-Theme id **Osiris** (`icon.xdg.themeName`), `Inherits=Adwaita,breeze,gnome,hicolor`
+Theme id **Osiris** (`icon.xdg.themeName`), `Inherits=Papirus-Dark,Papirus,breeze,gnome,hicolor`
 so anything unstyled falls through to the platform default. Generated to
 `build/icons/Osiris/`.
 

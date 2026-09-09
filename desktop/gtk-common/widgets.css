@@ -35,7 +35,7 @@ button {
   background-color: @osiris_bg_input;
   color: @osiris_fg;
   border: 1px solid @osiris_border_strong;
-  border-radius: 3px;
+  border-radius: 2px;
   padding: 6px 12px;
   transition: background-color 150ms ease, border-color 150ms ease;
 }
@@ -74,7 +74,7 @@ entry, .entry, spinbutton, textview text {
   background-color: @osiris_bg_input;
   color: @osiris_fg;
   border: 1px solid @osiris_border_strong;
-  border-radius: 3px;
+  border-radius: 2px;
   padding: 6px 8px;
   caret-color: @osiris_accent;
 }
@@ -100,12 +100,12 @@ popover.background > contents,
   background-color: @osiris_bg_card;
   color: @osiris_fg;
   border: 1px solid @osiris_border_strong;
-  border-radius: 6px;
+  border-radius: 2px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
   padding: 4px;
 }
 menuitem, .menu menuitem, popover modelbutton {
-  border-radius: 3px;
+  border-radius: 2px;
   padding: 6px 10px;
 }
 menuitem:hover,
@@ -157,7 +157,7 @@ separator { background-color: @osiris_border_subtle; min-width: 1px; min-height:
 check, radio {
   background-color: @osiris_bg_input;
   border: 1px solid @osiris_border_strong;
-  border-radius: 3px;
+  border-radius: 2px;
   min-width: 15px;
   min-height: 15px;
 }
@@ -172,7 +172,7 @@ check:focus-visible, radio:focus-visible { box-shadow: 0 0 0 3px @osiris_accent_
 /* ---- Switch (toggle) ------------------------------------------- */
 switch {
   background-color: @osiris_border_strong;
-  border-radius: 999px;
+  border-radius: 2px;
   border: none;
   min-width: 38px;
   min-height: 22px;
@@ -180,7 +180,7 @@ switch {
 switch:checked { background-color: @osiris_accent; }
 switch slider {
   background-color: @osiris_fg;
-  border-radius: 100%;
+  border-radius: 2px;
   min-width: 18px;
   min-height: 18px;
   margin: 2px;
@@ -190,13 +190,13 @@ switch:checked slider { background-color: @osiris_accent_fg; }
 /* ---- Scale / slider ------------------------------------------- */
 scale trough {
   background-color: @osiris_border_strong;
-  border-radius: 999px;
+  border-radius: 2px;
   min-height: 4px;
 }
-scale highlight { background-color: @osiris_accent; border-radius: 999px; }
+scale highlight { background-color: @osiris_accent; border-radius: 2px; }
 scale slider {
   background-color: @osiris_accent;
-  border-radius: 100%;
+  border-radius: 2px;
   min-width: 14px;
   min-height: 14px;
 }
@@ -204,11 +204,11 @@ scale slider {
 /* ---- Progress / spinner / levelbar --------------------------- */
 progressbar progress, levelbar block.filled {
   background-color: @osiris_secondary;
-  border-radius: 999px;
+  border-radius: 2px;
 }
 progressbar trough, levelbar trough {
   background-color: @osiris_bg_input;
-  border-radius: 999px;
+  border-radius: 2px;
 }
 spinner { color: @osiris_accent; }
 
@@ -216,7 +216,7 @@ spinner { color: @osiris_accent; }
 scrollbar { background-color: transparent; }
 scrollbar slider {
   background-color: alpha(@osiris_border_strong, 0.7);
-  border-radius: 999px;
+  border-radius: 2px;
   min-width: 8px;
   min-height: 8px;
 }
@@ -227,7 +227,7 @@ scrollbar slider:hover { background-color: @osiris_fg_muted; }
   background-color: @osiris_bg_card;
   color: @osiris_fg;
   border: 1px solid @osiris_border_strong;
-  border-radius: 3px;
+  border-radius: 2px;
   border-left: 3px solid @osiris_accent;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
@@ -239,7 +239,7 @@ tooltip {
   background-color: @osiris_bg_card;
   color: @osiris_fg;
   border: 1px solid @osiris_border_strong;
-  border-radius: 6px;
+  border-radius: 2px;
 }
 
 /* ---- Selection / links ----------------------------------- */

@@ -3,6 +3,19 @@
 All notable changes to `osiris-theme` are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](https://semver.org/).
 
+## [0.1.3] — 2026-09-09
+
+### Changed
+- **Iconography — Transition to Papirus Icon Theme**:
+  - Re-anchored the entire OSIRIS icon system on the Papirus visual language ([Papirus Icon Theme](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)).
+  - Vector glyphs in `iconography/glyphs.json` adapted to Papirus geometry with crisp silhouettes and 1px outer / 0px inner corner radius.
+  - XDG desktop icon theme inherits `Papirus-Dark, Papirus, breeze, gnome, hicolor` with distro packaging recommending `papirus-icon-theme`.
+  - VS Code extension defaults `workbench.iconTheme` to `osiris-file-icons` and `workbench.productIconTheme` to `osiris-product-icons`.
+- **Border Radius — Unified Minimal Rounding (2px)**:
+  - Standardized minimal border-radius to `2px` across all desktop environments, GTK 3, GTK 4 / libadwaita, GNOME Shell, and Bootstrap.
+  - Replaced heavy pill shapes (`999px`) on toggles, switches, searchbars, sliders, and badges with uniform `2px` technical rounding.
+  - Tokens updated in `assets/tokens.json` (`radius.sm: 2`, `radius.md: 2`, `radius.pill: 2`) and propagated across all stylesheets and documentation.
+
 ## [0.1.2] — 2026-09-06
 
 ### Added

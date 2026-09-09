@@ -32,10 +32,10 @@ $code-color:            #cf222e;  // syntax.property.light
 $text-muted:            #8c959f;  // text.muted
 
 // --- Shape & type — radius / font --------------------------------------------
-$border-radius:    0.375rem;  // radius.md (6px)
-$border-radius-sm: 0.1875rem; // radius.sm (3px)
-$border-radius-lg: 0.375rem;
-$border-radius-pill: 50rem;
+$border-radius:    0.125rem;  // radius.md (2px)
+$border-radius-sm: 0.125rem;  // radius.sm (2px)
+$border-radius-lg: 0.125rem;
+$border-radius-pill: 0.125rem;
 
 // One typeface — Fira Code for UI, prose and code alike (tokens.font). The
 // sans-serif tail is only a fallback for glyphs Fira Code lacks (CJK, etc).

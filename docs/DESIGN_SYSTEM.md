@@ -113,9 +113,9 @@ secondary, **U**ntracked → warning, **A**dded → success.
 
 | Token | Value | Notes |
 |---|---|---|
-| `radius.sm` | `3px` | inputs, buttons, list rows, tags, chips |
-| `radius.md` | `6px` | cards, popovers, command palette, toasts, window corners |
-| `radius.pill` | `999px` | toggles, segmented controls, debug toolbar |
+| `radius.sm` | `2px` | inputs, buttons, list rows, tags, chips |
+| `radius.md` | `2px` | cards, popovers, command palette, toasts, window corners |
+| `radius.pill` | `2px` | toggles, segmented controls, debug toolbar (unified minimal rounding) |
 | `shadow.window` | `0 30px 80px -20px rgba(0,0,0,.65), 0 8px 24px -8px rgba(0,0,0,.5)` | floating window / decorated frame |
 | `shadow.popup` | `0 16px 40px rgba(0,0,0,.5)` | menus, IntelliSense, palette |
 | transition | `.15s ease` | color / background / transform on hover & focus |

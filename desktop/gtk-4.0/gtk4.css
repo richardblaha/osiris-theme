@@ -24,7 +24,7 @@ windowcontrols button.close:hover { background-color: @osiris_secondary; color: 
 /* AdwWindow / AdwApplicationWindow rounded frame */
 window.csd,
 window.csd.dialog {
-  border-radius: 6px;
+  border-radius: 2px;
   box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.65),
               0 8px 24px -8px rgba(0, 0, 0, 0.5);
 }
@@ -39,8 +39,8 @@ list.boxed-list > row {
   background-color: @osiris_bg_card;
   border-bottom: 1px solid @osiris_border_subtle;
 }
-list.boxed-list > row:first-child { border-radius: 6px 6px 0 0; }
-list.boxed-list > row:last-child { border-radius: 0 0 6px 6px; border-bottom: none; }
+list.boxed-list > row:first-child { border-radius: 2px 2px 0 0; }
+list.boxed-list > row:last-child { border-radius: 0 0 2px 2px; border-bottom: none; }
 row.activatable:hover { background-color: @osiris_bg_hover; }
 
 /* AdwToast */
@@ -48,7 +48,7 @@ toast {
   background-color: @osiris_bg_card;
   border: 1px solid @osiris_border_strong;
   border-left: 3px solid @osiris_accent;
-  border-radius: 6px;
+  border-radius: 2px;
 }
 
 /* AdwEntryRow / AdwPasswordEntryRow focus */

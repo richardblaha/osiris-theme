@@ -3,7 +3,7 @@
 # version comes from `rpmbuild --define "version X"` (packaging/rpm/build-rpms.sh
 # reads it from the repo VERSION file); this default keeps a bare `rpmbuild -bb`
 # working too.
-%{!?version: %global version 0.1.1}
+%{!?version: %global version 0.1.3}
 
 Name:           osiris-desktop-theme
 Version:        %{version}
@@ -49,15 +49,15 @@ Plasma colour schemes, Kvantum Qt themes (OsirisDark / OsirisLight), the
 OsirisDark Aurorae decoration and the Osiris Plasma desktop theme.
 
 %package -n osiris-icon-theme
-Summary:        OSIRIS dual-accent icon theme (Material Symbols)
+Summary:        OSIRIS dual-accent icon theme (Papirus)
 BuildArch:      noarch
 Requires:       hicolor-icon-theme
-Recommends:     adwaita-icon-theme
+Recommends:     papirus-icon-theme
 %description -n osiris-icon-theme
-Freedesktop icon theme in the Material Symbols visual language — cyan/rose on a
+Freedesktop icon theme in the Papirus visual language — cyan/rose on a
 GitHub-flavoured ramp. Covers actions, apps, categories, devices, emblems,
 mimetypes, places and status with GNOME/KDE compatibility symlinks; inherits
-Adwaita / Breeze / hicolor. Installed as %{_datadir}/icons/Osiris.
+Papirus / Breeze / hicolor. Installed as %{_datadir}/icons/Osiris.
 
 %package -n osiris-theme-grub
 Summary:        OSIRIS graphical GRUB2 boot theme
