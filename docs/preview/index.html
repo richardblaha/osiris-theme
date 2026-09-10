@@ -51,9 +51,11 @@
     <button type="button" class="main-tab active" role="tab" aria-selected="true"
             data-act="main-tab" data-main-tab="editor">Editor</button>
     <button type="button" class="main-tab" role="tab" aria-selected="false"
-            data-act="main-tab" data-main-tab="app-icons">Aplikační ikony</button>
-    <button type="button" class="main-tab" role="tab" aria-selected="false"
             data-act="main-tab" data-main-tab="file-icons">Ikony souborů</button>
+    <button type="button" class="main-tab" role="tab" aria-selected="false"
+            data-act="main-tab" data-main-tab="product-icons">Produktové ikony</button>
+    <button type="button" class="main-tab" role="tab" aria-selected="false"
+            data-act="main-tab" data-main-tab="desktop-icons">Ikony plochy</button>
   </div>
 
   <!-- ================= IDE WINDOW ================= -->
@@ -630,23 +632,13 @@
 
   </div>
 
-  <!-- ================= APPLICATION ICONS ================= -->
-  <section class="icon-gallery" data-main-view="app-icons" aria-label="Aplikační ikony" hidden>
-    <header class="gallery-head">
-      <h2>Aplikační ikony</h2>
-      <p>XDG kategorie <b>apps</b> a <b>categories</b> z <b>iconography/map/xdg.json</b> — glyf z <b>iconography/glyphs.json</b>, barva z <b>tokens.icon.xdg.categoryColor</b>. Odesílá se do ikonového motivu <b>Osiris</b> (<code>/usr/share/icons/Osiris</code>) i do produktových ikon VS Code.</p>
-    </header>
-    <div class="gallery-body" id="gallery-app"></div>
-  </section>
-
-  <!-- ================= FILE ICONS ================= -->
-  <section class="icon-gallery" data-main-view="file-icons" aria-label="Ikony souborů" hidden>
-    <header class="gallery-head">
-      <h2>Ikony souborů</h2>
-      <p>Asociace z <b>iconography/map/filetypes.json</b> — glyf + role z palety <b>tokens.icon.fileIcon.palette</b>. Zdroj motivu ikon souborů VS Code (<i>Osiris File Icons</i>).</p>
-    </header>
-    <div class="gallery-body" id="gallery-file"></div>
-  </section>
+  <!-- ================= ICON THEMES (filled from icons.js) ================= -->
+  <section class="icon-gallery" data-main-view="file-icons" data-theme-id="file"
+           aria-label="Ikony souborů" hidden></section>
+  <section class="icon-gallery" data-main-view="product-icons" data-theme-id="product"
+           aria-label="Produktové ikony" hidden></section>
+  <section class="icon-gallery" data-main-view="desktop-icons" data-theme-id="xdg"
+           aria-label="Ikony plochy" hidden></section>
 
   <p class="footnote">
     Design tokeny (<b>--accent-primary</b>, <b>--accent-secondary</b>, <b>--bg-*</b>, <b>--text-*</b>) jsou definované jako CSS proměnné v <b>:root</b> a přepisované v blocích <b>[data-theme="dark"]</b> / <b>[data-theme="light"]</b> — připravené k extrakci do <b>assets/tokens.json</b> a odtud do všech témat OSIRIS.

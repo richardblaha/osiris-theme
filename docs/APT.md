@@ -37,8 +37,7 @@ sudo apt update
 |---|---|
 | `packaging/apt/build-apt-repo.sh <out> [deb-dir]` | builds the `pool/` + `dists/` tree, signs `Release` (→ `InRelease` + `Release.gpg`) with `APT_GPG_KEY`, writes `setup.sh` / `osiris.sources` / `osiris.list` / the public key / `index.html`. With no `deb-dir` it pulls the latest GitHub release's `.deb` assets via `gh`. |
 | `scripts/build.sh pages` | when `OSIRIS_APT_REPO=1`, stages the repo into `build/pages/apt/` (`OSIRIS_APT_DEB_DIR` picks the `.deb` source). |
-| `.github/workflows/release.yml` → `publish-pages` | on every tag: builds the repo from that release's fresh `.deb` artifact and deploys it with the preview site. |
-| `.github/workflows/build.yml` → `pages-build` | on every `main` push: rebuilds the repo from the **latest release** so a docs-only deploy never drops `/apt/`. |
+| `.github/workflows/build.yml` → `pages-build` / `pages-deploy` | on every `main` push: builds the repo from **that run's own `.deb` artifact** and deploys it with the preview site. This is the only place Pages is published — `release.yml` doesn't touch it — so the live repo always matches `main`. Cut a release by committing the `VERSION` bump to `main` (which deploys) *then* tagging that commit. |
 | `make apt` | local: `make deb` then build the repo into `build/apt/` from `dist/*.deb`. |
 
 Environment knobs: `APT_SUITE` (default `stable`), `APT_ARCHES` (default `amd64 arm64`),
@@ -75,14 +74,16 @@ and publishes the matching public key to
 
 ### 3. Enable GitHub Pages (if not already)
 
-*Settings → Pages → Source: GitHub Actions.* Until then `deploy-pages` 404s and the
-`publish-pages` job is allowed to fail without failing the release.
+*Settings → Pages → Source: GitHub Actions.* Until then `deploy-pages` 404s; the
+`pages-deploy` job is `continue-on-error` so it never fails the build. The
+`github-pages` environment's "Deployment branches and tags" must allow `main`
+(the default when Pages is enabled) — no tag rule is needed.
 
 ## Rotating the key
 
-Generate a new key, update the `APT_GPG_PRIVATE_KEY` secret, and cut a release (or
-push to `main`). The new public key ships automatically; users re-run `setup.sh` to
-pick it up. Announce it in `CHANGELOG.md` — an unexpected key change looks like an
+Generate a new key, update the `APT_GPG_PRIVATE_KEY` secret and push to `main`. The
+new public key ships automatically; users re-run `setup.sh` to pick it up. Announce
+it in `CHANGELOG.md` — an unexpected key change looks like an
 attack.
 
 ## Notes

@@ -106,16 +106,23 @@ jobs:
           if-no-files-found: error
 
   pages-build:
-    # release.yml deploys Pages itself on a tag — don't also build the artifact
-    # here (its name would collide with the release run's upload).
+    # The ONLY place Pages is built/deployed. On a release you bump VERSION,
+    # commit to main and *then* tag its tip, so this push already publishes the
+    # exact tree the release is cut from — the Release workflow doesn't touch
+    # Pages. Skipped on tag pushes (the reusable-workflow call from release.yml).
     if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
-    needs: tokens
+    needs: [tokens, deb]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: sudo apt-get update && sudo apt-get install -y jq dpkg-dev
-      # On main, rebuild the APT repo from the latest release so a docs-only
-      # deploy doesn't drop /apt/. Releases refresh it from fresh artifacts.
+      # On main: stage the signed APT repo under /apt/ from this run's own .deb
+      # artifact (so it always matches the deployed tree). PRs skip it.
+      - uses: actions/download-artifact@v4
+        if: github.ref == 'refs/heads/main'
+        with:
+          name: deb
+          path: debs
       - name: Import APT signing key
         if: github.ref == 'refs/heads/main'
         env:
@@ -132,8 +139,8 @@ jobs:
           echo "APT_GPG_KEY=$fpr" >> "$GITHUB_ENV"
       - name: Stage site (+ APT repo on main)
         env:
-          GH_TOKEN: ${{ github.token }}
           OSIRIS_APT_REPO: ${{ github.ref == 'refs/heads/main' && '1' || '0' }}
+          OSIRIS_APT_DEB_DIR: debs
         run: scripts/build.sh pages
       - uses: actions/upload-pages-artifact@v3
         with:

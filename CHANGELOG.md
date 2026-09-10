@@ -6,21 +6,28 @@ Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](ht
 ## [Unreleased]
 
 ### Added
-- **Preview page icon galleries** — `docs/preview/index.html` gains "Aplikační ikony"
-  and "Ikony souborů" tabs alongside the editor mock, rendering every app / category /
-  file-type association from `iconography/map/{xdg,filetypes}.json` in the OSIRIS palette.
-  Data generated into `docs/preview/icons.js` by `scripts/lib/gen_preview_icons.py`
-  (`make pages`).
+- **Preview page icon-theme showcase** — `docs/preview/index.html` gains a tab per
+  shipped icon theme alongside the editor mock: *Ikony souborů* (VS Code file icons),
+  *Produktové ikony* (VS Code product icons — 397 identifiers → 97 glyphs) and *Ikony
+  plochy* (the XDG "Osiris" theme, all 8 freedesktop categories, coloured by
+  `tokens.icon.xdg.categoryColor`). ~500 icons rendered live from
+  `iconography/map/{filetypes,producticons,xdg}.json`; data generated into
+  `docs/preview/icons.js` by `scripts/lib/gen_preview_icons.py` (`make pages`).
 - **Self-hosted APT repository** on GitHub Pages —
   `https://richardblaha.github.io/osiris-theme/apt/` (suite `stable`, component
   `main`). `packaging/apt/build-apt-repo.sh` (`make apt`) lays out a signed
-  `pool/` + `dists/` tree from the `.deb` set; `release.yml` deploys it beside the
-  design-system preview and `build.yml` refreshes it from the latest release on
-  every `main` push. One-line install:
-  `curl -fsSL …/apt/setup.sh | sudo sh`. The `Release` file is GPG-signed once the
-  `APT_GPG_PRIVATE_KEY` repo secret is set; setup in `docs/APT.md`.
+  `pool/` + `dists/` tree from the `.deb` set; `build.yml` builds and deploys it
+  beside the design-system preview on every `main` push, from that run's own
+  `.deb` artifact. One-line install: `curl -fsSL …/apt/setup.sh | sudo sh`. The
+  `Release` file is GPG-signed once the `APT_GPG_PRIVATE_KEY` repo secret is set;
+  setup in `docs/APT.md`.
 
 ### Changed
+- **GitHub Pages is deployed only by `build.yml` on `main` pushes** — `release.yml`
+  no longer touches Pages. Keeps the live site (preview + `/apt/`) in lock-step
+  with `main` and stops a re-run of an old release tag from clobbering it with a
+  stale tree. Cut a release by pushing the `VERSION` bump to `main`, then tagging
+  that commit.
 - Debian `Maintainer` / `debian/changelog` trailer set to
   `Richard Bláha <richardblaha@gmail.com>` (was the `osiris@example.org` placeholder).
 

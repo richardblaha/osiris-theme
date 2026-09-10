@@ -50,9 +50,10 @@ Never hand-tune a hex in a theme file or add a glyph straight into a target. `ma
 
 For an icon change: add the glyph to `iconography/glyphs.json`, reference it from
 `iconography/map/*.json`, `make tokens`, then `make icons vscode`. See
-[`docs/ICONOGRAPHY.md`](docs/ICONOGRAPHY.md). The preview page's "Aplikační ikony" /
-"Ikony souborů" tabs read [`docs/preview/icons.js`](docs/preview/icons.js) — generated
-from the glyph source + maps + `tokens.icon` by
+[`docs/ICONOGRAPHY.md`](docs/ICONOGRAPHY.md). The preview page has one showcase tab per
+shipped icon theme (*Ikony souborů* / *Produktové ikony* / *Ikony plochy*), fed by
+[`docs/preview/icons.js`](docs/preview/icons.js) — generated from the glyph source + all
+three maps + `tokens.icon` by
 [`scripts/lib/gen_preview_icons.py`](scripts/lib/gen_preview_icons.py) (run by
 `make pages`; committed so the page also works from `file://`). Regenerate and commit it
 with any glyph/map/palette change.
@@ -96,17 +97,21 @@ Other `scripts/lib/gen_*.py` (`gen_sourceview.py`, `gen_terminal.py`, `gen_kvant
 hand-edit a version in those files.
 
 To cut a release: bump `VERSION`, move `CHANGELOG.md` `[Unreleased]` items under a
-`## [x.y.z] - <date>` heading, commit, then `git tag vX.Y.Z && git push --tags` (must match
-`VERSION` or `release.yml` fails fast; `-` in the tag ⇒ pre-release). `.github/workflows/build.yml`
-runs the token guard + a full build on every push to `main` and every PR.
+`## [x.y.z] - <date>` heading, **commit to `main` and push** (this deploys Pages),
+*then* `git tag vX.Y.Z <that commit> && git push --tags` (tag must match `VERSION` or
+`release.yml` fails fast; `-` in the tag ⇒ pre-release). Always tag `main`'s tip —
+`release.yml` doesn't deploy Pages, so a tag behind `main` would otherwise ship stale
+docs. `.github/workflows/build.yml` runs the token guard + a full build on every push to
+`main` and every PR; `release.yml` builds the artifacts, cuts the GitHub Release and
+pushes npm.
 
-`release.yml` also publishes a **self-hosted APT repository** on GitHub Pages at
-`https://richardblaha.github.io/osiris-theme/apt/` (`packaging/apt/build-apt-repo.sh`,
-staged into `build/pages/apt/` by `scripts/build.sh pages` when `OSIRIS_APT_REPO=1`;
-`make apt` builds it locally from `dist/*.deb`). The `Release` file is GPG-signed with
-the `APT_GPG_PRIVATE_KEY` repo secret — until that is set the repo is unsigned and needs
-`[trusted=yes]`. `build.yml` rebuilds the same repo from the latest GitHub Release on every
-`main` push so a docs-only deploy never drops `/apt/`. See [`docs/APT.md`](docs/APT.md).
+GitHub Pages (`https://richardblaha.github.io/osiris-theme/`) — the design-system
+preview **and** a **self-hosted APT repository** under `/apt/` — is built and deployed
+only by `build.yml` on `main` pushes. `packaging/apt/build-apt-repo.sh` is staged into
+`build/pages/apt/` by `scripts/build.sh pages` when `OSIRIS_APT_REPO=1`, from that run's
+own `.deb` artifact (`make apt` builds it locally from `dist/*.deb`). The `Release` file
+is GPG-signed with the `APT_GPG_PRIVATE_KEY` repo secret — until that is set the repo is
+unsigned and needs `[trusted=yes]`. See [`docs/APT.md`](docs/APT.md).
 
 ## Conventions
 

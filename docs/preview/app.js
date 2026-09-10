@@ -27,7 +27,7 @@
     document.querySelectorAll('[data-main-view]').forEach(function (v) {
       v.hidden = v.getAttribute('data-main-view') !== name;
     });
-    if (!galleriesRendered && (name === 'app-icons' || name === 'file-icons')) {
+    if (!galleriesRendered && name !== 'editor') {
       renderGalleries();
       galleriesRendered = true;
     }
@@ -40,13 +40,15 @@
   }
 
   function iconCard(item) {
+    var glyphs = (window.OSIRIS_PREVIEW_ICONS && window.OSIRIS_PREVIEW_ICONS.glyphs) || {};
+    var glyph = glyphs[item.glyph] || { d: '' };
     var color = item.color;
     if (!color) {
       color = document.documentElement.getAttribute('data-theme') === 'light' ? item.light : item.dark;
     }
-    var fr = item.evenodd ? ' fill-rule="evenodd" clip-rule="evenodd"' : '';
+    var fr = glyph.e ? ' fill-rule="evenodd" clip-rule="evenodd"' : '';
     return '<div class="icon-card" title="' + esc(item.glyph) + '">' +
-      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + item.d + '" fill="' + color + '"' + fr + '/></svg>' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + glyph.d + '" fill="' + color + '"' + fr + '/></svg>' +
       '<span class="lbl">' + esc(item.label) + '</span></div>';
   }
 
@@ -58,25 +60,24 @@
 
   function renderGalleries() {
     var data = window.OSIRIS_PREVIEW_ICONS;
-    var app = document.getElementById('gallery-app');
-    var file = document.getElementById('gallery-file');
-    if (!data) {
-      var msg = '<div class="empty">icons.js se nenačetl — spusťte <b>make pages</b>.</div>';
-      if (app) app.innerHTML = msg;
-      if (file) file.innerHTML = msg;
-      return;
-    }
-    if (app) {
-      app.innerHTML =
-        iconGroup('Aplikace (' + data.app.apps.length + ')', data.app.apps) +
-        iconGroup('Kategorie nabídky (' + data.app.categories.length + ')', data.app.categories);
-    }
-    if (file) {
-      file.innerHTML =
-        iconGroup('Složky', data.file.folders) +
-        iconGroup('Podle přípony (' + data.file.extensions.length + ')', data.file.extensions) +
-        iconGroup('Podle názvu (' + data.file.filenames.length + ')', data.file.filenames);
-    }
+    var themes = (data && data.themes) || [];
+    document.querySelectorAll('.icon-gallery[data-theme-id]').forEach(function (sec) {
+      var id = sec.getAttribute('data-theme-id');
+      var theme = themes.filter(function (t) { return t.id === id; })[0];
+      if (!theme) {
+        sec.innerHTML = '<div class="empty">icons.js se nenačetl — spusťte <b>make pages</b>.</div>';
+        return;
+      }
+      sec.innerHTML =
+        '<header class="gallery-head">' +
+          '<h2>' + esc(theme.name) + '</h2>' +
+          '<p class="gallery-target">' + esc(theme.target) + '</p>' +
+          '<p>' + esc(theme.note) + '</p>' +
+        '</header>' +
+        '<div class="gallery-body">' +
+          theme.groups.map(function (gr) { return iconGroup(gr.title, gr.items); }).join('') +
+        '</div>';
+    });
   }
 
   /* ---- Activity Bar -> Side Bar view switching --------------------------- */
