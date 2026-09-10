@@ -22,7 +22,6 @@
     "fira code",
     "icon-theme",
     "file-icons",
-    "product-icons",
     "papirus"
   ],
   "galleryBanner": {
@@ -58,19 +57,11 @@
         "path": "./fileicons/osiris-file-icons.json"
       }
     ],
-    "productIconThemes": [
-      {
-        "id": "osiris-product-icons",
-        "label": "Osiris Product Icons",
-        "path": "./producticons/osiris-product-icons.json"
-      }
-    ],
     "configurationDefaults": {
       "workbench.colorTheme": "Osiris Dark",
       "workbench.preferredDarkColorTheme": "Osiris Dark",
       "workbench.preferredLightColorTheme": "Osiris Light",
       "workbench.iconTheme": "osiris-file-icons",
-      "workbench.productIconTheme": "osiris-product-icons",
       "editor.fontFamily": "'Fira Code', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace",
       "editor.fontLigatures": true,
       "editor.inlayHints.fontFamily": "'Fira Code', ui-monospace, monospace",
@@ -97,7 +88,6 @@
   },
   "devDependencies": {
     "@vscode/vsce": "^3.2.0",
-    "fantasticon": "^3.0.0",
     "ovsx": "^0.9.5"
   }
 }

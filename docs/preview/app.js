@@ -40,16 +40,11 @@
   }
 
   function iconCard(item) {
-    var glyphs = (window.OSIRIS_PREVIEW_ICONS && window.OSIRIS_PREVIEW_ICONS.glyphs) || {};
-    var glyph = glyphs[item.glyph] || { d: '' };
-    var color = item.color;
-    if (!color) {
-      color = document.documentElement.getAttribute('data-theme') === 'light' ? item.light : item.dark;
-    }
-    var fr = glyph.e ? ' fill-rule="evenodd" clip-rule="evenodd"' : '';
-    return '<div class="icon-card" title="' + esc(item.glyph) + '">' +
-      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + glyph.d + '" fill="' + color + '"' + fr + '/></svg>' +
-      '<span class="lbl">' + esc(item.label) + '</span></div>';
+    var svg = item.svg || '';
+    var label = item.label || item.glyph || '';
+    return '<div class="icon-card" title="' + esc(label) + '">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true">' + svg + '</svg>' +
+      '<span class="lbl">' + esc(label) + '</span></div>';
   }
 
   function iconGroup(title, items) {

@@ -25,9 +25,9 @@ interactive reference in [`docs/preview/`](docs/preview/).
 
 ```
 tokens.json ──┬─→ vscode/themes/*.json            → osiris-theme.vsix (colour theme)
-              ├─→ iconography/glyphs.json  ┬─→ vscode/fileicons/*     → Osiris File Icons
-              │   + iconography/map/*.json ├─→ vscode/producticons/*  → Osiris Product Icons
-              │                            └─→ build/icons/Osiris/    → /usr/share/icons/Osiris
+              ├─→ Papirus SVGs (build/papirus-src/)
+              │   + iconography/icon_map.json  ┬─→ vscode/fileicons/*     → Osiris File Icons
+              │                               └─→ build/icons/Osiris/    → /usr/share/icons/Osiris
               ├─→ desktop/gtk-* + gtk-common/*     → /usr/share/themes/Osiris{,-Light}/gtk-{3.0,4.0}
               ├─→ desktop/gnome-shell/*.css.in     → …/Osiris{,-Light}/gnome-shell
               ├─→ desktop/metacity-1/*.xml.in      → …/Osiris{,-Light}/metacity-1  (Flashback/Marco)
@@ -62,8 +62,8 @@ osiris-theme/
 ├── wiki/                        # Project Wiki & Graphic Design Manual (GitHub Wiki format)
 │   ├── Home.md  _Sidebar.md  Manual-grafickeho-designu.md  images/ ...
 ├── iconography/                 # icon single-source
-│   ├── glyphs.json              # ~145 Papirus-based path primitives
-│   └── map/                     # filetypes.json · xdg.json · producticons.json
+├── iconography/                 # icon name wiring
+│   └── icon_map.json            # file extensions, filenames, folders, XDG names → Papirus icon names
 ├── vscode/                      # VS Code extension — colour + file + product icon themes
 ├── vitepress/                   # npm: osiris-vitepress-theme (default-theme override)
 ├── bootstrap/                   # npm: osiris-bootstrap-theme (Bootstrap 5, Sass)
@@ -107,7 +107,6 @@ Then:
 
 - **Preferences: Color Theme → Osiris Dark / Osiris Light**
 - **Preferences: File Icon Theme → Osiris File Icons**
-- **Preferences: Product Icon Theme → Osiris Product Icons**
 
 ### Web — npm
 

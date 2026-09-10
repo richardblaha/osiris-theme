@@ -1,51 +1,37 @@
 #!/usr/bin/env python3
 """Generate docs/preview/icons.js — the data behind the preview page's icon-theme
-showcase tabs (one per icon theme this repo ships).
+showcase tabs.
 
-Single source of truth, like everything else: glyph paths from
-iconography/glyphs.json, wiring from iconography/map/{filetypes,producticons,xdg}.json,
-colours from assets/tokens.json (icon.fileIcon.palette / icon.xdg.categoryColor /
-themes.*.text).
+Reads icon name mappings from iconography/icon_map.json, fetches the
+corresponding Papirus SVGs, recolours them with the Osiris palette (via
+scripts/lib/gen_icons.py), and embeds the inner SVG markup so the preview
+page can render the icons without external files.
 
-The three shipped icon themes:
-  * file    — VS Code "Osiris File Icons"     (iconography/map/filetypes.json)
-  * product — VS Code "Osiris Product Icons"  (iconography/map/producticons.json)
-  * xdg     — freedesktop icon theme "Osiris" (iconography/map/xdg.json)
+Two shipped icon themes:
+  * file — VS Code "Osiris File Icons"     (icon_map.json → vscode_file)
+  * xdg  — freedesktop icon theme "Osiris" (icon_map.json → xdg)
 
-Run by `scripts/build.sh pages` (and `make icons`); the output is committed so
+The product icon theme has been removed.
+
+Run by `scripts/build.sh pages`; the output is committed so
 docs/preview/index.html also works opened straight from disk.
 """
 from __future__ import annotations
 
 import json
+import os
 import pathlib
+import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 OUT = ROOT / "docs" / "preview" / "icons.js"
+sys.path.insert(0, str(ROOT / "scripts" / "lib"))
 
 
 def load(*parts: str) -> dict:
     return json.loads(ROOT.joinpath(*parts).read_text(encoding="utf-8"))
 
 
-APP_LABELS = {
-    "text-editor": "Textový editor", "terminal-app": "Terminál",
-    "file-manager": "Správce souborů", "web-browser": "Webový prohlížeč",
-    "code": "Vývojové prostředí", "development": "Vývoj", "calculator": "Kalkulačka",
-    "image-viewer": "Prohlížeč obrázků", "media-player": "Přehrávač videa",
-    "music": "Přehrávač hudby", "mail": "Pošta", "help": "Nápověda",
-    "package": "Software", "monitor": "Sledování systému", "settings": "Nastavení",
-    "screenshot": "Snímek obrazovky", "color-picker": "Kapátko barev",
-    "file-archive": "Správce archivů", "calendar": "Kalendář", "clock": "Hodiny",
-}
-CATEGORY_LABELS = {
-    "development": "Vývoj", "graphics": "Grafika", "internet": "Internet",
-    "multimedia": "Multimédia", "music": "Zvuk", "videos": "Video",
-    "office": "Kancelář", "games": "Hry", "system": "Systém", "utilities": "Nástroje",
-    "accessories": "Příslušenství", "science": "Věda", "education": "Vzdělávání",
-    "package": "Ostatní", "preferences": "Předvolby", "settings": "Předvolby systému",
-    "help": "Nápověda",
-}
 XDG_CATEGORY_CS = {
     "actions": "Akce", "apps": "Aplikace", "categories": "Kategorie nabídky",
     "devices": "Zařízení", "emblems": "Emblémy", "mimetypes": "Typy souborů",
@@ -53,75 +39,65 @@ XDG_CATEGORY_CS = {
 }
 
 
+def extract_inner_svg(svg_text: str) -> str:
+    """Extract the inner XML of an SVG (everything between <svg ...> and </svg>)."""
+    start = svg_text.find(">", svg_text.find("<svg"))
+    end = svg_text.rfind("</svg>")
+    if start == -1 or end == -1:
+        return ""
+    return svg_text[start + 1:end].strip()
+
+
 def main() -> None:
-    glyphs = load("iconography", "glyphs.json")["glyphs"]
-    ft = load("iconography", "map", "filetypes.json")
-    pi = load("iconography", "map", "producticons.json")
-    xdg = load("iconography", "map", "xdg.json")["icons"]
-    tok = load("assets", "tokens.json")["icon"]
-    themes_tok = load("assets", "tokens.json")["themes"]
+    import gen_icons
 
-    palette = tok["fileIcon"]["palette"]
-    file_default = tok["fileIcon"]["default"]
-    folder_tok = tok["fileIcon"]["folder"]
-    folder_open_tok = tok["fileIcon"]["folderOpen"]
-    cat_color = tok["xdg"]["categoryColor"]
-    ui_dark = themes_tok["dark"]["text"]["primary"]
-    ui_light = themes_tok["light"]["text"]["primary"]
+    m = load("iconography", "icon_map.json")
 
-    used: dict[str, dict] = {}
+    build_dir = os.environ.get("OSIRIS_BUILD_DIR",
+                               str(ROOT / "build"))
+    papirus_src = os.environ.get("OSIRIS_PAPIRUS_SRC",
+                                 os.path.join(build_dir, "papirus-src"))
+    gen_icons.ensure_papirus(papirus_src)
+    papirus_root = os.path.join(papirus_src, "Papirus")
 
-    def g(key: str) -> dict:
-        if key not in used:
-            gl = glyphs[key]
-            entry = {"d": gl["d"]}
-            if gl.get("evenodd"):
-                entry["e"] = 1
-            used[key] = entry
-        return {"glyph": key}
-
-    def color_of(name: str) -> str:
-        return file_default if name == "default" else palette.get(name, file_default)
-
-    def dedupe(pairs, label_for) -> list:
-        """pairs: iterable of (identifier, glyph). Keep first identifier per glyph."""
-        out, seen = [], set()
-        for ident, glyph in pairs:
-            if glyph in seen or glyph not in glyphs:
-                continue
-            seen.add(glyph)
-            out.append({**g(glyph), "label": label_for(ident, glyph)})
-        return out
+    def recolor_to_inner(cat: str, name: str) -> str:
+        svg = gen_icons.read_papirus_svg(papirus_root, cat, name)
+        if svg is None:
+            return ""
+        return extract_inner_svg(gen_icons.recolor_svg(svg))
 
     # ---- 1. VS Code file icons -------------------------------------------
-    folders = [
-        {**g("folder"), "label": "folder", "dark": folder_tok["dark"], "light": folder_tok["light"]},
-        {**g("folder-open"), "label": "folder (otevřená)",
-         "dark": folder_open_tok["dark"], "light": folder_open_tok["light"]},
-    ]
-    seen_f = set()
-    for glyph in ft["folderNames"].values():
-        if glyph in seen_f or glyph not in glyphs:
+    ft = m["vscode_file"]
+
+    folders = []
+    for label, name in [("folder", ft["folder"]), ("folder (otevřená)", ft["folderOpen"])]:
+        inner = recolor_to_inner("places", name)
+        if inner:
+            folders.append({"svg": inner, "label": label})
+
+    seen_folder = set()
+    for fname, papirus_name in ft["folderNames"].items():
+        if papirus_name in seen_folder:
             continue
-        seen_f.add(glyph)
-        folders.append({**g(glyph), "label": glyph,
-                        "dark": folder_tok["dark"], "light": folder_tok["light"]})
+        seen_folder.add(papirus_name)
+        inner = recolor_to_inner("places", papirus_name)
+        if inner:
+            folders.append({"svg": inner, "label": papirus_name})
 
     def file_entries(section: dict) -> list:
         out = []
-        for name, spec in section.items():
-            if spec["glyph"] not in glyphs:
-                continue
-            out.append({**g(spec["glyph"]), "label": name,
-                        "color": color_of(spec.get("color", "default"))})
+        for name, papirus_name in section.items():
+            inner = recolor_to_inner("mimetypes", papirus_name)
+            if inner:
+                out.append({"svg": inner, "label": name})
         return out
 
     file_theme = {
         "id": "file",
         "name": "Osiris File Icons",
         "target": "VS Code · motiv ikon souborů",
-        "note": "iconography/map/filetypes.json — glyf + role z palety "
-                "tokens.icon.fileIcon.palette. Barvené SVG na asociaci.",
+        "note": "Papirus mimetype SVG přebarvená paletou Osiris. Sdílené s XDG "
+                "ikonami souborů pro GNOME.",
         "groups": [
             {"title": f"Složky ({len(folders)})", "items": folders},
             {"title": f"Podle přípony ({len(ft['fileExtensions'])})",
@@ -131,54 +107,40 @@ def main() -> None:
         ],
     }
 
-    # ---- 2. VS Code product icons --------------------------------------
-    prod = dedupe(
-        ((ident, glyph) for ident, glyph in pi.items() if not ident.startswith("$")),
-        lambda ident, glyph: glyph,
-    )
-    for item in prod:
-        item["dark"], item["light"] = ui_dark, ui_light
-    n_ids = sum(1 for k in pi if not k.startswith("$"))
-    product_theme = {
-        "id": "product",
-        "name": "Osiris Product Icons",
-        "target": "VS Code · motiv produktových ikon (osiris-symbols.woff)",
-        "note": f"iconography/map/producticons.json — {n_ids} identifikátorů "
-                f"Codicon přemapováno na {len(prod)} glyfů. Monochromatické, "
-                f"dědí barvu UI; identifikátory mimo seznam padají zpět na Codicon.",
-        "groups": [{"title": f"Sada glyfů ({len(prod)})", "items": prod}],
-    }
-
-    # ---- 3. XDG / freedesktop icon theme ------------------------------
+    # ---- 2. XDG / freedesktop icon theme ------------------------------
+    xdg_map = m.get("xdg", {})
     xdg_groups = []
-    for cat, mapping in xdg.items():
-        if cat.startswith("$"):
-            continue
-        labels = APP_LABELS if cat == "apps" else CATEGORY_LABELS if cat == "categories" else {}
-        items = dedupe(mapping.items(),
-                       lambda ident, glyph, lut=labels: lut.get(glyph, glyph))
-        color = cat_color.get(cat, file_default)
-        for item in items:
-            item["color"] = color
-        xdg_groups.append({"title": f"{XDG_CATEGORY_CS.get(cat, cat)} · {cat} ({len(items)})",
-                           "items": items})
+    for cat, mapping in xdg_map.items():
+        items = []
+        seen = set()
+        for xdg_name, papirus_name in mapping.items():
+            if papirus_name in seen:
+                continue
+            seen.add(papirus_name)
+            inner = recolor_to_inner(cat, papirus_name)
+            if inner:
+                items.append({"svg": inner, "label": xdg_name})
+        if items:
+            xdg_groups.append({
+                "title": f"{XDG_CATEGORY_CS.get(cat, cat)} · {cat} ({len(items)})",
+                "items": items,
+            })
+
     xdg_theme = {
         "id": "xdg",
         "name": "Osiris",
         "target": "XDG / freedesktop · /usr/share/icons/Osiris (GNOME, KDE Plasma)",
-        "note": "iconography/map/xdg.json — 8 kategorií, barva podle "
-                "tokens.icon.xdg.categoryColor. Dědí Papirus-Dark, Papirus, breeze, "
-                "gnome, hicolor pro cokoli nestylované.",
+        "note": "Papirus ikony přebarvené paletou Osiris. Dědí Papirus-Dark, "
+                "Papirus, breeze, gnome, hicolor pro cokoli nestylované.",
         "groups": xdg_groups,
     }
 
     data = {
-        "glyphs": {k: used[k] for k in sorted(used)},
-        "themes": [file_theme, product_theme, xdg_theme],
+        "themes": [file_theme, xdg_theme],
     }
 
-    banner = ("/* GENERATED by scripts/lib/gen_preview_icons.py from iconography/ + "
-              "assets/tokens.json — do not edit. */\n")
+    banner = ("/* GENERATED by scripts/lib/gen_preview_icons.py from Papirus + "
+              "iconography/icon_map.json — do not edit. */\n")
     OUT.write_text(
         banner + "window.OSIRIS_PREVIEW_ICONS = "
         + json.dumps(data, ensure_ascii=False, indent=2) + ";\n",

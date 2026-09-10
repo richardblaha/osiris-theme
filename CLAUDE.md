@@ -5,8 +5,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this repo is
 
 One repository that generates the entire **OSIRIS** visual identity from a single set of
-design tokens: a VS Code extension (colour + file + product icon themes), an XDG/Papirus
-icon theme, GTK 3/4, GNOME Shell, Metacity, KDE Plasma/Qt/Kvantum, GtkSourceView, GNOME
+design tokens: a VS Code extension (colour + file icon themes), an XDG/Papirus icon
+theme, GTK 3/4, GNOME Shell, Metacity, KDE Plasma/Qt/Kvantum, GtkSourceView, GNOME
 Terminal/Ptyxis/Konsole palettes, GRUB2, a VitePress npm theme, a Bootstrap 5 npm theme,
 Forgejo/Gitea CSS, Chromium/Firefox manifests, and wallpapers. Output ships as `.vsix`,
 `.tgz`, `.zip`, `.deb`, `.rpm`, and a `.tar.gz` bundle.
@@ -15,9 +15,11 @@ Forgejo/Gitea CSS, Chromium/Firefox manifests, and wallpapers. Output ships as `
 
 - **Every colour** comes from [`assets/tokens.json`](assets/tokens.json) (`accent`, `state`,
   `terminal`, `themes.{dark,light}`, plus `font`, `radius`, `shadow`, `icon`, `wallpaper`).
-- **Every icon** comes from [`iconography/glyphs.json`](iconography/glyphs.json) (~145 Papirus-style
-  24×24 path primitives), wired to targets through [`iconography/map/`](iconography/map/)
-  (`filetypes.json`, `xdg.json`, `producticons.json`).
+- **Every icon** is a real [Papirus Icon Theme](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)
+  SVG fetched at build time (shallow git clone, cached in `build/papirus-src/`), recoloured
+  with the Osiris palette by [`scripts/lib/gen_icons.py`](scripts/lib/gen_icons.py), and
+  wired through [`iconography/icon_map.json`](iconography/icon_map.json). VS Code file icons
+  and XDG mimetype icons share the same recoloured SVGs.
 
 Never hand-tune a hex in a theme file or add a glyph straight into a target. `make tokens`
 (→ [`scripts/check-tokens.sh`](scripts/check-tokens.sh)) is the CI gate and fails on drift.
@@ -48,15 +50,15 @@ Never hand-tune a hex in a theme file or add a glyph straight into a target. `ma
 5. Eyeball `docs/preview/index.html` (toggle dark/light) — this is the acceptance test;
    there is no unit-test suite.
 
-For an icon change: add the glyph to `iconography/glyphs.json`, reference it from
-`iconography/map/*.json`, `make tokens`, then `make icons vscode`. See
-[`docs/ICONOGRAPHY.md`](docs/ICONOGRAPHY.md). The preview page has one showcase tab per
-shipped icon theme (*Ikony souborů* / *Produktové ikony* / *Ikony plochy*), fed by
-[`docs/preview/icons.js`](docs/preview/icons.js) — generated from the glyph source + all
-three maps + `tokens.icon` by
+For an icon change: wire the extension/filename/folder/XDG name to a Papirus icon name in
+[`iconography/icon_map.json`](iconography/icon_map.json), `make tokens`, then
+`make icons vscode`. See [`docs/ICONOGRAPHY.md`](docs/ICONOGRAPHY.md). The preview page has
+two showcase tabs (*Ikony souborů* / *Ikony plochy*), fed by
+[`docs/preview/icons.js`](docs/preview/icons.js) — generated from `icon_map.json` + the
+Papirus source + `tokens.icon` by
 [`scripts/lib/gen_preview_icons.py`](scripts/lib/gen_preview_icons.py) (run by
 `make pages`; committed so the page also works from `file://`). Regenerate and commit it
-with any glyph/map/palette change.
+with any map/palette change.
 
 ## Build
 
@@ -86,9 +88,11 @@ partial local toolchain still produces most artifacts.
 ### Icon generator
 
 `python3 scripts/lib/gen_icons.py <target> <out-dir>` with `target` ∈
-`vscode-file` | `vscode-product` (needs fantasticon for the `.woff`) | `xdg` | `all`.
-Other `scripts/lib/gen_*.py` (`gen_sourceview.py`, `gen_terminal.py`, `gen_kvantum_svg.py`,
-`gen_grub_assets.py`, `gen_appicons.py`) are invoked by `build.sh`.
+`vscode-file` | `xdg` | `all`. The generator shallow-clones the Papirus Icon Theme into
+`build/papirus-src/` (cached across builds), recolours every SVG fill with the Osiris
+palette, and emits the XDG icon theme + VS Code file icon theme. File icons (mimetypes)
+are shared between VS Code and GNOME. The VS Code product icon theme has been removed;
+VS Code falls back to its built-in Codicon.
 
 ## Versioning & releases
 

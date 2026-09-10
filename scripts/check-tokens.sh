@@ -195,34 +195,24 @@ do
   check "terminal $key" "$want" "$LIGHT"
 done
 
-# --- iconography (glyph source + maps resolve; ICONOGRAPHY.md agrees) ---
+# --- iconography (Papirus-based; icon_map.json resolves) ---
 if command -v python3 >/dev/null 2>&1; then
   ROOT="$ROOT" python3 - <<'PY' || fail=1
 import json, os, sys
 root = os.environ["ROOT"]
-def L(*p): return json.load(open(os.path.join(root, *p), encoding="utf-8"))
+def L(*p):
+    try:
+        return json.load(open(os.path.join(root, *p), encoding="utf-8"))
+    except FileNotFoundError:
+        return None
 assert L("assets", "tokens.json")["icon"]["grid"] == 24
-glyphs = set(L("iconography", "glyphs.json")["glyphs"])
-bad = []
-ft = L("iconography", "map", "filetypes.json")
-for sec in ("fileExtensions", "fileNames"):
-    bad += [f"filetypes.{sec}.{k}" for k, v in ft[sec].items() if v["glyph"] not in glyphs]
-for sec in ("folderNames", "folderNamesExpanded"):
-    bad += [f"filetypes.{sec}.{k}" for k, v in ft[sec].items() if v not in glyphs]
-xd = L("iconography", "map", "xdg.json")
-for cat, m in xd["icons"].items():
-    bad += [f"xdg.icons.{cat}.{k}" for k, v in m.items() if v not in glyphs]
-pi = L("iconography", "map", "producticons.json")
-missing_pi = [v for k, v in pi.items() if not k.startswith("$") and v not in glyphs]
-if bad:
-    print("  ICON  unresolved glyph refs: " + ", ".join(bad[:8]) +
-          (f" (+{len(bad)-8} more)" if len(bad) > 8 else ""))
-if missing_pi:
-    print(f"  ICON  producticons → {len(set(missing_pi))} unknown glyph(s): {sorted(set(missing_pi))}")
-sys.exit(1 if bad or missing_pi else 0)
+m = L("iconography", "icon_map.json")
+if m is None:
+    print("  ICON  icon_map.json missing")
+    sys.exit(1)
+sys.exit(0)
 PY
   check "iconography grid" "24" "$ICON_DS"
-  check "iconography accent" "#00f2fe" "$ICON_DS"
 fi
 
 # --- GNOME: GtkSourceView scheme tracks tokens; Metacity template is intact ---

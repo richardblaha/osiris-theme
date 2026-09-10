@@ -2,27 +2,25 @@
 
 Dual-accent theme suite built from the
 [OSIRIS design system](https://richardblaha.github.io/osiris-theme/) — one
-extension, three contributions:
+extension, two contributions:
 
 | Contribution | Ids |
 |---|---|
 | **Color theme** | *Osiris Dark* · *Osiris Light* |
 | **File Icon Theme** | *Osiris File Icons* |
-| **Product Icon Theme** | *Osiris Product Icons* |
 
 - **Osiris Dark** — cyan `#00f2fe` / rose `#ff2a85` on a `#0d1117 / #161b22` neutral ramp.
 - **Osiris Light** — blue `#0969da` / rose `#e01a76` on white / `#f6f8fa`.
-- **Osiris File Icons** — Material-Symbols glyphs, ~155 extensions + ~48 filenames,
-  folder & language associations, dark/light folder tint.
-- **Osiris Product Icons** — `osiris-symbols.woff` remapping ~400 product-icon
-  ids (activity bar, status bar, SCM, debug, test, search, symbols …).
+- **Osiris File Icons** — recoloured Papirus Icon Theme SVGs, ~155 extensions +
+  ~48 filenames, folder & language associations.
 
 The colour themes ship `configurationDefaults` that turn on Fira Code with
 ligatures while active.
 
-The icon themes are generated from
-[`iconography/`](../iconography/) by
-[`scripts/lib/gen_icons.py`](../scripts/lib/gen_icons.py) at build time
+The file icon theme is generated from [Papirus Icon Theme](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)
+SVGs (fetched at build time, recoloured with the Osiris palette) by
+[`scripts/lib/gen_icons.py`](../scripts/lib/gen_icons.py). Name wiring lives in
+[`iconography/icon_map.json`](../iconography/icon_map.json).
 (`fileicons/` + `producticons/` are git-ignored). See
 [`docs/ICONOGRAPHY.md`](../docs/ICONOGRAPHY.md).
 

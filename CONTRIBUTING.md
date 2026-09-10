@@ -2,12 +2,14 @@
 
 ## The golden rule: one source of truth
 
-Every colour in every theme comes from [`assets/tokens.json`](assets/tokens.json),
-and every icon from [`iconography/glyphs.json`](iconography/glyphs.json). Do
-**not** hand-tune a hex in a theme file or add a glyph straight into a target —
+Every colour in every theme comes from [`assets/tokens.json`](assets/tokens.json).
+Every icon is a real [Papirus Icon Theme](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)
+SVG fetched at build time and recoloured with the Osiris palette by
+[`scripts/lib/gen_icons.py`](scripts/lib/gen_icons.py), wired through
+[`iconography/icon_map.json`](iconography/icon_map.json). Do
+**not** hand-tune a hex in a theme file or add an icon straight into a target —
 CI (`scripts/check-tokens.sh`) fails on drift between the tokens, the VS Code
-themes, `docs/DESIGN_SYSTEM.md`, the browser manifests, and on any icon map that
-references a glyph that does not exist.
+themes, `docs/DESIGN_SYSTEM.md`, and the browser manifests.
 
 Workflow for a palette change:
 
@@ -27,9 +29,9 @@ Workflow for a palette change:
 5. Eyeball `docs/preview/index.html` (dark + light toggle) — it is the acceptance
    test.
 
-For an **icon** change see [`docs/ICONOGRAPHY.md`](docs/ICONOGRAPHY.md): add the
-glyph to `iconography/glyphs.json`, wire it in `iconography/map/*.json`,
-`make tokens`, then `make icons vscode`.
+For an **icon** change see [`docs/ICONOGRAPHY.md`](docs/ICONOGRAPHY.md): wire the
+extension/filename/folder/XDG name to a Papirus icon name in
+`iconography/icon_map.json`, `make tokens`, then `make icons vscode`.
 
 ## Layout
 
@@ -38,8 +40,8 @@ glyph to `iconography/glyphs.json`, wire it in `iconography/map/*.json`,
 | `assets/` | tokens, shared icons, wallpaper SVG sources + dynamic definitions |
 | `docs/preview/` | interactive reference (GitHub Pages root) |
 | `docs/DESIGN_SYSTEM.md` · `docs/ICONOGRAPHY.md` | the written specs |
-| `iconography/` | `glyphs.json` (Material-Symbols primitives) + `map/` |
-| `vscode/` | VS Code extension — colour + file + product icon themes |
+| `iconography/` | `icon_map.json` — maps file extensions, filenames, folders, XDG names to Papirus icon names |
+| `vscode/` | VS Code extension — colour + file icon themes |
 | `vitepress/` | npm `osiris-vitepress-theme` — VitePress default-theme override |
 | `bootstrap/` | npm `osiris-bootstrap-theme` — Bootstrap 5 Sass build |
 | `forgejo/` | Forgejo / Gitea CSS themes — dark / light / auto |

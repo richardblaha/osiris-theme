@@ -53,13 +53,12 @@ build_vscode() {
   local d="$BUILD_DIR/vscode"
   rm -rf "$d"; mkdir -p "$d"
   cp -r vscode/. "$d/"
-  # generate the file + product icon themes from iconography/ into the build copy
+  # generate the file icon theme from Papirus iconography into the build copy
   if have python3; then
     python3 scripts/lib/gen_icons.py vscode-file "$d"
-    python3 scripts/lib/gen_icons.py vscode-product "$d"
   else
-    warn "python3 missing — icon themes not generated; dropping them from package.json"
-    node -e "const f='$d/package.json',j=require('./'+f);delete j.contributes.iconThemes;delete j.contributes.productIconThemes;require('fs').writeFileSync(f,JSON.stringify(j,null,2)+'\n')"
+    warn "python3 missing — icon theme not generated; dropping it from package.json"
+    node -e "const f='$d/package.json',j=require('./'+f);delete j.contributes.iconThemes;require('fs').writeFileSync(f,JSON.stringify(j,null,2)+'\n')"
   fi
   ( cd "$d"
     # sync version from repo VERSION
@@ -67,11 +66,6 @@ build_vscode() {
     # icon.png from icon.svg
     if [ ! -f icon.png ]; then
       rasterise_svg icon.svg icon.png 256 256 || warn "icon.png not generated; unset 'icon' in package.json if vsce fails"
-    fi
-    if [ ! -f producticons/osiris-symbols.woff ]; then
-      warn "osiris-symbols.woff missing (fantasticon unavailable) — dropping product icon theme"
-      node -e "const f='package.json',j=require('./'+f);delete j.contributes.productIconThemes;require('fs').writeFileSync(f,JSON.stringify(j,null,2)+'\n')"
-      rm -rf producticons
     fi
     if have vsce; then VSCE=vsce
     elif have npx; then VSCE="npx --yes @vscode/vsce"
