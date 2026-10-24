@@ -7,7 +7,7 @@
 - [Barevná paleta a tokeny](Barevna-paleta-a-tokeny.md)
 - [Typografie (Fira Code)](Typografie.md)
 - [Komponenty a UI stavy](Komponenty-a-UI-stavy.md)
-- [Ikonografie (Papirus)](Ikonografie.md)
+- [Ikonografie (Material Rounded)](Ikonografie.md)
 - [Tapety a vizuální aktiva](Tapety-a-vizualni-aktiva.md)
 - [Galerie a screenshoty](Galerie-a-screenshoty.md)
 

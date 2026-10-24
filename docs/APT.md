@@ -1,95 +1,80 @@
-# APT repository — `richardblaha.github.io/osiris-theme/apt`
+# APT repository — `richardblaha.github.io/osiris-deb-repo`
 
-A self-hosted, GPG-signed APT repository served as static files from GitHub Pages.
-It carries the six Debian packages
-(`osiris-theme-gtk`, `osiris-theme-plasma`, `osiris-icon-theme`, `osiris-theme-grub`,
-`osiris-wallpapers`, `osiris-desktop-theme`). They are all `Architecture: all` — pure
-data, no compiled code — so one suite works on **any** apt-based distribution
-(Debian, Ubuntu, Mint, Pop!_OS, …).
+A GPG-signed APT repository served as static files by GitHub Pages from the separate
+[`richardblaha/osiris-deb-repo`](https://github.com/richardblaha/osiris-deb-repo) repo.
+It carries every Debian package this repo builds (`osiris-theme-gtk`,
+`osiris-theme-plasma`, `osiris-icon-theme`, `osiris-theme-grub`, `osiris-wallpapers`,
+`osiris-desktop-theme`, `osiris-archive-keyring`). They are all `Architecture: all`,
+so one suite works on any apt-based distribution.
 
 - **Suite:** `stable` · **Component:** `main` · **Base URL:**
-  `https://richardblaha.github.io/osiris-theme/apt`
+  `https://richardblaha.github.io/osiris-deb-repo`
 - Layout: `pool/main/o/osiris-desktop-theme/*.deb`,
   `dists/stable/{Release,InRelease,Release.gpg}`,
   `dists/stable/main/binary-{amd64,arm64,all}/Packages{,.gz}`
+- Every released version stays in the pool (indexed with `--multiversion`).
 
 ## Install (end users)
 
+Either install the `osiris-archive-keyring_*.deb` from a GitHub Release:
+
 ```sh
-curl -fsSL https://richardblaha.github.io/osiris-theme/apt/setup.sh | sudo sh
+sudo apt install ./osiris-archive-keyring_*_all.deb
+sudo apt update && sudo apt install osiris-desktop-theme
+```
+
+or run the setup script, which does the same:
+
+```sh
+curl -fsSL https://richardblaha.github.io/osiris-deb-repo/setup.sh | sudo sh
 sudo apt install osiris-desktop-theme
 ```
 
-`setup.sh` drops the keyring at `/usr/share/keyrings/osiris-archive-keyring.gpg` and
-a deb822 source at `/etc/apt/sources.list.d/osiris.sources`. Manual equivalent:
-
-```sh
-curl -fsSL https://richardblaha.github.io/osiris-theme/apt/osiris-archive-keyring.gpg \
-  | sudo tee /usr/share/keyrings/osiris-archive-keyring.gpg > /dev/null
-curl -fsSL https://richardblaha.github.io/osiris-theme/apt/osiris.sources \
-  | sudo tee /etc/apt/sources.list.d/osiris.sources > /dev/null
-sudo apt update
-```
+Both put the key at `/usr/share/keyrings/osiris-archive-keyring.gpg` and a deb822
+source at `/etc/apt/sources.list.d/osiris.sources`. The keyring package is itself in
+the repo, so a future key rotation reaches users through `apt upgrade`.
 
 ## How it is built and published
 
 | Where | What |
 |---|---|
-| `packaging/apt/build-apt-repo.sh <out> [deb-dir]` | builds the `pool/` + `dists/` tree, signs `Release` (→ `InRelease` + `Release.gpg`) with `APT_GPG_KEY`, writes `setup.sh` / `osiris.sources` / `osiris.list` / the public key / `index.html`. With no `deb-dir` it pulls the latest GitHub release's `.deb` assets via `gh`. |
-| `scripts/build.sh pages` | when `OSIRIS_APT_REPO=1`, stages the repo into `build/pages/apt/` (`OSIRIS_APT_DEB_DIR` picks the `.deb` source). |
-| `.github/workflows/build.yml` → `pages-build` / `pages-deploy` | on every `main` push: builds the repo from **that run's own `.deb` artifact** and deploys it with the preview site. This is the only place Pages is published — `release.yml` doesn't touch it — so the live repo always matches `main`. Cut a release by committing the `VERSION` bump to `main` (which deploys) *then* tagging that commit. |
+| `packaging/apt/osiris-archive-keyring.gpg`, `packaging/apt/osiris.sources` | the public key and the source file; shipped by the `osiris-archive-keyring` package and copied into the repo. |
+| `packaging/apt/build-apt-repo.sh <out> [deb-dir]` | builds the `pool/` + `dists/` tree from every `.deb` in `deb-dir`, signs `Release` (→ `InRelease` + `Release.gpg`) with `APT_GPG_KEY`, writes `setup.sh` / `osiris.sources` / `osiris.list` / the public key / `index.html`. With no `deb-dir` it pulls the latest GitHub release's `.deb` assets via `gh`. |
+| `.github/workflows/release.yml` → `apt` | on a **stable** tag (no `-`): checks out `osiris-deb-repo`, rebuilds the repo from its existing pool plus the release's `.deb` files, and pushes. Pages on that repo serves `main`. |
 | `make apt` | local: `make deb` then build the repo into `build/apt/` from `dist/*.deb`. |
 
 Environment knobs: `APT_SUITE` (default `stable`), `APT_ARCHES` (default `amd64 arm64`),
-`APT_REPO` (default `richardblaha/osiris-theme`), `APT_ORIGIN` / `APT_LABEL`.
+`APT_REPO` (default `richardblaha/osiris-theme`), `APT_BASE_URL`, `APT_ORIGIN` / `APT_LABEL`.
 
-## One-time setup — the signing key
+## One-time setup — secrets in `osiris-theme`
 
-Until the **`APT_GPG_PRIVATE_KEY`** repo secret exists, the workflows still publish the
-repo but leave `Release` unsigned; users would then need `[trusted=yes]` in their
-sources line. To sign it:
-
-### 1. Create a dedicated, passphraseless repo-signing key
-
-```sh
-gpg --batch --pinentry-mode loopback --passphrase '' --quick-generate-key \
-    'OSIRIS Theme (APT repo signing) <richardblaha@gmail.com>' ed25519 sign 5y
-KEYID=$(gpg --list-keys --with-colons richardblaha@gmail.com | awk -F: '/^fpr:/{print $10; exit}')
-```
-
-Keep this separate from any personal key — it lives in a GitHub secret.
-
-### 2. Add it as a repo secret
+| Secret | Value |
+|---|---|
+| `APT_GPG_PRIVATE_KEY` | armored secret key of the dedicated, passphraseless repo-signing key `A26BFD08F6A2AD3AFACADC3D3ED714C4D0C6E6CE`. Must match `packaging/apt/osiris-archive-keyring.gpg`. |
+| `DEB_REPO_DEPLOY_KEY` | private half of an SSH key whose public half is a **write** deploy key on `osiris-deb-repo`. |
 
 ```sh
-gpg --armor --export-secret-keys "$KEYID" | gh secret set APT_GPG_PRIVATE_KEY
+gpg --armor --export-secret-keys A26BFD08F6A2AD3AFACADC3D3ED714C4D0C6E6CE \
+  | gh secret set APT_GPG_PRIVATE_KEY -R richardblaha/osiris-theme
+
+ssh-keygen -t ed25519 -N '' -C osiris-theme-release -f deploy_key
+gh repo deploy-key add deploy_key.pub -R richardblaha/osiris-deb-repo --allow-write -t "osiris-theme release"
+gh secret set DEB_REPO_DEPLOY_KEY -R richardblaha/osiris-theme < deploy_key
+rm deploy_key deploy_key.pub
 ```
-
-(or *Settings → Secrets and variables → Actions → New repository secret*,
-name `APT_GPG_PRIVATE_KEY`, value = the armored block).
-
-That is all. The workflow imports the key, derives its fingerprint, signs `Release`,
-and publishes the matching public key to
-`…/apt/osiris-archive-keyring.gpg` (binary, for `Signed-By:`) and `.asc` (armored).
-
-### 3. Enable GitHub Pages (if not already)
-
-*Settings → Pages → Source: GitHub Actions.* Until then `deploy-pages` 404s; the
-`pages-deploy` job is `continue-on-error` so it never fails the build. The
-`github-pages` environment's "Deployment branches and tags" must allow `main`
-(the default when Pages is enabled) — no tag rule is needed.
 
 ## Rotating the key
 
-Generate a new key, update the `APT_GPG_PRIVATE_KEY` secret and push to `main`. The
-new public key ships automatically; users re-run `setup.sh` to pick it up. Announce
-it in `CHANGELOG.md` — an unexpected key change looks like an
+Generate a new key, replace `packaging/apt/osiris-archive-keyring.gpg` with its public
+part (`gpg --export <fpr>`), update `APT_GPG_PRIVATE_KEY`, and release. For a smooth
+rotation, ship a keyring with **both** keys in one release before switching the
+signing key. Announce it in `CHANGELOG.md` — an unexpected key change looks like an
 attack.
 
 ## Notes
 
-- The repo keeps only the **latest** version of each package (it is rebuilt from the
-  newest release each time). Old `.deb` files stay on their GitHub Release.
 - No `Valid-Until` is set, so the indices never expire between releases.
+- Every release adds about 18 MB to the `osiris-deb-repo` git history; GitHub Pages
+  allows a 1 GB site. Prune old `.deb` files from its `pool/` when that gets close.
 - `dpkg-scanpackages` prints "missing from override file" warnings — harmless, there
   is deliberately no override file.

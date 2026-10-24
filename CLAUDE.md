@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this repo is
 
 One repository that generates the entire **OSIRIS** visual identity from a single set of
-design tokens: a VS Code extension (colour + file icon themes), an XDG/Papirus icon
+design tokens: a VS Code extension (colour + file and product icon themes), an XDG/GNOME icon
 theme, GTK 3/4, GNOME Shell, Metacity, KDE Plasma/Qt/Kvantum, GtkSourceView, GNOME
 Terminal/Ptyxis/Konsole palettes, GRUB2, a VitePress npm theme, a Bootstrap 5 npm theme,
 Forgejo/Gitea CSS, Chromium/Firefox manifests, and wallpapers. Output ships as `.vsix`,
@@ -15,11 +15,11 @@ Forgejo/Gitea CSS, Chromium/Firefox manifests, and wallpapers. Output ships as `
 
 - **Every colour** comes from [`assets/tokens.json`](assets/tokens.json) (`accent`, `state`,
   `terminal`, `themes.{dark,light}`, plus `font`, `radius`, `shadow`, `icon`, `wallpaper`).
-- **Every icon** is a real [Papirus Icon Theme](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)
-  SVG fetched at build time (shallow git clone, cached in `build/papirus-src/`), recoloured
-  with the Osiris palette by [`scripts/lib/gen_icons.py`](scripts/lib/gen_icons.py), and
-  wired through [`iconography/icon_map.json`](iconography/icon_map.json). VS Code file icons
-  and XDG mimetype icons share the same recoloured SVGs.
+- **Every standard icon** comes from official Material Symbols Rounded outlines in
+  [`iconography/material_symbols.json`](iconography/material_symbols.json), extracted
+  at 300/0/24/0. `glyphs.json` is fallback-only for concepts missing upstream.
+  [`scripts/lib/gen_icons.py`](scripts/lib/gen_icons.py) emits the VS Code file theme,
+  product icon font/theme, and the XDG/GNOME theme without network access.
 
 Never hand-tune a hex in a theme file or add a glyph straight into a target. `make tokens`
 (→ [`scripts/check-tokens.sh`](scripts/check-tokens.sh)) is the CI gate and fails on drift.
@@ -50,12 +50,13 @@ Never hand-tune a hex in a theme file or add a glyph straight into a target. `ma
 5. Eyeball `docs/preview/index.html` (toggle dark/light) — this is the acceptance test;
    there is no unit-test suite.
 
-For an icon change: wire the extension/filename/folder/XDG name to a Papirus icon name in
-[`iconography/icon_map.json`](iconography/icon_map.json), `make tokens`, then
+For an icon change: map an official symbol in `material_map.json` first; use
+`glyphs.json` only when upstream has no equivalent. Then wire the semantic id in
+`iconography/map/{filetypes,producticons,xdg}.json`, run `make tokens`, then
 `make icons vscode`. See [`docs/ICONOGRAPHY.md`](docs/ICONOGRAPHY.md). The preview page has
-two showcase tabs (*Ikony souborů* / *Ikony plochy*), fed by
-[`docs/preview/icons.js`](docs/preview/icons.js) — generated from `icon_map.json` + the
-Papirus source + `tokens.icon` by
+three showcase tabs (*Ikony souborů* / *Produktové ikony* / *Ikony plochy*), fed by
+[`docs/preview/icons.js`](docs/preview/icons.js) — generated from the shared glyph source,
+maps and `tokens.icon` by
 [`scripts/lib/gen_preview_icons.py`](scripts/lib/gen_preview_icons.py) (run by
 `make pages`; committed so the page also works from `file://`). Regenerate and commit it
 with any map/palette change.
@@ -71,6 +72,7 @@ make tokens        # palette + icon drift guard — the CI gate (needs: jq; pyth
 make vscode        # -> dist/osiris-theme-<ver>.vsix   (needs: node, vsce/npx, fantasticon, rsvg-convert)
 make npm           # -> dist/osiris-{vitepress,bootstrap}-theme-<ver>.tgz
 make icons         # -> build/icons/Osiris/            (needs: python3)
+make iconpack      # -> dist/osiris-icon-theme-<ver>.tar.gz
 make terminal browsers forgejo sourceview
 make desktop       # gtk + gnome-shell + metacity + sourceview + plasma -> build/themes/, build/plasma/
 make themes        # -> dist/osiris-gnome-theme-<ver>.tar.gz
@@ -88,11 +90,9 @@ partial local toolchain still produces most artifacts.
 ### Icon generator
 
 `python3 scripts/lib/gen_icons.py <target> <out-dir>` with `target` ∈
-`vscode-file` | `xdg` | `all`. The generator shallow-clones the Papirus Icon Theme into
-`build/papirus-src/` (cached across builds), recolours every SVG fill with the Osiris
-palette, and emits the XDG icon theme + VS Code file icon theme. File icons (mimetypes)
-are shared between VS Code and GNOME. The VS Code product icon theme has been removed;
-VS Code falls back to its built-in Codicon.
+`vscode-file` | `vscode-product` | `xdg` | `all`. It emits the XDG/GNOME icon theme,
+the VS Code file icon theme and the WOFF-backed VS Code product icon theme from the same
+24×24 rounded vector source. `fantasticon` is needed only for the product WOFF.
 
 ## Versioning & releases
 
@@ -110,12 +110,14 @@ docs. `.github/workflows/build.yml` runs the token guard + a full build on every
 pushes npm.
 
 GitHub Pages (`https://richardblaha.github.io/osiris-theme/`) — the design-system
-preview **and** a **self-hosted APT repository** under `/apt/` — is built and deployed
-only by `build.yml` on `main` pushes. `packaging/apt/build-apt-repo.sh` is staged into
-`build/pages/apt/` by `scripts/build.sh pages` when `OSIRIS_APT_REPO=1`, from that run's
-own `.deb` artifact (`make apt` builds it locally from `dist/*.deb`). The `Release` file
-is GPG-signed with the `APT_GPG_PRIVATE_KEY` repo secret — until that is set the repo is
-unsigned and needs `[trusted=yes]`. See [`docs/APT.md`](docs/APT.md).
+preview — is built and deployed only by `build.yml` on `main` pushes. The **APT
+repository** lives in the separate `richardblaha/osiris-deb-repo` repo (its own Pages):
+`release.yml`'s `apt` job rebuilds it with `packaging/apt/build-apt-repo.sh` from the
+existing pool plus the new `.deb` files on every stable tag and pushes via the
+`DEB_REPO_DEPLOY_KEY` secret, signing with `APT_GPG_PRIVATE_KEY`. The
+`osiris-archive-keyring` package installs the key + source
+(`packaging/apt/osiris-archive-keyring.gpg`, `packaging/apt/osiris.sources`). See
+[`docs/APT.md`](docs/APT.md).
 
 ## Conventions
 

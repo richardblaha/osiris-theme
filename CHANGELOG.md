@@ -6,9 +6,39 @@ Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](ht
 ## [Unreleased]
 
 ### Added
+- `osiris-archive-keyring` package: installs the APT signing key and source, so the
+  OSIRIS packages update through `apt upgrade`.
+
+### Changed
+- The APT repository moved to `https://richardblaha.github.io/osiris-deb-repo`
+  (repo `richardblaha/osiris-deb-repo`), published by `release.yml` on stable tags,
+  and keeps older package versions. The `/apt/` path on the docs site is gone.
+- The repo is signed with the dedicated repo-signing key `A26BFD08…C6E6CE`.
+
+## [0.2.0] — 2026-10-24
+
+### Added
+- Restored and expanded the generated **Osiris Product Icons** theme for VS Code:
+  660 product-icon identifiers backed by a compact WOFF font, including every
+  identifier exposed by the validated VS Code 1.143.1 Codicon registry.
+- A single offline vector source now generates the VS Code file icons, VS Code
+  product icons, and the complete eight-category GNOME/XDG theme.
+- Portable `osiris-icon-theme-<version>.tar.gz` release package for GNOME/XDG
+  installations without Debian or RPM tooling.
+
+### Changed
+- Replaced the Papirus dependency with outlines extracted from Google's official
+  **Material Symbols Rounded** variable font at weight 300, grade 0, optical size
+  24, fill 0. Semantic aliases use the nearest official symbol; custom additions
+  are reserved only for concepts without a usable upstream equivalent.
+- Adopted the current VS Code corner-radius hierarchy: 2px compact, 4px controls,
+  6px inner surfaces, 8px overlays, 12px prominent surfaces, and fully rounded pills.
+- XDG inheritance now uses `Adwaita,breeze,gnome,hicolor`; no Papirus package is required.
+
+### Added
 - **Preview page icon-theme showcase** — `docs/preview/index.html` gains a tab per
   shipped icon theme alongside the editor mock: *Ikony souborů* (VS Code file icons),
-  *Produktové ikony* (VS Code product icons — 397 identifiers → 97 glyphs) and *Ikony
+  *Produktové ikony* (VS Code product icons — 660 identifiers → 99 glyphs) and *Ikony
   plochy* (the XDG "Osiris" theme, all 8 freedesktop categories, coloured by
   `tokens.icon.xdg.categoryColor`). ~500 icons rendered live from
   `iconography/map/{filetypes,producticons,xdg}.json`; data generated into

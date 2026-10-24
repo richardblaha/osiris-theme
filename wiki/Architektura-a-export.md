@@ -6,12 +6,12 @@ Základním technickým pilířem projektu OSIRIS je **jediný zdroj pravdy (Sin
 
 ## 1. Tok generování aktiv (Pipeline)
 
-Následující diagram znázorňuje, jak se data z `assets/tokens.json` a `iconography/glyphs.json` distribuují do jednotlivých cílových platforem:
+Následující diagram znázorňuje, jak se tokeny a extrahované oficiální Material Symbols distribuují do cílových platforem:
 
 ```text
 assets/tokens.json ─────────┬──→ vscode/themes/*.json ─────────────→ osiris-theme.vsix
                             │
-iconography/glyphs.json ────┼──→ vscode/fileicons/* ───────────────→ Osiris File Icons
+iconography/material_symbols.json ─┼──→ vscode/fileicons/* ─────────→ Osiris File Icons
   + iconography/map/*.json  ├──→ vscode/producticons/* ────────────→ Osiris Product Icons (WOFF)
                             ├──→ build/icons/Osiris/ ──────────────→ /usr/share/icons/Osiris
                             │
@@ -54,7 +54,7 @@ bash scripts/check-tokens.sh
 
 ### Co tento skript ověřuje v CI:
 1. Shodu každého hexadecimálního kódu v `docs/DESIGN_SYSTEM.md` s `assets/tokens.json`.
-2. Validitu všech odkazů v mapovacích souborech ikon (`iconography/map/*.json`) vůči existujícím glyfům v `iconography/glyphs.json`.
+2. Validitu map ikon vůči sjednocené sadě oficiálních Material Symbols a explicitních fallbacků.
 3. Správnost CSS proměnných v balíčcích pro VitePress, Bootstrap a Forgejo.
 
 Při jakémkoliv nesouladu dojde k okamžitému selhání CI pipeline na GitHubu.

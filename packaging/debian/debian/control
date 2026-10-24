@@ -39,12 +39,12 @@ Description: OSIRIS dual-accent KDE Plasma / Qt theme
 Package: osiris-icon-theme
 Architecture: all
 Depends: ${misc:Depends}, hicolor-icon-theme
-Recommends: papirus-icon-theme, adwaita-icon-theme
-Description: OSIRIS dual-accent icon theme (Papirus)
- Freedesktop icon theme in the Papirus visual language — cyan/rose on a
+Recommends: adwaita-icon-theme
+Description: OSIRIS Material Symbols Rounded icon theme
+ Freedesktop icon theme in the Material Symbols Rounded 300 visual language — cyan/rose on a
  GitHub-flavoured ramp. Covers actions, apps, categories, devices, emblems,
  mimetypes, places and status, with GNOME↔KDE compatibility symlinks. Inherits
- Papirus / Breeze / hicolor for anything unstyled. Installed as
+ Adwaita / Breeze / GNOME / hicolor for anything unstyled. Installed as
  /usr/share/icons/Osiris.
 
 Package: osiris-theme-grub
@@ -75,3 +75,12 @@ Depends:
 Description: OSIRIS desktop theme (metapackage)
  Pulls in every OSIRIS theme component: GTK/GNOME, KDE Plasma/Qt, the icon theme,
  the GRUB boot theme and the wallpapers.
+
+Package: osiris-archive-keyring
+Section: misc
+Architecture: all
+Depends: ${misc:Depends}
+Description: OSIRIS APT repository signing key and source
+ Installs the OSIRIS archive signing key and an APT source for
+ https://richardblaha.github.io/osiris-deb-repo, so the OSIRIS packages are
+ updated by apt like any other package.

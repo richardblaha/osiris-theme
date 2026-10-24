@@ -195,22 +195,36 @@ do
   check "terminal $key" "$want" "$LIGHT"
 done
 
-# --- iconography (Papirus-based; icon_map.json resolves) ---
+# --- iconography (shared rounded glyph source + maps resolve) ---
 if command -v python3 >/dev/null 2>&1; then
   ROOT="$ROOT" python3 - <<'PY' || fail=1
 import json, os, sys
 root = os.environ["ROOT"]
-def L(*p):
-    try:
-        return json.load(open(os.path.join(root, *p), encoding="utf-8"))
-    except FileNotFoundError:
-        return None
+def L(*p): return json.load(open(os.path.join(root, *p), encoding="utf-8"))
 assert L("assets", "tokens.json")["icon"]["grid"] == 24
-m = L("iconography", "icon_map.json")
-if m is None:
-    print("  ICON  icon_map.json missing")
+glyphs = set(L("iconography", "glyphs.json")["glyphs"])
+material = L("iconography", "material_symbols.json")
+if material["axes"] != {"style": "Rounded", "wght": 300, "GRAD": 0, "opsz": 24, "FILL": 0}:
+    print("  ICON  unexpected Material Symbols axes")
     sys.exit(1)
-sys.exit(0)
+if set(material["glyphs"]) | set(material["customGlyphs"]) != glyphs:
+    print("  ICON  official/custom Material Symbols coverage is incomplete")
+    sys.exit(1)
+bad = []
+ft = L("iconography", "map", "filetypes.json")
+for sec in ("fileExtensions", "fileNames"):
+    bad += [f"filetypes.{sec}.{k}" for k, v in ft[sec].items() if v["glyph"] not in glyphs]
+for sec in ("folderNames", "folderNamesExpanded"):
+    bad += [f"filetypes.{sec}.{k}" for k, v in ft[sec].items() if v not in glyphs]
+xd = L("iconography", "map", "xdg.json")
+for cat, mapping in xd["icons"].items():
+    bad += [f"xdg.icons.{cat}.{k}" for k, v in mapping.items() if v not in glyphs]
+pi = L("iconography", "map", "producticons.json")
+bad += [f"producticons.{k}" for k, v in pi.items() if not k.startswith("$") and v not in glyphs]
+if bad:
+    print("  ICON  unresolved glyph refs: " + ", ".join(bad[:8]) +
+          (f" (+{len(bad)-8} more)" if len(bad) > 8 else ""))
+sys.exit(1 if bad else 0)
 PY
   check "iconography grid" "24" "$ICON_DS"
 fi

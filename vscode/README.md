@@ -11,13 +11,13 @@ extension, two contributions:
 
 - **Osiris Dark** — cyan `#00f2fe` / rose `#ff2a85` on a `#0d1117 / #161b22` neutral ramp.
 - **Osiris Light** — blue `#0969da` / rose `#e01a76` on white / `#f6f8fa`.
-- **Osiris File Icons** — recoloured Papirus Icon Theme SVGs, ~155 extensions +
+- **Osiris File Icons** — SVGs extracted from official Material Symbols Rounded 300, 155+ extensions +
   ~48 filenames, folder & language associations.
 
 The colour themes ship `configurationDefaults` that turn on Fira Code with
 ligatures while active.
 
-The file icon theme is generated from [Papirus Icon Theme](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)
+The file and product themes use official Material Symbols Rounded paths; custom fallbacks are used only for concepts absent upstream
 SVGs (fetched at build time, recoloured with the Osiris palette) by
 [`scripts/lib/gen_icons.py`](../scripts/lib/gen_icons.py). Name wiring lives in
 [`iconography/icon_map.json`](../iconography/icon_map.json).

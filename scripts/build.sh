@@ -26,10 +26,7 @@
 #   desktop     gtk + gnome + sourceview + plasma
 #   grub        -> build/grub/osiris/  (theme.txt + pixmaps + icons + fonts)
 #   wallpapers  -> build/wallpapers/   (PNGs + GNOME XML + KDE packages)
-#   pages       -> build/pages/        (docs/ site for GitHub Pages;
-#               OSIRIS_APT_REPO=1 also stages the APT repo under build/pages/apt/,
-#               from OSIRIS_APT_DEB_DIR or the latest gh release, signed with
-#               APT_GPG_KEY — see packaging/apt/build-apt-repo.sh)
+#   pages       -> build/pages/        (docs/ site for GitHub Pages)
 #   clean       rm -rf build/ dist/
 # ============================================================================
 set -euo pipefail
@@ -53,12 +50,13 @@ build_vscode() {
   local d="$BUILD_DIR/vscode"
   rm -rf "$d"; mkdir -p "$d"
   cp -r vscode/. "$d/"
-  # generate the file icon theme from Papirus iconography into the build copy
+  # Generate both VS Code icon themes from the shared Material-rounded source.
   if have python3; then
     python3 scripts/lib/gen_icons.py vscode-file "$d"
+    python3 scripts/lib/gen_icons.py vscode-product "$d"
   else
-    warn "python3 missing — icon theme not generated; dropping it from package.json"
-    node -e "const f='$d/package.json',j=require('./'+f);delete j.contributes.iconThemes;require('fs').writeFileSync(f,JSON.stringify(j,null,2)+'\n')"
+    warn "python3 missing — icon themes not generated; dropping them from package.json"
+    node -e "const f='$d/package.json',j=require('./'+f);delete j.contributes.iconThemes;delete j.contributes.productIconThemes;require('fs').writeFileSync(f,JSON.stringify(j,null,2)+'\n')"
   fi
   ( cd "$d"
     # sync version from repo VERSION
@@ -86,6 +84,14 @@ build_icons() {
   # a lowercase-name copy some tools expect
   [ -d "$d/Osiris" ] && ln -sfn Osiris "$d/osiris" 2>/dev/null || true
   log "  -> $d/Osiris"
+}
+
+# Portable icon-theme archive for systems where deb/rpm tooling is unavailable.
+build_iconpack() {
+  build_icons
+  mkdir -p "$DIST_DIR"
+  tar -C "$BUILD_DIR/icons" -czf "$DIST_DIR/osiris-icon-theme-$VERSION.tar.gz" Osiris
+  log "  -> $DIST_DIR/osiris-icon-theme-$VERSION.tar.gz"
 }
 
 # ---------------------------------------------------------------------------
@@ -381,22 +387,11 @@ build_pages() {
   cp assets/tokens.json "$s/tokens.json"
   touch "$s/.nojekyll"
 
-  # APT repository under /apt/ — only in CI (OSIRIS_APT_REPO=1). Uses the local
-  # .deb dir when given (release build), else pulls the latest release via gh.
-  if [[ "${OSIRIS_APT_REPO:-0}" == "1" ]]; then
-    if packaging/apt/build-apt-repo.sh "$s/apt" ${OSIRIS_APT_DEB_DIR:+"$OSIRIS_APT_DEB_DIR"}; then
-      log "  -> $s/apt (APT repository)"
-    else
-      warn "APT repository step failed — Pages staged without it"
-      rm -rf "$s/apt"
-    fi
-  fi
-
   log "  -> $s (entry: index.html)"
 }
 
 # ---------------------------------------------------------------------------
-for tgt in tokens vscode vitepress bootstrap appicons watermarks icons terminal browsers forgejo gtk gnome plasma sourceview themes grub wallpapers pages; do
+for tgt in tokens vscode vitepress bootstrap appicons watermarks icons iconpack terminal browsers forgejo gtk gnome plasma sourceview themes grub wallpapers pages; do
   case "$tgt" in
     gtk|gnome|plasma|sourceview) want "$tgt" || want desktop || continue ;;
     vitepress|bootstrap)         want "$tgt" || want npm || continue ;;

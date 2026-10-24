@@ -13,7 +13,7 @@ Tato složka (`wiki/`) obsahuje zdrojové soubory pro oficiální **GitHub Wiki*
 - `Barevna-paleta-a-tokeny.md` – Dual-accent paleta, neutrální rampa, status bar, syntax.
 - `Typografie.md` – Specifikace Fira Code, škály velikostí a pravidla pro UI.
 - `Komponenty-a-UI-stavy.md` – Rádiusy, stíny, Focus Ring a kontrakt komponent.
-- `Ikonografie.md` – Papirus Icon Theme, souborové i systémové ikony.
+- `Ikonografie.md` – Material Symbols Rounded 300, souborové i systémové ikony.
 - `Tapety-a-vizualni-aktiva.md` – Kolekce tapet, app ikony a letterpress vodoznaky.
 - `Galerie-a-screenshoty.md` – Vizuální galerie a rozbor rozhraní.
 - `Architektura-a-export.md` – Pipeline generování výstupních balíčků.

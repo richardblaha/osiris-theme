@@ -40,7 +40,14 @@
   }
 
   function iconCard(item) {
-    var svg = item.svg || '';
+    var data = window.OSIRIS_PREVIEW_ICONS || {};
+    var glyph = (data.glyphs || {})[item.glyph];
+    var mode = document.documentElement.getAttribute('data-theme') || 'dark';
+    var color = item.color || item[mode] || 'currentColor';
+    var rule = glyph && glyph.e ? ' fill-rule="evenodd" clip-rule="evenodd"' : '';
+    var svg = item.svg || (glyph
+      ? '<path d="' + esc(glyph.d) + '" fill="' + esc(color) + '"' + rule + '/>'
+      : '');
     var label = item.label || item.glyph || '';
     return '<div class="icon-card" title="' + esc(label) + '">' +
       '<svg viewBox="0 0 24 24" aria-hidden="true">' + svg + '</svg>' +
@@ -136,6 +143,10 @@
     var stored = null;
     try { stored = localStorage.getItem('osiris-preview-theme'); } catch (e) { /* ignore */ }
     if (stored === 'dark' || stored === 'light') setTheme(stored);
+    var requestedTab = location.hash.replace(/^#/, '');
+    if (['file-icons', 'product-icons', 'desktop-icons'].indexOf(requestedTab) >= 0) {
+      setMainTab(requestedTab);
+    }
 
     // delegate onclick hooks declared in markup
     document.querySelectorAll('[data-act="theme"]').forEach(function (b) {

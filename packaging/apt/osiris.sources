@@ -1,0 +1,5 @@
+Types: deb
+URIs: https://richardblaha.github.io/osiris-deb-repo
+Suites: stable
+Components: main
+Signed-By: /usr/share/keyrings/osiris-archive-keyring.gpg

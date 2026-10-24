@@ -27,7 +27,7 @@ Výchozí a stěžejní varianta systému OSIRIS. Využívá hluboké uhlíkové
 ### Rozbor klíčových zón tmavého motivu:
 1. **Titlebar (`#0d1117`):** Čisté, nerušivé záhlaví okna s integrovaným menu a symbolem OSIRIS.
 2. **Activity Bar (`#0d1117`):** Postranní lišta se svislým 2px akcentovým indikátorem u aktivní ikony a růžovým odznakem (badge) pro oznámení.
-3. **Sidebar / Explorer (`#161b22`):** Strom souborů s barevnými ikonami na bázi Papirus a Git příznaky změn (**M**odified v barvě Rose, **U**ntracked ve žluté barvě).
+3. **Sidebar / Explorer (`#161b22`):** Strom souborů s barevnými ikonami Material Symbols Rounded 300 a Git příznaky změn (**M**odified v barvě Rose, **U**ntracked ve žluté barvě).
 4. **Editor (`#0d1117`):** Prostředí pro kód s písmem Fira Code, ligaturami a precizním syntax highlightingem. Horní aktivní záložka nese výraznou 2px linku v barvě Rose (`#ff2a85`).
 5. **Status Bar (`#00f2fe`):** Podpisový prvek – plně akcentovaný proužek v barvě Cyan s inverzním tmavým textem (`#04151a`).
 

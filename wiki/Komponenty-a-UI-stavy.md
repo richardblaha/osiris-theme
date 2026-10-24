@@ -10,9 +10,12 @@ OSIRIS používá umírněné, technické zaoblení rohů, které působí moder
 
 | Token | Hodnota | Použití v rozhraní |
 |---|---|---|
-| `radius.sm` | `2 px` | Tlačítka, vstupní pole, řádky seznamů, štítky, chips, taby |
-| `radius.md` | `2 px` | Karty, vyskakovací okna (popovers), dialogy, notifikace, rohy oken |
-| `radius.pill` | `2 px` | Přepínače (toggles), segmentované přepínače, vyhledávací lišty, odznaky (badges) |
+| `radius.xs` | `2 px` | Velmi kompaktní indikátory |
+| `radius.sm` | `4 px` | Tlačítka, vstupní pole, řádky seznamů a taby |
+| `radius.md` | `6 px` | Karty a vnitřní plochy |
+| `radius.lg` | `8 px` | Popovers, dialogy, notifikace a plovoucí plochy |
+| `radius.xl` | `12 px` | Výrazné vnější plochy |
+| `radius.pill` | `9999 px` | Přepínače, odznaky, avatary a kruhové prvky |
 
 ---
 

@@ -113,9 +113,12 @@ secondary, **U**ntracked → warning, **A**dded → success.
 
 | Token | Value | Notes |
 |---|---|---|
-| `radius.sm` | `2px` | inputs, buttons, list rows, tags, chips |
-| `radius.md` | `2px` | cards, popovers, command palette, toasts, window corners |
-| `radius.pill` | `2px` | toggles, segmented controls, debug toolbar (unified minimal rounding) |
+| `radius.xs` | `2px` | very compact indicators |
+| `radius.sm` | `4px` | controls: inputs, buttons, list rows, tabs |
+| `radius.md` | `6px` | inner surfaces and cards |
+| `radius.lg` | `8px` | menus, dialogs, toasts and floating surfaces |
+| `radius.xl` | `12px` | very prominent surfaces |
+| `radius.pill` | `9999px` | pills, toggles, avatars and circular indicators |
 | `shadow.window` | `0 30px 80px -20px rgba(0,0,0,.65), 0 8px 24px -8px rgba(0,0,0,.5)` | floating window / decorated frame |
 | `shadow.popup` | `0 16px 40px rgba(0,0,0,.5)` | menus, IntelliSense, palette |
 | transition | `.15s ease` | color / background / transform on hover & focus |

@@ -3,7 +3,7 @@
 # OSIRIS Themes
 
 **One repository for the entire OSIRIS visual identity** — VS Code (color, file
-and product icons), a Papirus-based icon theme, GTK, GNOME Shell, KDE Plasma /
+and product icons), a Material Symbols Rounded icon theme, GTK, GNOME Shell, KDE Plasma /
 Qt, GRUB2, VitePress, Bootstrap 5, Chromium & Firefox, and wallpapers — all
 generated from a single set of design tokens and shipped as `.vsix`, npm
 packages, browser `.zip`s, `.deb` and `.rpm`.
@@ -25,9 +25,9 @@ interactive reference in [`docs/preview/`](docs/preview/).
 
 ```
 tokens.json ──┬─→ vscode/themes/*.json            → osiris-theme.vsix (colour theme)
-              ├─→ Papirus SVGs (build/papirus-src/)
-              │   + iconography/icon_map.json  ┬─→ vscode/fileicons/*     → Osiris File Icons
-              │                               └─→ build/icons/Osiris/    → /usr/share/icons/Osiris
+              ├─→ official Material Symbols + map/ ┬─→ vscode/fileicons/*    → Osiris File Icons
+              │                                  ├─→ vscode/producticons/* → Osiris Product Icons
+              │                                  └─→ build/icons/Osiris/   → GNOME/XDG icon theme
               ├─→ desktop/gtk-* + gtk-common/*     → /usr/share/themes/Osiris{,-Light}/gtk-{3.0,4.0}
               ├─→ desktop/gnome-shell/*.css.in     → …/Osiris{,-Light}/gnome-shell
               ├─→ desktop/metacity-1/*.xml.in      → …/Osiris{,-Light}/metacity-1  (Flashback/Marco)
@@ -58,12 +58,14 @@ osiris-theme/
 │   ├── preview/                 # interactive reference → GitHub Pages
 │   │   ├── index.html  styles.css  app.js
 │   ├── DESIGN_SYSTEM.md         # written spec (ramp, syntax, states, components)
-│   └── ICONOGRAPHY.md           # icon spec (Papirus grid, colour, XDG layout)
+│   └── ICONOGRAPHY.md           # Material Symbols Rounded 300 + XDG layout
 ├── wiki/                        # Project Wiki & Graphic Design Manual (GitHub Wiki format)
 │   ├── Home.md  _Sidebar.md  Manual-grafickeho-designu.md  images/ ...
-├── iconography/                 # icon single-source
-├── iconography/                 # icon name wiring
-│   └── icon_map.json            # file extensions, filenames, folders, XDG names → Papirus icon names
+├── iconography/                 # official Material outlines + custom fallbacks + maps
+│   ├── material_symbols.json    # extracted official Rounded 300 paths
+│   ├── material_map.json        # semantic id → official symbol name
+│   ├── glyphs.json              # fallback only when upstream has no equivalent
+│   └── map/                     # file types, VS Code product ids, XDG/GNOME names
 ├── vscode/                      # VS Code extension — colour + file + product icon themes
 ├── vitepress/                   # npm: osiris-vitepress-theme (default-theme override)
 ├── bootstrap/                   # npm: osiris-bootstrap-theme (Bootstrap 5, Sass)
@@ -167,6 +169,15 @@ the GNOME Terminal installer under `/usr/share`.
 
 ### Debian / Ubuntu
 
+With updates via apt (adds the signed repo, see [docs/APT.md](docs/APT.md)):
+
+```sh
+sudo apt install ./osiris-archive-keyring_<ver>_all.deb
+sudo apt update && sudo apt install osiris-desktop-theme
+```
+
+Or one-off from the release files:
+
 ```sh
 sudo apt install ./osiris-desktop-theme_<ver>_all.deb   # metapackage — pulls all six
 # …or pick components:
@@ -179,7 +190,7 @@ sudo apt install ./osiris-icon-theme_<ver>_all.deb ./osiris-theme-gtk_<ver>_all.
   a GNOME Terminal profile installer (`/usr/share/osiris/gnome-terminal/install.sh`).
   Apply the theme with `osiris-gtk-theme --apply` (or GNOME Tweaks → Appearance);
   pick the editor scheme in the app's preferences.
-- `osiris-icon-theme` — Papirus-based icon set. Select **Osiris** in GNOME
+- `osiris-icon-theme` — official Material Symbols Rounded 300-based icon set. Select **Osiris** in GNOME
   Tweaks → Appearance → Icons, or System Settings → Icons on KDE.
 - `osiris-theme-plasma` — set **System Settings → Colors → Osiris**, decoration
   **Osiris Dark**, the Kvantum style (full Qt coverage) and the **Osiris

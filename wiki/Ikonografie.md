@@ -2,13 +2,18 @@
 
 Ikonografie OSIRIS představuje jednotný vizuální systém pro všechny ikony v ekosystému – od souborových a produktových ikon ve VS Code až po systémové ikony na Linuxovém desktopu (standard XDG / FreeDesktop).
 
-Veškeré ikony jsou generovány z jediného centrálního repozitáře glyfů [`iconography/glyphs.json`](https://github.com/richardblaha/osiris-theme/blob/main/iconography/glyphs.json) pomocí generátoru `scripts/lib/gen_icons.py`.
+Standardní glyfy jsou přímo extrahované z oficiálního fontu Google Material
+Symbols Rounded do `iconography/material_symbols.json` při osách 300/0/24/0.
+`iconography/glyphs.json` je pouze rezervovaný fallback pro koncepty, které
+upstream nemá. Cílové sady sestavuje `scripts/lib/gen_icons.py`.
 
 ---
 
-## 1. Designový jazyk: Papirus Icon Theme
+## 1. Designový jazyk: Material Symbols Rounded 300
 
-Všechny ikony vycházejí z geometrie a proporcí moderního ikonového tématu **[Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)**:
+Všechny současné základní ikony jsou oficiální **Material Symbols Rounded** s
+váhou 300, grade 0, optical size 24 a fill 0. Chybějící budoucí koncepty se
+dokreslí až jako oddělené doplňky ve stejné geometrii:
 - **Mřížka:** `24×24`
 - **Geometrie:** Čisté ploché geometrické tvary s minimálním zaoblením rohů (`1px` vnější / `0px` vnitřní).
 - **Typ:** Vyplněné geometrické cesty (filled paths).

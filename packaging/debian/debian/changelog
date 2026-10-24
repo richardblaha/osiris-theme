@@ -1,3 +1,11 @@
+osiris-desktop-theme (0.2.0-1) unstable; urgency=medium
+
+  * Material Symbols Rounded 300 icon family for VS Code and GNOME/XDG.
+  * Restore the VS Code product icon theme and bundle its generated WOFF.
+  * Match the current VS Code 2/4/6/8/12 px corner-radius hierarchy.
+
+ -- Richard Bláha <richardblaha@gmail.com>  Sat, 24 Oct 2026 12:00:00 +0200
+
 osiris-desktop-theme (0.1.3-1) unstable; urgency=medium
 
   * Transition to Papirus Icon Theme (Papirus-Dark, Papirus, breeze, gnome, hicolor).

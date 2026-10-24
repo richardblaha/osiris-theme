@@ -10,7 +10,7 @@ BUILD      := scripts/build.sh
 
 .DEFAULT_GOAL := help
 .PHONY: help all tokens vscode vitepress bootstrap npm appicons watermarks brand \
-        icons terminal browsers forgejo \
+        icons iconpack terminal browsers forgejo \
         gtk gnome sourceview themes plasma desktop grub wallpapers pages deb rpm apt \
         dist install-local clean distclean lint wiki-sync
 
@@ -44,6 +44,9 @@ brand: appicons watermarks ## App icons + watermark rasters (committed brand ass
 
 icons: ## Generate the XDG icon theme (build/icons/Osiris/) (needs: python3)
 	@$(BUILD) icons
+
+iconpack: ## Portable GNOME/XDG icon-theme archive (dist/*.tar.gz)
+	@$(BUILD) iconpack
 
 terminal: ## Generate GNOME Terminal / Ptyxis / Konsole schemes (build/terminal/)
 	@$(BUILD) terminal
@@ -94,7 +97,7 @@ rpm: desktop icons terminal grub wallpapers ## Build all .rpm packages into dist
 apt: deb ## Build the signed APT repo from dist/*.deb -> build/apt/ (APT_GPG_KEY to sign; see docs/APT.md)
 	@packaging/apt/build-apt-repo.sh build/apt dist
 
-dist: vscode npm browsers forgejo themes deb rpm ## Everything that ships in a GitHub Release -> dist/
+dist: vscode npm browsers forgejo themes iconpack deb rpm ## Everything that ships in a GitHub Release -> dist/
 	@ls -la $(DIST_DIR)
 
 install-local: desktop icons terminal wallpapers ## Build + install themes into $$HOME (no root)

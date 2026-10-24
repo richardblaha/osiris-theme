@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 # Build a signed APT repository from the OSIRIS .deb packages, laid out for
-# static hosting on GitHub Pages:
-#   https://richardblaha.github.io/osiris-theme/apt/
+# static hosting on GitHub Pages. release.yml publishes it to the
+# richardblaha/osiris-deb-repo repo:
+#   https://richardblaha.github.io/osiris-deb-repo/
+# Every version found in [deb-dir] is indexed (release.yml feeds it the old pool
+# plus the new release), so users can still pin or downgrade.
 #
 # The packages are all `Architecture: all` (pure data — themes, icons, GRUB,
 # wallpapers), so a single suite serves every apt-based distro.
@@ -20,6 +23,7 @@
 #   APT_ARCHES    dpkg arches to advertise         (default: "amd64 arm64")
 #   APT_REPO      owner/name for `gh release`      (default: richardblaha/osiris-theme)
 #   APT_ORIGIN / APT_LABEL                         (default: OSIRIS / OSIRIS Theme)
+#   APT_BASE_URL  public URL of the repo root      (default: the osiris-deb-repo Pages URL)
 #
 # Deps: dpkg-dev (dpkg-scanpackages), gzip; gnupg when APT_GPG_KEY is set;
 #       gh when [deb-dir] is omitted.
@@ -35,7 +39,7 @@ COMPONENT=main
 ORIGIN="${APT_ORIGIN:-OSIRIS}"
 LABEL="${APT_LABEL:-OSIRIS Theme}"
 GH_REPO="${APT_REPO:-richardblaha/osiris-theme}"
-BASE_URL="https://richardblaha.github.io/osiris-theme/apt"
+BASE_URL="${APT_BASE_URL:-https://richardblaha.github.io/osiris-deb-repo}"
 KEYRING="/usr/share/keyrings/osiris-archive-keyring.gpg"
 
 command -v dpkg-scanpackages >/dev/null || { echo "need dpkg-dev (dpkg-scanpackages)" >&2; exit 1; }
@@ -75,7 +79,7 @@ gen_arch() {
   local arch="$1"
   local dir="$OUT/dists/$SUITE/$COMPONENT/binary-$arch"
   mkdir -p "$dir"
-  ( cd "$OUT" && dpkg-scanpackages --arch "$arch" "pool/$COMPONENT" /dev/null ) > "$dir/Packages"
+  ( cd "$OUT" && dpkg-scanpackages --multiversion --arch "$arch" "pool/$COMPONENT" /dev/null ) > "$dir/Packages"
   gzip -9nkf "$dir/Packages"
   cat > "$dir/Release" <<EOF
 Archive: $SUITE
@@ -130,14 +134,8 @@ else
 fi
 
 # ---- consumer helpers ------------------------------------------------
-cat > "$OUT/osiris.sources" <<EOF
-Types: deb
-URIs: $BASE_URL
-Suites: $SUITE
-Components: $COMPONENT
-Architectures: $ARCHES
-Signed-By: $KEYRING
-EOF
+# same file the osiris-archive-keyring package installs
+cp packaging/apt/osiris.sources "$OUT/osiris.sources"
 
 cat > "$OUT/osiris.list" <<EOF
 deb [signed-by=$KEYRING] $BASE_URL $SUITE $COMPONENT
@@ -168,12 +166,15 @@ cat > "$OUT/index.html" <<EOF
  a{color:#0aa}
 </style>
 <h1>OSIRIS APT repository</h1>
-<p>Debian/Ubuntu packages for the <a href="../">OSIRIS desktop theme</a> —
-GTK/GNOME, KDE Plasma, the Papirus-style icon theme, the GRUB theme and the
+<p>Debian/Ubuntu packages for the <a href="https://richardblaha.github.io/osiris-theme/">OSIRIS desktop theme</a> —
+GTK/GNOME, KDE Plasma, the Material Symbols Rounded icon theme, the GRUB theme and the
 wallpapers. Packages are architecture-independent, so this works on any
 apt-based distribution.</p>
 <h2>Quick add</h2>
 <pre>curl -fsSL $BASE_URL/setup.sh | sudo sh</pre>
+<p>Or install <code>osiris-archive-keyring</code> from the
+<a href="https://github.com/richardblaha/osiris-theme/releases/latest">latest release</a>
+— it adds this repository and its key, so updates arrive via <code>apt upgrade</code>.</p>
 <h2>Manual</h2>
 <pre>curl -fsSL $BASE_URL/osiris-archive-keyring.gpg \\
   | sudo tee $KEYRING &gt; /dev/null

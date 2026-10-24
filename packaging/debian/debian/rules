@@ -63,6 +63,10 @@ override_dh_auto_install:
 	install -d $(DESTDIR)/usr/share/wallpapers
 	cp -r build/wallpapers/kde/Osiris-* $(DESTDIR)/usr/share/wallpapers/
 
+	# --- APT repository key + source (osiris-archive-keyring) ---
+	install -Dm0644 packaging/apt/osiris-archive-keyring.gpg $(DESTDIR)/usr/share/keyrings/osiris-archive-keyring.gpg
+	install -Dm0644 packaging/apt/osiris.sources $(DESTDIR)/etc/apt/sources.list.d/osiris.sources
+
 override_dh_auto_test:
 	scripts/check-tokens.sh
 

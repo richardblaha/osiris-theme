@@ -37,7 +37,7 @@ Tato Wiki slouží jako **oficiální manuál grafického designu** projektu OSI
 | **[2. Barevná paleta a tokeny](Barevna-paleta-a-tokeny.md)** | Dual-accent koncepce (Cyan & Rose), neutrální rampy pro Dark/Light, sémantické barvy a syntax highlighting. |
 | **[3. Typografie](Typografie.md)** | Výhradní písmo Fira Code, typografická hierarchie, pravidla pro řezy, velikosti a ligatury. |
 | **[4. Komponenty a UI stavy](Komponenty-a-UI-stavy.md)** | Tvarosloví (rádiusy), elevace, stíny, standardizovaný Focus Ring a interaktivní kontrakt komponent. |
-| **[5. Ikonografie](Ikonografie.md)** | Pravidla Papirus Icon Theme, 24x24 mřížka, souborové i systémové XDG ikony. |
+| **[5. Ikonografie](Ikonografie.md)** | Material Symbols Rounded 300, 24x24 mřížka, souborové, produktové i XDG ikony. |
 | **[6. Tapety a vizuální aktiva](Tapety-a-vizualni-aktiva.md)** | Kolekce tapet Abstract a Egypt, letterpress vodoznaky a systémové ikony. |
 | **[7. Galerie a screenshoty](Galerie-a-screenshoty.md)** | Vizuální prezentace tmavého a světlého motivu v reálném rozhraní, popis klíčových zón. |
 | **[8. Architektura a export](Architektura-a-export.md)** | Způsob generování motivů z `tokens.json`, strom repozitáře a kontrola integrity (CI guard). |
@@ -54,7 +54,7 @@ Tato Wiki slouží jako **oficiální manuál grafického designu** projektu OSI
 │  2. STATUS BAR      Solid Accent Bar (plně barevný podpisový proužek)   │
 │  3. SURFACES        Hluboké temné uhlí (#0d1117/#161b22) / Čistá světlá│
 │  4. TYPOGRAFIE      Jediné písmo Fira Code všude (včetně UI chrome)     │
-│  5. IKONY           Čisté geometrické Papirus Icon Theme (24px mřížka)  │
+│  5. IKONY           Material Symbols Rounded 300 (24px mřížka)          │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
