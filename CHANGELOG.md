@@ -5,17 +5,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](ht
 
 ## [Unreleased]
 
-### Added
-- `osiris-archive-keyring` package: installs the APT signing key and source, so the
-  OSIRIS packages update through `apt upgrade`.
-
-### Changed
-- The APT repository moved to `https://richardblaha.github.io/osiris-deb-repo`
-  (repo `richardblaha/osiris-deb-repo`), published by `release.yml` on stable tags,
-  and keeps older package versions. The `/apt/` path on the docs site is gone.
-- The repo is signed with the dedicated repo-signing key `A26BFD08…C6E6CE`.
-
-## [0.2.0] — 2026-10-24
+## [0.2.0] — 2026-10-26
 
 ### Added
 - Restored and expanded the generated **Osiris Product Icons** theme for VS Code:
@@ -44,17 +34,21 @@ Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](ht
   `iconography/map/{filetypes,producticons,xdg}.json`; data generated into
   `docs/preview/icons.js` by `scripts/lib/gen_preview_icons.py` (`make pages`).
 - **Self-hosted APT repository** on GitHub Pages —
-  `https://richardblaha.github.io/osiris-theme/apt/` (suite `stable`, component
-  `main`). `packaging/apt/build-apt-repo.sh` (`make apt`) lays out a signed
-  `pool/` + `dists/` tree from the `.deb` set; `build.yml` builds and deploys it
-  beside the design-system preview on every `main` push, from that run's own
-  `.deb` artifact. One-line install: `curl -fsSL …/apt/setup.sh | sudo sh`. The
-  `Release` file is GPG-signed once the `APT_GPG_PRIVATE_KEY` repo secret is set;
+  `https://richardblaha.github.io/osiris-deb-repo` (the separate
+  `richardblaha/osiris-deb-repo` repo, suite `stable`, component `main`).
+  `packaging/apt/build-apt-repo.sh` (`make apt`) lays out a `pool/` + `dists/` tree
+  from the `.deb` set, signed with the dedicated repo-signing key `A26BFD08…C6E6CE`;
+  `release.yml` republishes it on every stable tag and every released version stays
+  in the pool. One-line install:
+  `curl -fsSL https://richardblaha.github.io/osiris-deb-repo/setup.sh | sudo sh`;
   setup in `docs/APT.md`.
+- `osiris-archive-keyring` package: installs the APT signing key and the deb822
+  source, so the OSIRIS packages (and future key rotations) reach users through
+  `apt upgrade`.
 
 ### Changed
 - **GitHub Pages is deployed only by `build.yml` on `main` pushes** — `release.yml`
-  no longer touches Pages. Keeps the live site (preview + `/apt/`) in lock-step
+  no longer touches Pages. Keeps the live preview in lock-step
   with `main` and stops a re-run of an old release tag from clobbering it with a
   stale tree. Cut a release by pushing the `VERSION` bump to `main`, then tagging
   that commit.
