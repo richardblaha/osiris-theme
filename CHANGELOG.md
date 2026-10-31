@@ -5,6 +5,19 @@ Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](ht
 
 ## [Unreleased]
 
+## [0.3.1] — 2026-10-31
+
+### Fixed
+- **New `osiris-theme-gnome` package** (deb + rpm): the standalone GNOME theme —
+  GTK 3/4 + libadwaita + GNOME Shell + Metacity, GtkSourceView schemes, Ptyxis
+  palette, GNOME Terminal installer and the `osiris-gtk-theme` helper — with no
+  Qt/KDE dependencies. `osiris-theme-gtk` remains as a transitional package that
+  depends on it.
+- `osiris-theme-plasma` demotes Kvantum (`qt5/qt6-style-kvantum`, `kvantum`) from
+  Recommends to Suggests, so `apt/dnf install osiris-desktop-theme` no longer pulls
+  Qt onto a GNOME-only system. RPM: Konsole colour schemes moved to the plasma
+  subpackage where they belong.
+
 ## [0.3.0] — 2026-10-31
 
 ### Changed

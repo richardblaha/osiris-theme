@@ -1,3 +1,16 @@
+osiris-desktop-theme (0.3.1-1) unstable; urgency=medium
+
+  * New package osiris-theme-gnome: the GTK 3/4 + libadwaita + GNOME Shell +
+    Metacity theme, GtkSourceView schemes, Ptyxis palette, GNOME Terminal
+    installer and the osiris-gtk-theme helper — with no Qt/KDE dependencies.
+  * osiris-theme-gtk is now a transitional package depending on
+    osiris-theme-gnome.
+  * osiris-theme-plasma demotes qt5/qt6-style-kvantum from Recommends to
+    Suggests, so installing the osiris-desktop-theme metapackage no longer
+    pulls in Qt on a GNOME-only system.
+
+ -- Richard Bláha <richardblaha@gmail.com>  Sat, 31 Oct 2026 12:00:00 +0200
+
 osiris-desktop-theme (0.2.0-1) unstable; urgency=medium
 
   * Material Symbols Rounded 300 icon family for VS Code and GNOME/XDG.

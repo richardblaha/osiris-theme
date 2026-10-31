@@ -37,5 +37,5 @@ or by hand:
 - **Konsole** — `cp build/terminal/konsole/*.colorscheme ~/.local/share/konsole/`,
   then Settings ▸ Edit Profile ▸ Appearance ▸ **Osiris Dark / Light**.
 
-The `osiris-theme-gtk` / `osiris-theme-plasma` packages ship the Ptyxis palette,
+The `osiris-theme-gnome` / `osiris-theme-plasma` packages ship the Ptyxis palette,
 the Konsole schemes and the GNOME Terminal installer under `/usr/share`.

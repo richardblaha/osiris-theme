@@ -31,7 +31,7 @@ scripts/install-local.sh desktop --dark      # copies into ~/.local/share + ~/.t
 ## GTK 4 / libadwaita caveat
 
 libadwaita apps ignore `/usr/share/themes` unless `GTK_THEME` is set or the app
-opts in. `osiris-gtk-theme --apply` (shipped in `osiris-theme-gtk.deb`) writes the
+opts in. `osiris-gtk-theme --apply` (shipped in `osiris-theme-gnome.deb`) writes the
 opt-in drop-in to `~/.config/gtk-4.0/{gtk.css,colors.css}` and sets the GNOME
 `color-scheme` / legacy `gtk-theme` keys.
 

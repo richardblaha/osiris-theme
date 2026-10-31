@@ -21,29 +21,44 @@ BuildRequires:  python3-pillow
 BuildRequires:  librsvg2-tools
 BuildRequires:  grub2-tools
 
-Requires:       osiris-theme-gtk = %{version}-%{release}
+Requires:       osiris-theme-gnome = %{version}-%{release}
 Requires:       osiris-theme-plasma = %{version}-%{release}
 Requires:       osiris-icon-theme = %{version}-%{release}
 Requires:       osiris-theme-grub = %{version}-%{release}
 Requires:       osiris-wallpapers = %{version}-%{release}
 
 %description
-Metapackage pulling in every OSIRIS theme component: GTK/GNOME, KDE Plasma/Qt,
-the icon theme, the GRUB boot theme and the wallpapers. Colours come from the
-OSIRIS design system (see the bundled DESIGN_SYSTEM.md).
+Metapackage pulling in every OSIRIS theme component: GNOME/GTK, KDE Plasma/Qt,
+the icon theme, the GRUB boot theme and the wallpapers. The Plasma subpackage
+is pure data and only Suggests Kvantum, so this metapackage does not install
+Qt on a GNOME-only system; for GNOME alone use osiris-theme-gnome. Colours
+come from the OSIRIS design system (see the bundled DESIGN_SYSTEM.md).
 
 # --------------------------------------------------------------------------
-%package -n osiris-theme-gtk
-Summary:        OSIRIS GTK 3/4 + libadwaita + GNOME Shell theme
+%package -n osiris-theme-gnome
+Summary:        OSIRIS GNOME theme (GTK 3/4 + GNOME Shell + Metacity)
 BuildArch:      noarch
+Recommends:     gnome-shell-extension-user-theme
+Recommends:     osiris-icon-theme = %{version}-%{release}
+%description -n osiris-theme-gnome
+Cyan/rose GTK 3, GTK 4 / libadwaita, GNOME Shell and Metacity theme (Osiris /
+Osiris-Light) plus the osiris-gtk-theme helper (also sets the Osiris icon
+theme), GtkSourceView schemes, the Ptyxis palette and a GNOME Terminal
+profile installer. No Qt/KDE dependencies.
+
+%package -n osiris-theme-gtk
+Summary:        Transitional package for osiris-theme-gnome
+BuildArch:      noarch
+Requires:       osiris-theme-gnome = %{version}-%{release}
 %description -n osiris-theme-gtk
-Cyan/rose GTK 3, GTK 4 / libadwaita and GNOME Shell theme (Osiris / Osiris-Light)
-plus the osiris-gtk-theme helper for the libadwaita opt-in.
+The GTK/GNOME theme moved to its own package, osiris-theme-gnome, so a GNOME
+desktop can be themed without the KDE/Qt bits. This empty package only keeps
+`dnf install osiris-theme-gtk` working.
 
 %package -n osiris-theme-plasma
 Summary:        OSIRIS KDE Plasma / Qt theme
 BuildArch:      noarch
-Recommends:     kvantum
+Suggests:       kvantum
 %description -n osiris-theme-plasma
 Plasma colour schemes, Kvantum Qt themes (OsirisDark / OsirisLight), the
 OsirisDark Aurorae decoration and the Osiris Plasma desktop theme.
@@ -173,7 +188,7 @@ fi
 %doc README.md docs/DESIGN_SYSTEM.md
 %license LICENSE
 
-%files -n osiris-theme-gtk
+%files -n osiris-theme-gnome
 %license LICENSE
 %{_datadir}/themes/Osiris
 %{_datadir}/themes/Osiris-Light
@@ -186,6 +201,9 @@ fi
 %{_datadir}/gtksourceview-3.0/styles/osiris-light.xml
 %{_datadir}/org.gnome.Ptyxis/palettes/osiris.palette
 %{_datadir}/osiris/gnome-terminal
+
+%files -n osiris-theme-gtk
+%license LICENSE
 
 %files -n osiris-theme-plasma
 %license LICENSE
@@ -214,6 +232,15 @@ fi
 %{_datadir}/wallpapers/Osiris-Egypt
 
 %changelog
+* Sat Oct 31 2026 OSIRIS <osiris@example.org> - 0.3.1-1
+- New subpackage osiris-theme-gnome: GTK 3/4 + libadwaita + GNOME Shell +
+  Metacity, GtkSourceView schemes, Ptyxis palette, GNOME Terminal installer and
+  the osiris-gtk-theme helper — no Qt/KDE requirements.
+- osiris-theme-gtk is now a transitional package requiring osiris-theme-gnome.
+- osiris-theme-plasma demotes kvantum from Recommends to Suggests, so the
+  osiris-desktop-theme metapackage no longer pulls in Qt on GNOME-only systems.
+- Konsole colour schemes move from the gtk to the plasma subpackage.
+
 * Fri Sep 04 2026 OSIRIS <osiris@example.org> - 0.1.1-1
 - Bundle Fira Code (SIL OFL-1.1); GRUB .pf2 build sources the TTF from the
   system or upstream instead of falling back to unicode.pf2.

@@ -2,10 +2,13 @@
 
 A GPG-signed APT repository served as static files by GitHub Pages from the separate
 [`richardblaha/osiris-deb-repo`](https://github.com/richardblaha/osiris-deb-repo) repo.
-It carries every Debian package this repo builds (`osiris-theme-gtk`,
-`osiris-theme-plasma`, `osiris-icon-theme`, `osiris-theme-grub`, `osiris-wallpapers`,
-`osiris-desktop-theme`, `osiris-archive-keyring`). They are all `Architecture: all`,
-so one suite works on any apt-based distribution.
+It carries every Debian package this repo builds (`osiris-theme-gnome`,
+`osiris-theme-gtk` (transitional), `osiris-theme-plasma`, `osiris-icon-theme`,
+`osiris-theme-grub`, `osiris-wallpapers`, `osiris-desktop-theme`,
+`osiris-archive-keyring`). They are all `Architecture: all`,
+so one suite works on any apt-based distribution. For a GNOME-only desktop,
+`apt install osiris-theme-gnome osiris-icon-theme` is enough — no Qt is pulled in
+(the Plasma package only *suggests* the Kvantum Qt style).
 
 - **Suite:** `stable` · **Component:** `main` · **Base URL:**
   `https://richardblaha.github.io/osiris-deb-repo`

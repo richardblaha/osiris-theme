@@ -180,22 +180,26 @@ sudo apt update && sudo apt install osiris-desktop-theme
 Or one-off from the release files:
 
 ```sh
-sudo apt install ./osiris-desktop-theme_<ver>_all.deb   # metapackage — pulls all six
-# …or pick components:
-sudo apt install ./osiris-icon-theme_<ver>_all.deb ./osiris-theme-gtk_<ver>_all.deb
+sudo apt install ./osiris-desktop-theme_<ver>_all.deb   # metapackage — pulls all components
+# …or pick components (GNOME only — no Qt/KDE gets installed):
+sudo apt install ./osiris-icon-theme_<ver>_all.deb ./osiris-theme-gnome_<ver>_all.deb
 ```
 
-- `osiris-theme-gtk` — GTK 3/4 + libadwaita + GNOME Shell + Metacity (Flashback),
-  the GtkSourceView syntax schemes (**osiris** / **osiris-light** — used by GNOME
-  Text Editor, gedit, GNOME Builder, meld…), the **Ptyxis** terminal palette and
-  a GNOME Terminal profile installer (`/usr/share/osiris/gnome-terminal/install.sh`).
+- `osiris-theme-gnome` — the GNOME theme package: GTK 3/4 + libadwaita + GNOME Shell +
+  Metacity (Flashback), the GtkSourceView syntax schemes (**osiris** / **osiris-light** —
+  used by GNOME Text Editor, gedit, GNOME Builder, meld…), the **Ptyxis** terminal
+  palette and a GNOME Terminal profile installer (`/usr/share/osiris/gnome-terminal/install.sh`).
   Apply the theme with `osiris-gtk-theme --apply` (or GNOME Tweaks → Appearance);
-  pick the editor scheme in the app's preferences.
+  pick the editor scheme in the app's preferences. No Qt dependencies.
+  (`osiris-theme-gtk` still works — it is now a transitional package that pulls in
+  `osiris-theme-gnome`.)
 - `osiris-icon-theme` — official Material Symbols Rounded 300-based icon set. Select **Osiris** in GNOME
   Tweaks → Appearance → Icons, or System Settings → Icons on KDE.
 - `osiris-theme-plasma` — set **System Settings → Colors → Osiris**, decoration
-  **Osiris Dark**, the Kvantum style (full Qt coverage) and the **Osiris
-  Dark/Light** Konsole colour schemes.
+  **Osiris Dark**, the **Osiris Dark/Light** Konsole colour schemes; the Kvantum
+  Qt style (full Qt coverage) is only *suggested* — `apt install qt6-style-kvantum`
+  if you want Qt apps themed too. This is why the `osiris-desktop-theme`
+  metapackage no longer installs Qt on a GNOME-only system.
 - `osiris-theme-grub` — configures `/boot/grub` and runs `update-grub` on install.
 - `osiris-wallpapers` — appears in **Settings → Background** (static + *Dynamic*).
 
