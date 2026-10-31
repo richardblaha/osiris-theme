@@ -52,7 +52,7 @@ for path in \
   '.accent.secondary.dark:#ff2a85' \
   '.themes.dark.bg.editor:#0d1117' \
   '.themes.dark.bg.sidebar:#161b22' \
-  '.themes.dark.bg.statusbar:#00f2fe' \
+  '.themes.dark.bg.statusbar:#161b22' \
   '.themes.dark.text.primary:#e6edf3' \
   '.themes.dark.syntax.string:#a5d6ff' \
   '.themes.dark.syntax.type:#79c0ff' \
@@ -147,7 +147,7 @@ for path in \
   '.accent.primary.light:#0969da' \
   '.accent.secondary.light:#e01a76' \
   '.themes.light.bg.editor:#ffffff' \
-  '.themes.light.bg.statusbar:#0969da' \
+  '.themes.light.bg.statusbar:#f6f8fa' \
   '.themes.light.text.primary:#1f2328'
 do
   key="${path%%:*}"; want="${path##*:}"

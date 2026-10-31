@@ -78,7 +78,17 @@ ensure_fira_ttf() {
 render_gnome_shell() {
   local variant="$1" infile="$2" outfile="$3"
   local acc acc_fg sec panel surface hover border fg fg_dim fg_muted sel
-  local success warning error
+  local success warning error base
+  # Base: the stock Adwaita shell theme from gnome-shell's own gresource, so the
+  # Osiris theme is Adwaita + re-colour + smaller corner rounding, not a rewrite.
+  # GNOME <= 46 ships gnome-shell.css (dark default); GNOME 47+ ships
+  # gnome-shell-{dark,light}.css — import both where present; a missing resource
+  # is a harmless warning and the template's own rules still cover the chrome.
+  if [ "$variant" = dark ]; then
+    base='@import url("resource:///org/gnome/shell/theme/gnome-shell.css"); @import url("resource:///org/gnome/shell/theme/gnome-shell-dark.css");'
+  else
+    base='@import url("resource:///org/gnome/shell/theme/gnome-shell-light.css");'
+  fi
   acc="$(tok ".accent.primary.$variant")"
   sec="$(tok ".accent.secondary.$variant")"
   panel="$(tok ".themes.$variant.bg.activitybar")"
@@ -94,7 +104,8 @@ render_gnome_shell() {
   error="$(tok ".state.error.$variant")"
   acc_fg="$(tok ".themes.$variant.text.inverse")"
 
-  sed -e "s|@ACCENT@|$acc|g" \
+  sed -e "s|@BASE@|$base|g" \
+      -e "s|@ACCENT@|$acc|g" \
       -e "s|@ACCENT_FG@|$acc_fg|g" \
       -e "s|@ACCENT_SOFT@|${acc}26|g" \
       -e "s|@ACCENT_DIM@|${acc}14|g" \

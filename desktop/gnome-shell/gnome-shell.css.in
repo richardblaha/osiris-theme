@@ -5,12 +5,22 @@
    <theme>/gnome-shell/gnome-shell.css. Both an Osiris (dark) and an
    Osiris-Light (light) variant are produced.
 
-   Tokens (each wrapped in AT signs): ACCENT ACCENT_FG ACCENT_SOFT ACCENT_DIM
-   SECONDARY SECONDARY_SOFT PANEL SURFACE SURFACE_HOVER SELECTION BORDER FG
-   FG_DIM FG_MUTED SUCCESS SUCCESS_SOFT WARNING WARNING_SOFT ERROR ERROR_SOFT.
+   The theme is the stock Adwaita shell (imported below from gnome-shell's own
+   gresource) plus: OSIRIS colours, Fira Code, the Osiris icon theme's glyphs at
+   16px, and smaller corner rounding — radius.sm (4px) everywhere, no pills and
+   no round corners (the VS Code 2026 shape language, tokens.json "radius").
+
+   Tokens (each wrapped in AT signs): BASE ACCENT ACCENT_FG ACCENT_SOFT
+   ACCENT_DIM SECONDARY SECONDARY_SOFT PANEL SURFACE SURFACE_HOVER SELECTION
+   BORDER FG FG_DIM FG_MUTED SUCCESS SUCCESS_SOFT WARNING WARNING_SOFT ERROR
+   ERROR_SOFT.
 
    Targets GNOME Shell 42 -> 48. Unknown selectors degrade gracefully.
    ========================================================================== */
+
+/* Adwaita base — resolved per variant by render_gnome_shell (gnome-shell.css /
+   gnome-shell-{dark,light}.css inside gnome-shell-theme.gresource). */
+@BASE@
 
 /* ---- Global -------------------------------------------------------- */
 stage {
@@ -19,6 +29,18 @@ stage {
   color: @FG@;
   font-size: 10.5pt;
 }
+
+/* Adwaita's bigger radii (12/16px popups, round toggles) shrink to 4px. */
+.popup-menu-content, .quick-settings, .osd-window, .notification-banner,
+.message, .search-entry, .entry, StEntry, #panel .panel-button, .button,
+.calendar, .datemenu-today-button, .message-list-sections, .quick-toggle,
+.quick-menu-toggle, .quick-toggle-menu, .world-clocks-button, .events-button,
+.weather-button, .window-picker .window-clone-border {
+  border-radius: 4px;
+}
+.toggle-switch { border-radius: 4px; }
+.toggle-switch StBin { border-radius: 2px; }
+.check-box StBin, .radio-box StBin { border-radius: 4px; }
 
 .system-status-icon,
 .popup-menu-icon { icon-size: 16px; }
@@ -42,8 +64,8 @@ stage {
 StEntry StLabel.hint-text { color: @FG_MUTED@; }
 .entry StIcon { color: @FG_DIM@; }
 
-/* sliders (quick settings, OSD, a11y) */
-.slider { color: @ACCENT@; -barlevel-height: 4px; -slider-handle-radius: 9999px; }
+/* sliders (quick settings, OSD, a11y) — square-ish handle, no round knob */
+.slider { color: @ACCENT@; -barlevel-height: 4px; -slider-handle-radius: 4px; }
 .slider:hover { color: @ACCENT@; }
 
 /* check boxes / radio */

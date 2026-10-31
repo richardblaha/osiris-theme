@@ -24,6 +24,8 @@ apply() {
     gsettings set org.gnome.desktop.interface gtk-theme "$NAME" || true
     gsettings set org.gnome.desktop.interface color-scheme \
       "$([ "$MODE" = light ] && echo prefer-light || echo prefer-dark)" || true
+    # the Osiris XDG icon theme (osiris-icon-theme package) for shell + apps
+    gsettings set org.gnome.desktop.interface icon-theme "Osiris" || true
     gsettings writable org.gnome.shell.extensions.user-theme name >/dev/null 2>&1 && \
       gsettings set org.gnome.shell.extensions.user-theme name "$NAME" || true
   fi
@@ -34,6 +36,7 @@ revert() {
   rm -f "$CONFIG/gtk-4.0/gtk.css" "$CONFIG/gtk-4.0/colors.css" "$CONFIG/gtk-3.0/gtk.css"
   if command -v gsettings >/dev/null 2>&1; then
     gsettings reset org.gnome.desktop.interface gtk-theme || true
+    gsettings reset org.gnome.desktop.interface icon-theme || true
     gsettings writable org.gnome.shell.extensions.user-theme name >/dev/null 2>&1 && \
       gsettings set org.gnome.shell.extensions.user-theme name "" || true
   fi

@@ -1,6 +1,7 @@
 /* ============================================================================
    OSIRIS — GTK 3 specific rules.
    The build (scripts/build.sh :: build_gtk) concatenates, in order:
+       @import Adwaita base (libgtk-3 gresource, gtk.css / gtk-dark.css)
        gtk-common/colors-<variant>.css
        gtk-common/widgets.css
        gtk-3.0/gtk3.css

@@ -57,10 +57,11 @@ keyword syntax, progress).
 | `border.strong` | `#30363d` | `#d0d7de` | Input borders, popovers, cards |
 | `scrollbar` | `#30363d` | `#d0d7de` | Scrollbar thumb |
 
-The status bar is a **solid accent bar**: cyan `#00f2fe` on `#04151a` text
-(dark), blue `#0969da` on `#ffffff` (light). This is the single most recognisable
-OSIRIS signature — keep it in every shell (GNOME top bar accent, Plasma
-active-task underline, GRUB progress bar).
+The status bar sits in the **background colour** — `#161b22` with `#e6edf3`
+text (dark), `#f6f8fa` with `#1f2328` text (light), separated by a
+`border.subtle` hairline — like VS Code 2026, never a solid accent bar. The
+accents stay where they carry affordance: focus rings, active indicators, the
+GNOME top-bar active underline, Plasma active-task underline, GRUB progress bar.
 
 ---
 
@@ -113,13 +114,18 @@ secondary, **U**ntracked → warning, **A**dded → success.
 
 | Token | Value | Notes |
 |---|---|---|
-| `radius.xs` | `2px` | very compact indicators |
-| `radius.sm` | `4px` | controls: inputs, buttons, list rows, tabs |
-| `radius.md` | `6px` | inner surfaces and cards |
-| `radius.lg` | `8px` | menus, dialogs, toasts and floating surfaces |
-| `radius.xl` | `12px` | very prominent surfaces |
-| `radius.pill` | `9999px` | pills, toggles, avatars and circular indicators |
+| `radius.xs` | `2px` | very compact indicators (switch knobs, focus ticks) |
+| `radius.sm` | `4px` | controls: inputs, buttons, list rows, tabs — the default |
+| `radius.md` | `4px` | inner surfaces and cards |
+| `radius.lg` | `6px` | menus, dialogs, toasts and floating surfaces |
+| `radius.xl` | `8px` | very prominent surfaces |
 | `shadow.window` | `0 30px 80px -20px rgba(0,0,0,.65), 0 8px 24px -8px rgba(0,0,0,.5)` | floating window / decorated frame |
+
+**Shape rule (VS Code 2026):** no round corners and **no pills** — every corner
+is square with a slight rounding (`radius.sm`/`md` = 4px on controls, `lg`/`xl`
+on floating surfaces). There is no `radius.pill` token; toggles, badges,
+avatars and switches are slightly rounded rectangles, not capsules. Only tiny
+status dots stay circular.
 | `shadow.popup` | `0 16px 40px rgba(0,0,0,.5)` | menus, IntelliSense, palette |
 | transition | `.15s ease` | color / background / transform on hover & focus |
 
@@ -142,11 +148,11 @@ active tab top edge uses `accent.secondary`; panel tab bottom edge uses
 | Text / number input | bg `bg.input`, 1px `border.strong`, `radius.sm` | border `border.strong` | focus ring | muted text |
 | Select / dropdown | as input + chevron in `text.secondary` | — | focus ring | — |
 | Checkbox / radio | `accent.primary` accent-color, 15px | — | focus ring | — |
-| Toggle switch | track `border.strong`; thumb `text.primary` | — | checked: track `accent.primary`, thumb `text.inverse`, 16px travel | — |
+| Toggle switch | track `border.strong`, `radius.sm` (rectangular, not a pill); thumb `text.primary`, `radius.xs` | — | checked: track `accent.primary`, thumb `text.inverse`, 16px travel | — |
 | Range slider | track 4px, `accent.primary` accent-color | — | focus ring on thumb | — |
 | Tab (editor) | bg `bg.tabInactive`, text `text.secondary` | `bg.hover` | bg `bg.tabActive`, text `text.primary`, 2px `accent.primary` top bar | — |
 | List row | transparent | `bg.hover` | `accent.primary` soft bg | — |
-| Badge / count | fill `accent.secondary` (activity) or `bg.hover` (panel tab), `radius.pill` | — | — | — |
+| Badge / count | fill `accent.secondary` (activity) or `bg.hover` (panel tab), `radius.sm` | — | — | — |
 | Toast | bg `bg.sidebar`, 1px `border.strong`, 3px left border in the status colour, `radius.sm`, `shadow.popup` | — | — | — |
 | Command palette | box `bg.sidebar`, 1px `border.strong`, `radius.md`, `shadow.popup`; active row `accent.primary` soft | — | — | — |
 | Dialog / modal backdrop | `rgba(3,6,10,0.55)` | — | — | — |

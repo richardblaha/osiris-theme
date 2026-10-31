@@ -138,8 +138,8 @@
   );
   --vp-home-hero-image-filter: blur(44px);
 
-  /* Shape — radius.md */
-  --vp-border-radius: 6px;
+  /* Shape — radius.md (4px): square corners with a slight rounding, no pills */
+  --vp-border-radius: 4px;
 }
 
 /* ===========================================================================
@@ -236,7 +236,7 @@
   top: 3px;
   bottom: 3px;
   width: 2px;
-  border-radius: 999px;
+  border-radius: var(--radius-sm, 4px);
   background: var(--vp-c-brand-1);
 }
 

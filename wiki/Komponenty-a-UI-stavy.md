@@ -10,12 +10,13 @@ OSIRIS používá umírněné, technické zaoblení rohů, které působí moder
 
 | Token | Hodnota | Použití v rozhraní |
 |---|---|---|
-| `radius.xs` | `2 px` | Velmi kompaktní indikátory |
-| `radius.sm` | `4 px` | Tlačítka, vstupní pole, řádky seznamů a taby |
-| `radius.md` | `6 px` | Karty a vnitřní plochy |
-| `radius.lg` | `8 px` | Popovers, dialogy, notifikace a plovoucí plochy |
-| `radius.xl` | `12 px` | Výrazné vnější plochy |
-| `radius.pill` | `9999 px` | Přepínače, odznaky, avatary a kruhové prvky |
+| `radius.xs` | `2 px` | Velmi kompaktní indikátory (jezdec přepínače) |
+| `radius.sm` | `4 px` | Tlačítka, vstupní pole, řádky seznamů a taby — výchozí hodnota |
+| `radius.md` | `4 px` | Karty a vnitřní plochy |
+| `radius.lg` | `6 px` | Popovers, dialogy, notifikace a plovoucí plochy |
+| `radius.xl` | `8 px` | Výrazné vnější plochy |
+
+**Pravidlo tvaru (VS Code 2026):** žádná kulatá zaoblení a **žádné pills** — každý roh je hranatý jen lehce zaoblený (`radius.sm`/`md` = 4 px na ovládacích prvcích, `radius.lg`/`xl` na plovoucích plochách). Token `radius.pill` záměrně neexistuje; přepínače, odznaky, avatary a přepínací prvky jsou lehce zaoblené obdélníky, ne kapsle. Kulaté zůstávají jen malé stavové tečky.
 
 ---
 
@@ -77,10 +78,10 @@ Přehled chování a stylů komponent v jednotlivých stavech:
 | **Textové pole (Input)**| Pozadí `bg.input`, 1px rámeček `border.strong`, text `text.primary` | Rámeček `border.strong` | Focus Ring, pozadí `bg.input` | Text `text.muted`, rámeček `border.subtle` |
 | **Výběrové pole (Select)**| Stejné jako Input + šipka chevron v barvě `text.secondary` | Zvýraznění chevronu | Focus Ring | Opacita 50 % |
 | **Zaškrtávací pole (Checkbox)**| Rámeček `border.strong`, zaškrtnuto: `accent.primary` výplň | Jemný akcentový okraj | Focus Ring | Opacita 40 % |
-| **Přepínač (Toggle Switch)**| Dráha `border.strong`, jezdec `text.primary`, zaoblení `radius.pill` | — | Zapnuto: dráha `accent.primary`, jezdec `text.inverse`, posun 16 px | Opacita 40 % |
+| **Přepínač (Toggle Switch)**| Dráha `border.strong`, zaoblení `radius.sm` (hranatá, ne pill), jezdec `text.primary`, zaoblení `radius.xs` | — | Zapnuto: dráha `accent.primary`, jezdec `text.inverse`, posun 16 px | Opacita 40 % |
 | **Záložka editoru (Tab)**| Pozadí `bg.tabInactive`, text `text.secondary` | Pozadí `bg.hover` | Pozadí `bg.tabActive`, text `text.primary`, 2px horní pruh `accent.secondary` | — |
 | **Řádek v seznamu** | Transparentní pozadí | Pozadí `bg.hover` | Pozadí `accent.primarySoft`, text `text.primary` | — |
-| **Odznak (Badge / Count)**| Výplň `accent.secondary` (notifikace) nebo `bg.hover` (panely), zaoblení `radius.pill` | — | — | — |
+| **Odznak (Badge / Count)**| Výplň `accent.secondary` (notifikace) nebo `bg.hover` (panely), zaoblení `radius.sm` | — | — | — |
 | **Toast notifikace** | Pozadí `bg.sidebar`, 1px rámeček `border.strong`, 3px levý svislý pruh v sémantické barvě stavu, stín `shadow.popup` | — | — | — |
 | **Command Palette** | Okno `bg.sidebar`, rámeček `border.strong`, stín `shadow.popup`, aktivní řádek `accent.primarySoft` | — | Focus na vyhledávacím poli | — |
 | **Modální pozadí** | `rgba(3, 6, 10, 0.55)` (poloprůhledná tlumící vrstva) | — | — | — |

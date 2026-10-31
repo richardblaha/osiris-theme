@@ -18,8 +18,9 @@ packages, browser `.zip`s, `.deb` and `.rpm`.
 
 A **dual-accent** system: cyan primary + magenta/rose secondary on a
 GitHub-flavoured neutral ramp (`#0d1117` / `#161b22` dark, white / `#f6f8fa`
-light). The signature move is a **solid accent status bar**. Everything —
-editor, window chrome, panel, boot menu — is derived from
+light). The shape language is VS Code 2026: square corners with a slight
+rounding (4px), no pills, and the status bar in the background colour — not an
+accent bar. Everything — editor, window chrome, panel, boot menu — is derived from
 [`assets/tokens.json`](assets/tokens.json), which was extracted verbatim from the
 interactive reference in [`docs/preview/`](docs/preview/).
 

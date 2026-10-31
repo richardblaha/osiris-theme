@@ -5,6 +5,28 @@ Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](ht
 
 ## [Unreleased]
 
+### Changed
+- **VS Code 2026 shape language everywhere:** no round corners and no pills —
+  every corner is square with a slight rounding (`radius` tokens are now
+  2/4/4/6/8px; `radius.pill` is removed). Toggles, badges, avatars and switches
+  are slightly rounded rectangles; only tiny status dots stay circular.
+- **Status bar in the background colour, not the accent** (VS Code 2026):
+  `bg.statusbar` is now `bg.sidebar` with `text.primary` on it in both VS Code
+  colour themes, the preview page and the Osiris web clients (PWA + Digital
+  Twin AI). The accent stays on focus rings, active indicators and the remote/
+  debugging status items.
+- **GTK 3/4 and GNOME Shell themes now build on Adwaita itself**: the assembled
+  `gtk-3.0/gtk.css` / `gtk-4.0/gtk.css` and `gnome-shell/gnome-shell.css` start
+  with `@import` of the stock Adwaita stylesheet from the toolkit's gresource
+  and only override colours, Fira Code and the corner radius (4px). GNOME Shell
+  imports `gnome-shell.css` / `gnome-shell-{dark,light}.css` (GNOME 42–48).
+- `osiris-gtk-theme --apply` now also sets the `Osiris` icon theme
+  (`org.gnome.desktop.interface icon-theme`).
+- The Osiris PWA and the Digital Twin AI web apps share the same tokens
+  (`packages/shared` THEME incl. `bgStatusbar`/`bgStatusbarText`; a test pins
+  both apps' `theme.css` to them); `--radius` is 4px and pill switches/avatars
+  are gone.
+
 ## [0.2.0] — 2026-10-26
 
 ### Added

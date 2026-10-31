@@ -1,6 +1,8 @@
 /* ============================================================================
    OSIRIS — GTK 4 / libadwaita specific rules.
    Concatenation order (scripts/build.sh :: build_gtk):
+       @import Adwaita base (libgtk-4 "Default" gresource; libadwaita apps
+           always carry libadwaita's own Adwaita stylesheet underneath)
        gtk-common/colors-<variant>.css     (also defines libadwaita @accent_* etc.)
        gtk-common/widgets.css
        gtk-4.0/gtk4.css
@@ -12,21 +14,33 @@
    ~/.config drop-in via `osiris-gtk-theme --apply`.
    ========================================================================== */
 
+/* Shrink Adwaita/libadwaita's larger radii to radius.sm (4px) — VS Code 2026
+   shape: square corners with a slight rounding, no pills anywhere. */
 windowcontrols button {
   background: transparent;
   color: @osiris_fg_dim;
   min-width: 24px;
   min-height: 24px;
+  border-radius: 4px;
 }
 windowcontrols button:hover { background-color: @osiris_bg_hover; color: @osiris_fg; }
 windowcontrols button.close:hover { background-color: @osiris_secondary; color: #0a0a0a; }
 
-/* AdwWindow / AdwApplicationWindow rounded frame */
+/* AdwWindow / AdwApplicationWindow frame (Adwaita uses 12px) */
 window.csd,
 window.csd.dialog {
   border-radius: 4px;
   box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.65),
               0 8px 24px -8px rgba(0, 0, 0, 0.5);
+}
+
+/* Pill-shaped libadwaita controls become slightly rounded rectangles */
+button.pill,
+viewswitcher button,
+tabbar tab,
+switch,
+switch slider {
+  border-radius: 4px;
 }
 
 /* AdwViewSwitcher / AdwTabBar */
@@ -62,5 +76,5 @@ banner > box {
 }
 banner button { background-color: @osiris_accent; color: @osiris_accent_fg; }
 
-/* Accent-tinted checked pills / suggested toggle groups */
+/* Accent-tinted checked toggle groups */
 togglebutton:checked { background-color: @osiris_accent_soft; color: @osiris_fg; box-shadow: inset 0 0 0 1px @osiris_accent; }

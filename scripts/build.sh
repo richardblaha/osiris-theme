@@ -199,10 +199,30 @@ assemble_gtk_variant() {   # <variant> <ThemeName>
   local t="$BUILD_DIR/themes/$name"
   mkdir -p "$t/gtk-3.0" "$t/gtk-4.0"
 
-  cat desktop/gtk-common/colors-$variant.css desktop/gtk-common/widgets.css \
-      desktop/gtk-3.0/gtk3.css > "$t/gtk-3.0/gtk.css"
-  cat desktop/gtk-common/colors-$variant.css desktop/gtk-common/widgets.css \
-      desktop/gtk-4.0/gtk4.css > "$t/gtk-4.0/gtk.css"
+  # Base: Adwaita itself, imported from the toolkit's own gresource — this theme
+  # only re-colours it, sets Fira Code and shrinks the corner rounding (4px, no
+  # pills). GTK3 keeps Adwaita inside libgtk-3; plain GTK4 apps load libgtk-4's
+  # "Default" (= Adwaita); libadwaita apps always carry libadwaita's stylesheet
+  # underneath the named theme.
+  local gtk3_base gtk4_base
+  if [ "$variant" = dark ]; then
+    gtk3_base='resource:///org/gtk/libgtk/theme/Adwaita/gtk-dark.css'
+    gtk4_base='resource:///org/gtk/libgtk/theme/Default/gtk-dark.css'
+  else
+    gtk3_base='resource:///org/gtk/libgtk/theme/Adwaita/gtk.css'
+    gtk4_base='resource:///org/gtk/libgtk/theme/Default/gtk-light.css'
+  fi
+
+  {
+    printf '/* Adwaita base — see scripts/build.sh :: assemble_gtk_variant */\n@import url("%s");\n\n' "$gtk3_base"
+    cat desktop/gtk-common/colors-$variant.css desktop/gtk-common/widgets.css \
+        desktop/gtk-3.0/gtk3.css
+  } > "$t/gtk-3.0/gtk.css"
+  {
+    printf '/* Adwaita base — see scripts/build.sh :: assemble_gtk_variant */\n@import url("%s");\n\n' "$gtk4_base"
+    cat desktop/gtk-common/colors-$variant.css desktop/gtk-common/widgets.css \
+        desktop/gtk-4.0/gtk4.css
+  } > "$t/gtk-4.0/gtk.css"
   cp "$t/gtk-3.0/gtk.css" "$t/gtk-3.0/gtk-dark.css"   # some apps look for -dark
   cp desktop/gtk-common/colors-$variant.css "$t/gtk-4.0/colors.css"
 
