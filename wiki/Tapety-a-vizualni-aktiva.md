@@ -4,33 +4,21 @@ Součástí kompletní identity OSIRIS jsou oficiální systémové tapety, apli
 
 ---
 
-## 1. Tapetové rodiny (Wallpaper Families)
+## 1. Tapetová rodina (Wallpaper Family)
 
-Projekt obsahuje dvě samostatné rodiny tapet, z nichž každá nabízí variantu **Den (Day / Light)** a **Noc (Night / Dark)** s plynulým časovým přechodem podle denní doby.
+Projekt obsahuje jednu rodinu tapet **Neon Sci-Fi** — 10 motivů, každý ve variantě **Dark** a **Light** (celkem 20 tapet), s plynulým časovým přechodem podle denní doby.
 
-### Rodina A: Abstract (Bloom / Fluid)
-- **Vizuální styl:** Plynulé vrstvené křivky z průsvitných gradientů ve stylu moderního skla (Fluent / Glassmorphism) s přechodem ze zářivého Cyanu do Rose na hlubokém neutrálním pozadí.
-- **Denní varianta (Day):** Světlý perleťový podklad s čistým vzdušným gradientem.
-- **Noční varianta (Night):** Hluboké uhlíkové pozadí s výrazným neonovým luminiscenčním svitem.
-- **Soubory v repozitáři:**
-  - `assets/wallpapers/abstract/osiris-abstract-day.svg`
-  - `assets/wallpapers/abstract/osiris-abstract-night.svg`
-
-### Rodina B: Egypt (Ancient Egypt Sci-Fi)
-- **Vizuální styl:** Minimalistická vektorová kompozice spojující starověkou egyptskou symboliku (Djed pilíř – symbol stability, posvátný scarabeus a silueta pyramid) s kybernetickou sci-fi linkou osvětlenou bočním akcentovým světlem.
-- **Denní varianta (Day):** Pískovcově světlý čistý technický náčrt.
-- **Noční varianta (Night):** Temná silueta pyramid a posvátných symbolů s akcentovými hranami.
-- **Soubory v repozitáři:**
-  - `assets/wallpapers/egypt/osiris-egypt-day.svg`
-  - `assets/wallpapers/egypt/osiris-egypt-night.svg`
-
----
+### Neon Sci-Fi
+- **Vizuální styl:** Neonové kybernetické sci-fi motivy v cyan/magenta na neutrálním GitHub rampu — portál, horizont planety, hexagonová dlažba, vlny bodů, radar, pyramida v mlze, síť uzlů, oběžná dráha, tok čar, monolit.
+- **Dark varianta:** Hluboké uhlíkové pozadí (`#0d1117`) s neonovým svitem cyan `#00f2fe` / rose `#ff2a85`.
+- **Light varianta:** Světlé perleťové pozadí (`#eef2f7`) s tlumenějším akcentem `#0969da` / `#e01a76`.
+- **Soubory v repozitáři:** `assets/wallpapers/neon/osiris-neon-<NN>-<motiv>-<dark|light>.png` (20 master PNG, 1920×1080)
 
 ## 2. Podpora dynamických tapet na Linuxu
 
-Skript `scripts/generate-wallpapers.py` automaticky renderuje vektorové SVG do 4K rastrů (3840 × 2160 px) a sestavuje balíčky pro:
+Skript `scripts/generate-wallpapers.py` automaticky převede master PNG na rozlišení 2560×1440 / 1920×1080 / 1366×768 a sestavuje balíčky pro:
 
-- **GNOME Shell:** Generuje XML časovací soubory (`osiris-abstract.xml`, `osiris-egypt.xml`), které v průběhu dne automaticky plynule prolínají denní a noční tapetu podle východu a západu slunce.
+- **GNOME Shell:** Generuje XML časovací soubory (`osiris-neon-<motiv>-<rozlišení>.xml`), které v průběhu dne automaticky plynule prolínají light a dark variantu každého motivu podle východu a západu slunce.
 - **KDE Plasma:** Generuje strukturu s `metadata.json` pro nativní přepínač tapet v nastavení plochy Plasma.
 - **Umístění po instalaci:** `/usr/share/backgrounds/osiris/`
 

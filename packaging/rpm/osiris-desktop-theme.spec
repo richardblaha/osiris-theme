@@ -82,7 +82,7 @@ Requires:       grub2-tools
 into /boot/grub2, sets GRUB_THEME and regenerates grub.cfg.
 
 %package -n osiris-wallpapers
-Summary:        OSIRIS wallpapers (Abstract Bloom + Ancient Egypt Sci-Fi)
+Summary:        OSIRIS wallpapers (Neon Sci-Fi — 10 designs, dark + light)
 BuildArch:      noarch
 %description -n osiris-wallpapers
 Static Day/Night renders at four resolutions plus GNOME time-of-day dynamic XML
@@ -228,10 +228,16 @@ fi
 %license LICENSE
 %{_datadir}/backgrounds/osiris
 %{_datadir}/gnome-background-properties/osiris.xml
-%{_datadir}/wallpapers/Osiris-Abstract
-%{_datadir}/wallpapers/Osiris-Egypt
+%{_datadir}/wallpapers/Osiris-Neon-*
 
 %changelog
+* Sat Oct 31 2026 OSIRIS <osiris@example.org> - 0.4.0-1
+- Wallpapers: replace Abstract + Egypt with the Neon Sci-Fi set (10 designs x
+  dark/light, JPEG q88 at 2560x1440/1920x1080/1366x768, GNOME dynamic XML,
+  KDE packages Osiris-Neon-*).
+- GNOME Shell theme: force 4px radius over the imported Adwaita base and halve
+  the overview window close button.
+
 * Sat Oct 31 2026 OSIRIS <osiris@example.org> - 0.3.1-1
 - New subpackage osiris-theme-gnome: GTK 3/4 + libadwaita + GNOME Shell +
   Metacity, GtkSourceView schemes, Ptyxis palette, GNOME Terminal installer and

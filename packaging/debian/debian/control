@@ -72,10 +72,10 @@ Description: OSIRIS graphical GRUB2 boot theme
 Package: osiris-wallpapers
 Architecture: all
 Depends: ${misc:Depends}
-Description: OSIRIS wallpapers (Abstract Bloom + Ancient Egypt Sci-Fi)
- Fixed Day/Night renders at 4 resolutions plus GNOME time-of-day dynamic XML and
- KDE Plasma light/dark wallpaper packages. Installed under
- /usr/share/backgrounds/osiris.
+Description: OSIRIS wallpapers (Neon Sci-Fi — 10 designs, dark + light)
+ 20 raster masters rendered at 2560x1440 / 1920x1080 / 1366x768, plus GNOME
+ time-of-day dynamic XML and KDE Plasma light/dark wallpaper packages.
+ Installed under /usr/share/backgrounds/osiris.
 
 Package: osiris-desktop-theme
 Architecture: all

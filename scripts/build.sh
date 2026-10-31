@@ -381,6 +381,7 @@ build_grub() {
 build_wallpapers() {
   log "generating wallpapers"
   if have python3; then
+    rm -rf "$BUILD_DIR/wallpapers"
     python3 scripts/generate-wallpapers.py --out "$BUILD_DIR/wallpapers"
   else
     die "python3 required for wallpaper generation"

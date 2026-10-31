@@ -23,7 +23,7 @@
 - **Web a dokumentace:** VitePress (oficiální téma dokumentace), Bootstrap 5 (Sass proměnné a komponenty), Forgejo / Gitea (tmavé, světlé a auto CSS téma).
 - **Webové prohlížeče:** Google Chrome, Chromium, Microsoft Edge a Mozilla Firefox.
 - **Systémový start:** GRUB2 bootloader motiv s vlastní grafikou a typografií.
-- **Vizuální podklad:** Tapety ve dvou rodinách (Abstract a Egypt) s dynamickými přechody den/noc.
+- **Vizuální podklad:** Tapety Neon Sci-Fi — 10 motivů × dark/light s dynamickými přechody den/noc.
 
 ---
 
@@ -38,7 +38,7 @@ Tato Wiki slouží jako **oficiální manuál grafického designu** projektu OSI
 | **[3. Typografie](Typografie.md)** | Výhradní písmo Fira Code, typografická hierarchie, pravidla pro řezy, velikosti a ligatury. |
 | **[4. Komponenty a UI stavy](Komponenty-a-UI-stavy.md)** | Tvarosloví (rádiusy), elevace, stíny, standardizovaný Focus Ring a interaktivní kontrakt komponent. |
 | **[5. Ikonografie](Ikonografie.md)** | Material Symbols Rounded 300, 24x24 mřížka, souborové, produktové i XDG ikony. |
-| **[6. Tapety a vizuální aktiva](Tapety-a-vizualni-aktiva.md)** | Kolekce tapet Abstract a Egypt, letterpress vodoznaky a systémové ikony. |
+| **[6. Tapety a vizuální aktiva](Tapety-a-vizualni-aktiva.md)** | Kolekce tapet Neon Sci-Fi (10 motivů × dark/light), letterpress vodoznaky a systémové ikony. |
 | **[7. Galerie a screenshoty](Galerie-a-screenshoty.md)** | Vizuální prezentace tmavého a světlého motivu v reálném rozhraní, popis klíčových zón. |
 | **[8. Architektura a export](Architektura-a-export.md)** | Způsob generování motivů z `tokens.json`, strom repozitáře a kontrola integrity (CI guard). |
 

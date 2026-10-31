@@ -1,3 +1,14 @@
+osiris-desktop-theme (0.4.0-1) unstable; urgency=medium
+
+  * Wallpapers: replace Abstract + Egypt with the Neon Sci-Fi set — 10 designs
+    x dark/light, JPEG q88 at 2560x1440/1920x1080/1366x768, GNOME dynamic XML
+    and KDE packages Osiris-Neon-*.
+  * GNOME Shell theme: force 4px corner radius over the imported Adwaita base
+    (popovers, quick settings, toggles, boxpointer arrows) and halve the
+    overview window close button.
+
+ -- Richard Bláha <richardblaha@gmail.com>  Sat, 31 Oct 2026 18:00:00 +0200
+
 osiris-desktop-theme (0.3.1-1) unstable; urgency=medium
 
   * New package osiris-theme-gnome: the GTK 3/4 + libadwaita + GNOME Shell +

@@ -178,11 +178,12 @@ active tab top edge uses `accent.secondary`; panel tab bottom edge uses
 
 ## 9. Wallpaper palettes
 
-See `assets/tokens.json → wallpaper`. Two families, each with a fixed **Day
-(Light)** and **Night (Dark)** render plus a dynamic time-of-day transition
-(GNOME `*.xml`, KDE `metadata.json` / `*.json`).
+See `assets/tokens.json → wallpaper`. One family — **Neon Sci-Fi** — with
+**10 designs**, each in a **dark** and a **light** variant (20 masters), plus a
+dynamic time-of-day transition per design (GNOME `*.xml`, KDE
+`metadata.json` / `*.json`).
 
-- **Abstract (Bloom / Fluid):** layered translucent curves, Fluent-style depth,
-  cyan↔rose gradient wash over the neutral base.
-- **Egypt (Ancient Egypt Sci-Fi):** minimalist vector Djed pillar, scarab,
-  pyramid silhouette and hieroglyph strip, lit by a single accent rim light.
+- **Neon Sci-Fi:** cyan↔rose neon on the neutral ramp — portal, horizon, hex,
+  waves, radar, pyramid, mesh, orbit, flow, monolith
+  (`assets/wallpapers/neon/osiris-neon-<design>-<dark|light>.png`).
+- Raster sources cap at 2560×1440; outputs are 2560×1440 / 1920×1080 / 1366×768.

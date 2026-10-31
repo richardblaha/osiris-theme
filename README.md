@@ -53,8 +53,7 @@ osiris-theme/
 │   ├── fonts/fira-code/         # bundled Fira Code webfont (SIL OFL-1.1)
 │   ├── watermarks/              # letterpress marks — SVG + 1x/2x PNG
 │   └── wallpapers/
-│       ├── abstract/            # Bloom / Fluid — day.svg, night.svg, *.xml, kde-metadata.json
-│       └── egypt/               # Ancient Egypt Sci-Fi — same set
+│       └── neon/                # Neon Sci-Fi — 10 designs × dark/light PNG masters + *.xml + kde-metadata.json
 ├── docs/
 │   ├── preview/                 # interactive reference → GitHub Pages
 │   │   ├── index.html  styles.css  app.js

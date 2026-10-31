@@ -30,17 +30,39 @@ stage {
   font-size: 10.5pt;
 }
 
-/* Adwaita's bigger radii (12/16px popups, round toggles) shrink to 4px. */
-.popup-menu-content, .quick-settings, .osd-window, .notification-banner,
-.message, .search-entry, .entry, StEntry, #panel .panel-button, .button,
-.calendar, .datemenu-today-button, .message-list-sections, .quick-toggle,
-.quick-menu-toggle, .quick-toggle-menu, .world-clocks-button, .events-button,
-.weather-button, .window-picker .window-clone-border {
-  border-radius: 4px;
+/* Adwaita's bigger radii shrink to 4px — VS Code 2026 shape, no pills, no big
+   rounded corners on either side of a popover. Adwaita ships 20px popovers,
+   a 30px date-menu, 36px quick settings and 999px toggles, so the selectors
+   are doubled (and !important) to beat the imported sheet at any specificity. */
+.popup-menu-content.popup-menu-content, .candidate-popup-content.candidate-popup-content,
+.datemenu-popover.datemenu-popover, .quick-settings.quick-settings,
+.quick-toggle.quick-toggle, .quick-toggle-has-menu.quick-toggle-has-menu,
+.quick-menu-toggle.quick-menu-toggle, .quick-toggle-menu.quick-toggle-menu,
+.osd-window.osd-window, .notification-banner.notification-banner, .message.message,
+.search-entry.search-entry, stage .entry, stage StEntry, #panel .panel-button,
+.button.button, .calendar.calendar, .datemenu-today-button.datemenu-today-button,
+.message-list-sections.message-list-sections, .world-clocks-button.world-clocks-button,
+.events-button.events-button, .weather-button.weather-button,
+.popup-menu-item.popup-menu-item, .window-picker .window-clone-border,
+.popup-menu-boxpointer.popup-menu-boxpointer, .candidate-popup-boxpointer.candidate-popup-boxpointer {
+  border-radius: 4px !important;
 }
-.toggle-switch { border-radius: 4px; }
-.toggle-switch StBin { border-radius: 2px; }
+.popup-menu-boxpointer.popup-menu-boxpointer,
+.candidate-popup-boxpointer.candidate-popup-boxpointer {
+  -arrow-border-radius: 4px;
+}
+.toggle-switch.toggle-switch { border-radius: 4px !important; }
+.toggle-switch StBin { border-radius: 2px !important; }
 .check-box StBin, .radio-box StBin { border-radius: 4px; }
+
+/* Overview window close button: Adwaita draws it 32px with a 24px icon —
+   half of that is enough. */
+.window-close.window-close, .screenshot-ui-close-button.screenshot-ui-close-button {
+  height: 16px;
+  padding: 2px;
+  border-radius: 4px !important;
+}
+.window-close StIcon, .screenshot-ui-close-button StIcon { icon-size: 12px; }
 
 .system-status-icon,
 .popup-menu-icon { icon-size: 16px; }
@@ -65,7 +87,7 @@ StEntry StLabel.hint-text { color: @FG_MUTED@; }
 .entry StIcon { color: @FG_DIM@; }
 
 /* sliders (quick settings, OSD, a11y) — square-ish handle, no round knob */
-.slider { color: @ACCENT@; -barlevel-height: 4px; -slider-handle-radius: 4px; }
+.slider.slider { color: @ACCENT@; -barlevel-height: 4px; -slider-handle-radius: 4px; }
 .slider:hover { color: @ACCENT@; }
 
 /* check boxes / radio */

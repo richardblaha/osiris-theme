@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+<!--
+  OSIRIS "Neon Sci-Fi" — GNOME dynamic (time-of-day) wallpaper, one per design.
+  Light 07:00 -> dusk transition 19:00 (2h) -> Dark -> dawn transition 06:00 (1h).
+  Paths are the packaged install location. scripts/install-local.sh rewrites
+  them to ~/.local/share/backgrounds/osiris for from-source installs.
+  @NAME@ = design (01-portal, ...), @RES@ = resolution — substituted by
+  scripts/generate-wallpapers.py.
+-->
+<background>
+  <starttime>
+    <year>2026</year><month>01</month><day>01</day>
+    <hour>07</hour><minute>00</minute><second>00</second>
+  </starttime>
+
+  <!-- Light -->
+  <static>
+    <duration>43200.0</duration>
+    <file>/usr/share/backgrounds/osiris/neon/osiris-neon-@NAME@-light-@RES@.jpg</file>
+  </static>
+
+  <!-- Light -> Dark -->
+  <transition type="overlay">
+    <duration>7200.0</duration>
+    <from>/usr/share/backgrounds/osiris/neon/osiris-neon-@NAME@-light-@RES@.png</from>
+    <to>/usr/share/backgrounds/osiris/neon/osiris-neon-@NAME@-dark-@RES@.png</to>
+  </transition>
+
+  <!-- Dark -->
+  <static>
+    <duration>39600.0</duration>
+    <file>/usr/share/backgrounds/osiris/neon/osiris-neon-@NAME@-dark-@RES@.jpg</file>
+  </static>
+
+  <!-- Dark -> Light -->
+  <transition type="overlay">
+    <duration>3600.0</duration>
+    <from>/usr/share/backgrounds/osiris/neon/osiris-neon-@NAME@-dark-@RES@.png</from>
+    <to>/usr/share/backgrounds/osiris/neon/osiris-neon-@NAME@-light-@RES@.png</to>
+  </transition>
+</background>

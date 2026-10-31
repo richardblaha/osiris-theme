@@ -5,6 +5,27 @@ Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](ht
 
 ## [Unreleased]
 
+## [0.4.0] — 2026-10-31
+
+### Changed
+- **Wallpapers: the Abstract and Egypt families are replaced by the Neon Sci-Fi
+  set** — 10 designs (portal, horizon, hex, waves, radar, pyramid, mesh, orbit,
+  flow, monolith), each in a dark and a light variant (20 masters, 10 wallpapers
+  per variant), rendered to 2560x1440 / 1920x1080 / 1366x768 as JPEG q88, with a
+  GNOME dynamic day/night XML and a KDE package per design
+  (`Osiris-Neon-*`). `scripts/generate-wallpapers.py` now discovers any number of
+  designs per family and supports PNG/JPG masters.
+
+### Fixed
+- **GNOME Shell on the Adwaita base:** the imported Adwaita sheet won
+  specificity ties, leaving 20px popovers, a 30px date menu, 36px quick settings
+  and 999px pill toggles — popovers were far too round on the right side. All
+  shell surfaces are now forced to `border-radius: 4px` (doubled selectors +
+  !important), including toggle switches, sliders, check/radio boxes and the
+  boxpointer arrows.
+- **GNOME Shell overview:** the window close button (`.window-close`) is halved
+  (32px -> 16px, icon 24px -> 12px, no pill).
+
 ## [0.3.1] — 2026-10-31
 
 ### Fixed

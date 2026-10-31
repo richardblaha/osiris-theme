@@ -1,0 +1,13 @@
+{
+  "$comment": "Template for the KDE Plasma wallpaper package of one Neon design. generate-wallpapers.py copies this to <pkg>/metadata.json, replacing @NAME@ (display name) and @ID@ (package id), and fills contents/images/ (light) + contents/images_dark/ (dark).",
+  "KPlugin": {
+    "Authors": [ { "Name": "OSIRIS" } ],
+    "License": "MIT",
+    "Name": "Osiris Neon — @NAME@",
+    "Id": "Osiris-Neon-@ID@",
+    "Version": "0.1.0",
+    "Website": "https://richardblaha.github.io/osiris-theme/"
+  },
+  "X-KDE-PluginInfo-Category": "Wallpaper",
+  "X-Plasma-API": "5.0"
+}

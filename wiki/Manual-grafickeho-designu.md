@@ -6,7 +6,7 @@ Tento dokument představuje **oficiální manuál grafického designu značky OS
 
 ## 1. Filozofie a vize značky
 
-Vizuální styl OSIRIS vychází z propojení **precizního inženýrství, moderní kybernetické estetiky a egyptské mystiky**. Není to pouze barevné schéma pro editor kódu, ale komplexní designový jazyk sjednocující operační systém, nástroje a dokumentaci.
+Vizuální styl OSIRIS vychází z propojení **precizního inženýrství a moderní neonové kybernetické estetiky**. Není to pouze barevné schéma pro editor kódu, ale komplexní designový jazyk sjednocující operační systém, nástroje a dokumentaci.
 
 ### Klíčové principy:
 1. **Funkční ergonomie (Developer First):** Všechny barvy, kontrasty a rádiusy jsou optimalizovány pro mnohahodinovou práci bez únavy očí (certifikovaný kontrast WCAG AA).
