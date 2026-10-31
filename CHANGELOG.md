@@ -5,6 +5,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](ht
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-10-31
+
 ### Changed
 - **VS Code 2026 shape language everywhere:** no round corners and no pills —
   every corner is square with a slight rounding (`radius` tokens are now
