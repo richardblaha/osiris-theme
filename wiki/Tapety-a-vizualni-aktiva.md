@@ -12,7 +12,7 @@ Projekt obsahuje jednu rodinu tapet **Neon Sci-Fi** — 10 motivů, každý ve v
 - **Vizuální styl:** Neonové kybernetické sci-fi motivy v cyan/magenta na neutrálním GitHub rampu — portál, horizont planety, hexagonová dlažba, vlny bodů, radar, pyramida v mlze, síť uzlů, oběžná dráha, tok čar, monolit.
 - **Dark varianta:** Hluboké uhlíkové pozadí (`#0d1117`) s neonovým svitem cyan `#00f2fe` / rose `#ff2a85`.
 - **Light varianta:** Světlé perleťové pozadí (`#eef2f7`) s tlumenějším akcentem `#0969da` / `#e01a76`.
-- **Soubory v repozitáři:** `assets/wallpapers/neon/osiris-neon-<NN>-<motiv>-<dark|light>.png` (20 master PNG, 1920×1080)
+- **Soubory v repozitáři:** `assets/wallpapers/neon/osiris-neon-<NN>-<motiv>-<dark|light>.png` (20 master PNG, 2560×1440)
 
 ## 2. Podpora dynamických tapet na Linuxu
 

@@ -231,6 +231,10 @@ fi
 %{_datadir}/wallpapers/Osiris-Neon-*
 
 %changelog
+* Sun Nov 01 2026 OSIRIS <osiris@example.org> - 0.4.1-1
+- Wallpapers: native QHD (2560x1440) high-resolution masters for all 10 Neon
+  Sci-Fi designs (dark + light) without border artifacts.
+
 * Sat Oct 31 2026 OSIRIS <osiris@example.org> - 0.4.0-1
 - Wallpapers: replace Abstract + Egypt with the Neon Sci-Fi set (10 designs x
   dark/light, JPEG q88 at 2560x1440/1920x1080/1366x768, GNOME dynamic XML,

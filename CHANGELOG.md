@@ -5,6 +5,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](ht
 
 ## [Unreleased]
 
+## [0.4.1] — 2026-11-01
+
+### Changed
+- **Wallpapers: native QHD (2560×1440) masters for the Neon Sci-Fi set** — all
+  20 master PNGs (`01-portal` through `10-monolith`, dark + light) are now
+  rendered at full 2560×1440 resolution with crisp details and without the
+  contact-sheet border artifacts.
+
 ## [0.4.0] — 2026-10-31
 
 ### Changed
