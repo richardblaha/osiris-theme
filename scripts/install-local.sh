@@ -3,7 +3,7 @@
 #
 #   scripts/install-local.sh <what> [--dark|--light]
 #
-#   what: vscode | gtk | gnome | plasma | icons | terminal | wallpapers | grub | all
+#   what: vscode | gtk | gnome | plasma | icons | cursors | terminal | wallpapers | grub | all
 #
 # Run scripts/build.sh first. GRUB still needs root (delegates to sudo).
 set -euo pipefail
@@ -120,6 +120,14 @@ do_icons() {
   log "icon theme 'Osiris' installed to $DATA/icons/Osiris + selected"
 }
 
+do_cursors() {
+  [ -d "$BUILD_DIR/cursors/Osiris-Cursors" ] || die "no cursor theme — run: scripts/build.sh cursors"
+  mkdir -p "$DATA/icons"
+  cp -rT "$BUILD_DIR/cursors/Osiris-Cursors" "$DATA/icons/Osiris-Cursors"
+  have gsettings && gsettings set org.gnome.desktop.interface cursor-theme "Osiris-Cursors" || true
+  log "cursor theme 'Osiris-Cursors' installed + selected"
+}
+
 do_terminal() {
   [ -d "$BUILD_DIR/terminal" ] || die "no terminal schemes in $BUILD_DIR/terminal — run: scripts/build.sh terminal"
   # Ptyxis (current GNOME default terminal)
@@ -142,10 +150,11 @@ case "$WHAT" in
   gnome) do_gtk; do_gnome ;;
   plasma) do_plasma ;;
   icons) do_icons ;;
+  cursors) do_cursors ;;
   terminal) do_terminal ;;
   wallpapers) do_wallpapers ;;
   grub) do_grub ;;
-  desktop) do_gtk; do_gnome; do_plasma; do_icons; do_terminal; do_wallpapers ;;
-  all) do_vscode || true; do_gtk; do_gnome; do_plasma; do_icons; do_terminal; do_wallpapers ;;
+  desktop) do_gtk; do_gnome; do_plasma; do_icons; do_cursors; do_terminal; do_wallpapers ;;
+  all) do_vscode || true; do_gtk; do_gnome; do_plasma; do_icons; do_cursors; do_terminal; do_wallpapers ;;
   *) die "unknown target: $WHAT" ;;
 esac

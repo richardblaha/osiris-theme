@@ -42,10 +42,14 @@
   function iconCard(item) {
     var data = window.OSIRIS_PREVIEW_ICONS || {};
     var glyph = (data.glyphs || {})[item.glyph];
+    var source = (data.derived || {})[item.source];
     var mode = document.documentElement.getAttribute('data-theme') || 'dark';
     var color = item.color || item[mode] || 'currentColor';
     var rule = glyph && glyph.e ? ' fill-rule="evenodd" clip-rule="evenodd"' : '';
-    var svg = item.svg || (glyph
+    var svg = item.svg || (source
+      ? '<svg x="2" y="2" width="20" height="20" viewBox="' + esc(source.viewBox) +
+        '" preserveAspectRatio="xMidYMid meet" style="color:' + esc(color) + '">' + source.body + '</svg>'
+      : glyph
       ? '<path d="' + esc(glyph.d) + '" fill="' + esc(color) + '"' + rule + '/>'
       : '');
     var label = item.label || item.glyph || '';
@@ -75,10 +79,49 @@
           '<h2>' + esc(theme.name) + '</h2>' +
           '<p class="gallery-target">' + esc(theme.target) + '</p>' +
           '<p>' + esc(theme.note) + '</p>' +
+          '<input class="gallery-search" type="search" placeholder="Filtrovat ikony…" aria-label="Filtrovat ikony">' +
         '</header>' +
         '<div class="gallery-body">' +
           theme.groups.map(function (gr) { return iconGroup(gr.title, gr.items); }).join('') +
         '</div>';
+      var input = sec.querySelector('.gallery-search');
+      if (input) input.addEventListener('input', function () {
+        var query = input.value.trim().toLocaleLowerCase();
+        sec.querySelectorAll('.icon-card').forEach(function (card) {
+          card.hidden = !!query && card.textContent.toLocaleLowerCase().indexOf(query) < 0;
+        });
+      });
+    });
+    renderWallpapers();
+  }
+
+  function wallpaperCard(item, animated) {
+    var frames = animated ? item.frames : [item.src];
+    var title = animated ? item.family + ' · ' + item.variant + ' · ' + item.name
+      : item.family + ' · ' + item.design + ' · ' + item.variant;
+    return '<article class="wallpaper-card' + (animated ? ' animated' : '') + '" data-frames="' +
+      esc(JSON.stringify(frames)) + '"><div class="wallpaper-image"><img src="' + esc(frames[0]) +
+      '" alt="' + esc(title) + '"><span class="wallpaper-kind">' + (animated ? 'TIME' : item.variant.toUpperCase()) +
+      '</span></div><h3>' + esc(title) + '</h3></article>';
+  }
+
+  function renderWallpapers() {
+    var sec = document.querySelector('.wallpaper-gallery');
+    var data = window.OSIRIS_WALLPAPERS;
+    if (!sec || !data || sec.dataset.rendered) return;
+    sec.dataset.rendered = '1';
+    sec.innerHTML = '<header class="gallery-head"><h2>OSIRIS Wallpapery</h2>' +
+      '<p class="gallery-target">Neon Sci-Fi · statické a časové GNOME sady</p>' +
+      '<p>Všechny dodávané varianty. TIME náhledy střídají stejné snímky jako nainstalované 24hodinové XML.</p></header>' +
+      '<div class="wallpaper-body"><h3>Statické varianty (' + data.static.length + ')</h3><div class="wallpaper-grid">' +
+      data.static.map(function (x) { return wallpaperCard(x, false); }).join('') +
+      '</div><h3>Časové kolekce (' + data.animated.length + ')</h3><div class="wallpaper-grid">' +
+      data.animated.map(function (x) { return wallpaperCard(x, true); }).join('') + '</div></div>';
+    sec.querySelectorAll('.wallpaper-card.animated').forEach(function (card, index) {
+      var frames = JSON.parse(card.getAttribute('data-frames'));
+      var image = card.querySelector('img');
+      var frame = 0;
+      setInterval(function () { frame = (frame + 1) % frames.length; image.src = frames[frame]; }, 2400 + index * 120);
     });
   }
 
@@ -144,7 +187,7 @@
     try { stored = localStorage.getItem('osiris-preview-theme'); } catch (e) { /* ignore */ }
     if (stored === 'dark' || stored === 'light') setTheme(stored);
     var requestedTab = location.hash.replace(/^#/, '');
-    if (['file-icons', 'product-icons', 'desktop-icons'].indexOf(requestedTab) >= 0) {
+    if (['file-icons', 'product-icons', 'desktop-icons', 'wallpapers'].indexOf(requestedTab) >= 0) {
       setMainTab(requestedTab);
     }
 

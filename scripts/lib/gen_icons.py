@@ -17,6 +17,7 @@ warning when the tool is missing.
 from __future__ import annotations
 
 import json
+import gzip
 import os
 import shutil
 import subprocess
@@ -59,10 +60,22 @@ def have(cmd: str) -> bool:
 def svg(glyph_name: str, color: str) -> str:
     g = GLYPHS[glyph_name]
     fr = ' fill-rule="evenodd" clip-rule="evenodd"' if g.get("evenodd") else ""
+    base = ""
+    if g.get("base") in GLYPHS:
+        base = f'<path fill="{color}" d="{GLYPHS[g["base"]]["d"]}"/>'
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {GRID} {GRID}" '
         f'width="{GRID}" height="{GRID}">'
-        f'<path{fr} fill="{color}" d="{g["d"]}"/></svg>\n'
+        f'{base}<path{fr} fill="{color}" d="{g["d"]}"/></svg>\n'
+    )
+
+
+def derived_svg(source: dict, color: str) -> str:
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {GRID} {GRID}" '
+        f'width="{GRID}" height="{GRID}" color="{color}">'
+        f'<svg x="2" y="2" width="20" height="20" viewBox="{source["viewBox"]}" '
+        f'preserveAspectRatio="xMidYMid meet">{source["body"]}</svg></svg>\n'
     )
 
 
@@ -228,12 +241,37 @@ def gen_xdg(out: str) -> None:
     sizes = xdg["sizes"]
     categories = xdg["categories"]
 
+    # Explicit OSIRIS mappings win. Every remaining compatibility name must
+    # resolve to its own normalized Papirus-derived drawing; no generic fallback.
+    papirus_path = os.path.join(ICONOGRAPHY, "papirus_catalog.json")
+    papirus = load(papirus_path) if os.path.exists(papirus_path) else {"icons": {}, "symbolic": []}
+    derived_path = os.path.join(ICONOGRAPHY, "papirus_derived.json.gz")
+    if os.path.exists(derived_path):
+        with gzip.open(derived_path, "rt", encoding="utf-8") as stream:
+            derived = json.load(stream)
+    else:
+        derived = {"icons": {}, "sources": {}}
+    icons = {cat: dict(mapping) for cat, mapping in icons.items()}
+    for cat, names in papirus.get("icons", {}).items():
+        if cat not in icons:
+            continue
+        for name in names:
+            # A catalogue name is generated only when it has its own derived
+            # Papirus drawing. There is deliberately no generic fallback icon.
+            if name in derived.get("icons", {}).get(cat, {}):
+                icons[cat].setdefault(name, None)
+    for name in papirus.get("symbolic", []):
+        if name in derived.get("icons", {}).get("status", {}):
+            icons["status"].setdefault(name, None)
+
     theme_dir = os.path.join(out, xdg["themeName"])
     if os.path.isdir(theme_dir):
         shutil.rmtree(theme_dir)
     os.makedirs(theme_dir, exist_ok=True)
     shutil.copy2(os.path.join(ICONOGRAPHY, "LICENSE.material-symbols"),
                  os.path.join(theme_dir, "LICENSE.material-symbols"))
+    shutil.copy2(os.path.join(ICONOGRAPHY, "LICENSE.papirus"),
+                 os.path.join(theme_dir, "LICENSE.papirus"))
 
     ctx = {
         "actions": "Actions", "apps": "Applications", "categories": "Categories",
@@ -272,6 +310,13 @@ def gen_xdg(out: str) -> None:
     for cat, mapping in icons.items():
         color = emblem_color if cat == "emblems" else cat_color.get(cat, "#8b949e")
         for name, glyph in mapping.items():
+            source_id = derived.get("icons", {}).get(cat, {}).get(name)
+            if glyph is None and source_id in derived.get("sources", {}):
+                write(os.path.join(theme_dir, "scalable", cat, f"{name}.svg"),
+                      derived_svg(derived["sources"][source_id], color))
+                written[cat].add(name)
+                total += 1
+                continue
             if glyph not in GLYPHS:
                 warn(f"xdg {cat}/{name}: unknown glyph '{glyph}' — skipped")
                 continue

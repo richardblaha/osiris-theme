@@ -10,7 +10,7 @@ BUILD      := scripts/build.sh
 
 .DEFAULT_GOAL := help
 .PHONY: help all tokens vscode vitepress bootstrap npm appicons watermarks brand \
-        icons iconpack terminal browsers forgejo \
+        icons iconpack cursors terminal browsers forgejo \
         gtk gnome sourceview themes plasma desktop grub wallpapers pages deb rpm apt \
         dist install-local clean distclean lint wiki-sync
 
@@ -45,6 +45,9 @@ brand: appicons watermarks ## App icons + watermark rasters (committed brand ass
 icons: ## Generate the XDG icon theme (build/icons/Osiris/) (needs: python3)
 	@$(BUILD) icons
 
+cursors: ## Generate the Xcursor theme (build/cursors/Osiris-Cursors/)
+	@$(BUILD) cursors
+
 iconpack: ## Portable GNOME/XDG icon-theme archive (dist/*.tar.gz)
 	@$(BUILD) iconpack
 
@@ -72,7 +75,7 @@ themes: ## GTK + GNOME Shell + Metacity theme tarball (dist/osiris-gnome-theme-<
 plasma: ## Assemble KDE Plasma / Qt / Kvantum / Aurorae (build/plasma/)
 	@$(BUILD) plasma
 
-desktop: gtk gnome sourceview plasma ## All Linux desktop themes
+desktop: gtk gnome sourceview plasma cursors ## All Linux desktop themes
 
 grub: ## Build the GRUB2 theme (build/grub/)
 	@$(BUILD) grub

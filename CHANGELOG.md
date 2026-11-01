@@ -5,6 +5,36 @@ Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](ht
 
 ## [Unreleased]
 
+## [0.5.0] — 2026-11-01
+
+### Added
+- **Complete Papirus-derived icon compatibility** — the generated XDG theme now
+  covers 16,000+ Papirus 20260801 names plus icon IDs discovered from locally
+  installed applications. Every previously missing name is backed by its own
+  Papirus-derived, monochrome rounded drawing (6,500+ distinct drawings); there
+  is no generic fallback icon. The GPL-3.0-only derived artwork is kept separate
+  from the MIT generator and is reproducible with
+  `scripts/lib/sync_papirus_{catalog,glyphs}.py`.
+- **Osiris-Cursors** — a generated cyan/magenta Xcursor theme with 11 designs,
+  47 standard aliases and 24/32/48 px frames. It is included in local installs,
+  portable icon archives, Debian packages and RPM packages.
+- **Six time-changing wallpaper collections** — three dark and three light
+  24-hour GNOME slideshows, each cycling through four Neon Sci-Fi designs.
+- **Complete preview galleries** — the GitHub Pages showcase now exposes all
+  17,000+ icon associations with filtering, all 20 static wallpaper variants,
+  and animated previews of the six timed collections.
+
+### Changed
+- Documents, Downloads, Pictures, Music and Videos now share one outlined
+  folder silhouette and differ only by their semantic ornament.
+- GNOME Shell overview close controls are a bare magenta X, notification badges
+  use the secondary magenta accent, and split Quick Settings menu buttons keep
+  the correct right-hand geometry on GNOME Shell 50.
+
+### Fixed
+- GNOME wallpaper transition XML now references the packaged JPEG files rather
+  than temporary PNG files removed during generation.
+
 ## [0.4.1] — 2026-11-01
 
 ### Changed

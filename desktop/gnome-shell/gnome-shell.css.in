@@ -207,6 +207,27 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
   border-radius: 4px;
   border: none;
 }
+.quick-toggle-has-menu .quick-toggle {
+  min-width: auto;
+  max-width: auto;
+}
+.quick-toggle-has-menu .quick-toggle:ltr { border-radius: 4px 0 0 4px; }
+.quick-toggle-has-menu .quick-toggle:rtl { border-radius: 0 4px 4px 0; }
+.quick-toggle-has-menu .quick-toggle:ltr:last-child,
+.quick-toggle-has-menu .quick-toggle:rtl:last-child { border-radius: 4px; }
+.quick-toggle-has-menu .quick-toggle-menu-button {
+  background-color: @SURFACE_HOVER@;
+  color: @FG@;
+  padding: 0 10px;
+}
+.quick-toggle-has-menu .quick-toggle-menu-button:ltr { border-radius: 0 4px 4px 0; }
+.quick-toggle-has-menu .quick-toggle-menu-button:rtl { border-radius: 4px 0 0 4px; }
+.quick-toggle-has-menu:checked .quick-toggle-menu-button {
+  background-color: @ACCENT@;
+  color: @ACCENT_FG@;
+}
+.quick-toggle-has-menu .quick-toggle-separator { width: 1px; background-color: @BORDER@; }
+.quick-toggle-has-menu:checked .quick-toggle-separator { background-color: @ACCENT_FG@; }
 .quick-toggle:hover, .quick-menu-toggle:hover { background-color: @SELECTION@; }
 .quick-toggle:checked, .quick-menu-toggle:checked,
 .quick-toggle-has-menu:checked {
@@ -423,14 +444,28 @@ StScrollBar StButton#vhandle:hover, StScrollBar StButton#hhandle:hover { backgro
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 .window-close, .workspace-close-button {
-  background-color: @ERROR@;
-  color: #ffffff;
-  border: 2px solid @SURFACE@;
+  background-color: transparent;
+  color: @SECONDARY@;
+  border: none;
   border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: none;
+  padding: 4px;
+  width: 28px;
+  height: 28px;
 }
-.window-close:hover { background-image: linear-gradient(rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12)); }
+.window-close StIcon, .workspace-close-button StIcon { icon-size: 20px; color: @SECONDARY@; }
+.window-close:hover, .workspace-close-button:hover { background-color: @SECONDARY_SOFT@; }
 .window-clone-border { border: 2px solid @ACCENT@; border-radius: 4px; }
+
+#dashtodockContainer .notification-badge,
+.overview-tile .notification-badge,
+.grid-search-result .notification-badge,
+.icon-grid .notification-badge {
+  background-color: @SECONDARY@;
+  color: #ffffff;
+  border-radius: 10px;
+  font-weight: 700;
+}
 
 /* ---- Overview: app grid + folders ------------------------- */
 .icon-grid { spacing: 12px; }

@@ -10,7 +10,7 @@ DESTDIR = debian/tmp
 	dh $@
 
 override_dh_auto_build:
-	scripts/build.sh tokens gtk gnome sourceview plasma icons terminal grub wallpapers
+	scripts/build.sh tokens gtk gnome sourceview plasma icons cursors terminal grub wallpapers
 
 override_dh_auto_install:
 	# --- GTK / GNOME Shell / Metacity ---
@@ -50,6 +50,7 @@ override_dh_auto_install:
 	# --- Icon theme ---
 	install -d $(DESTDIR)/usr/share/icons
 	cp -rT build/icons/Osiris $(DESTDIR)/usr/share/icons/Osiris
+	cp -rT build/cursors/Osiris-Cursors $(DESTDIR)/usr/share/icons/Osiris-Cursors
 
 	# --- GRUB ---
 	install -d $(DESTDIR)/usr/share/grub/themes/osiris

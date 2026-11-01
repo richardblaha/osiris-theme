@@ -18,6 +18,7 @@ docs/preview/index.html also works opened straight from disk.
 from __future__ import annotations
 
 import json
+import gzip
 import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -61,6 +62,9 @@ def main() -> None:
     ft = load("iconography", "map", "filetypes.json")
     pi = load("iconography", "map", "producticons.json")
     xdg = load("iconography", "map", "xdg.json")["icons"]
+    papirus = load("iconography", "papirus_catalog.json")
+    with gzip.open(ROOT / "iconography" / "papirus_derived.json.gz", "rt", encoding="utf-8") as stream:
+        derived = json.load(stream)
     tok = load("assets", "tokens.json")["icon"]
     themes_tok = load("assets", "tokens.json")["themes"]
 
@@ -77,7 +81,8 @@ def main() -> None:
     def g(key: str) -> dict:
         if key not in used:
             gl = glyphs[key]
-            entry = {"d": gl["d"]}
+            entry = {"d": (glyphs[gl["base"]]["d"] + " " + gl["d"])
+                     if gl.get("base") in glyphs else gl["d"]}
             if gl.get("evenodd"):
                 entry["e"] = 1
             used[key] = entry
@@ -135,10 +140,11 @@ def main() -> None:
     }
 
     # ---- 2. VS Code product icons --------------------------------------
-    prod = dedupe(
-        ((ident, glyph) for ident, glyph in pi.items() if not ident.startswith("$")),
-        lambda ident, glyph: glyph,
-    )
+    prod = [
+        {**g(glyph), "label": ident}
+        for ident, glyph in sorted(pi.items())
+        if not ident.startswith("$") and glyph in glyphs
+    ]
     for item in prod:
         item["dark"], item["light"] = ui_dark, ui_light
     n_ids = sum(1 for k in pi if not k.startswith("$"))
@@ -147,7 +153,7 @@ def main() -> None:
         "name": "Osiris Product Icons",
         "target": "VS Code · motiv produktových ikon (osiris-symbols.woff)",
         "note": f"iconography/map/producticons.json — {n_ids} identifikátorů "
-                f"Codicon přemapováno na {len(prod)} glyfů. Monochromatické, "
+                f"Codicon zobrazeno jako {len(prod)} položek. Monochromatické, "
                 f"dědí barvu UI; identifikátory mimo seznam padají zpět na Codicon.",
         "groups": [{"title": f"Sada glyfů ({len(prod)})", "items": prod}],
     }
@@ -158,8 +164,19 @@ def main() -> None:
         if cat.startswith("$"):
             continue
         labels = APP_LABELS if cat == "apps" else CATEGORY_LABELS if cat == "categories" else {}
-        items = dedupe(mapping.items(),
-                       lambda ident, glyph, lut=labels: lut.get(glyph, glyph))
+        names = set(mapping)
+        names.update(papirus.get("icons", {}).get(cat, []))
+        if cat == "status":
+            names.update(papirus.get("symbolic", []))
+        items = []
+        for ident in sorted(names):
+            glyph = mapping.get(ident)
+            if glyph in glyphs:
+                items.append({**g(glyph), "label": ident})
+                continue
+            source = derived.get("icons", {}).get(cat, {}).get(ident)
+            if source in derived.get("sources", {}):
+                items.append({"source": source, "label": ident})
         color = cat_color.get(cat, file_default)
         for item in items:
             item["color"] = color
@@ -169,7 +186,7 @@ def main() -> None:
         "id": "xdg",
         "name": "Osiris",
         "target": "XDG / freedesktop · /usr/share/icons/Osiris (GNOME, KDE Plasma)",
-        "note": "iconography/map/xdg.json — 8 kategorií, Material Symbols Rounded 300, "
+        "note": "Úplný katalog Papirus kompatibility + lokálních aplikací — 8 kategorií, Material Symbols Rounded 300, "
                 "barva podle tokens.icon.xdg.categoryColor. Dědí Adwaita, breeze, "
                 "gnome, hicolor pro cokoli nestylované.",
         "groups": xdg_groups,
@@ -177,6 +194,7 @@ def main() -> None:
 
     data = {
         "glyphs": {k: used[k] for k in sorted(used)},
+        "derived": derived["sources"],
         "themes": [file_theme, product_theme, xdg_theme],
     }
 

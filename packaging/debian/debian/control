@@ -54,10 +54,11 @@ Package: osiris-icon-theme
 Architecture: all
 Depends: ${misc:Depends}, hicolor-icon-theme
 Recommends: adwaita-icon-theme
-Description: OSIRIS Material Symbols Rounded icon theme
+Description: OSIRIS rounded icon and cursor theme
  Freedesktop icon theme in the Material Symbols Rounded 300 visual language — cyan/rose on a
  GitHub-flavoured ramp. Covers actions, apps, categories, devices, emblems,
- mimetypes, places and status, with GNOME↔KDE compatibility symlinks. Inherits
+ mimetypes, places and status, with individually derived Papirus drawings and GNOME↔KDE
+ compatibility symlinks. Also ships the matching Osiris-Cursors Xcursor theme. Inherits
  Adwaita / Breeze / GNOME / hicolor for anything unstyled. Installed as
  /usr/share/icons/Osiris.
 

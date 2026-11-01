@@ -23,8 +23,8 @@
   <!-- Light -> Dark -->
   <transition type="overlay">
     <duration>7200.0</duration>
-    <from>/usr/share/backgrounds/osiris/neon/osiris-neon-@NAME@-light-@RES@.png</from>
-    <to>/usr/share/backgrounds/osiris/neon/osiris-neon-@NAME@-dark-@RES@.png</to>
+    <from>/usr/share/backgrounds/osiris/neon/osiris-neon-@NAME@-light-@RES@.jpg</from>
+    <to>/usr/share/backgrounds/osiris/neon/osiris-neon-@NAME@-dark-@RES@.jpg</to>
   </transition>
 
   <!-- Dark -->
@@ -36,7 +36,7 @@
   <!-- Dark -> Light -->
   <transition type="overlay">
     <duration>3600.0</duration>
-    <from>/usr/share/backgrounds/osiris/neon/osiris-neon-@NAME@-dark-@RES@.png</from>
-    <to>/usr/share/backgrounds/osiris/neon/osiris-neon-@NAME@-light-@RES@.png</to>
+    <from>/usr/share/backgrounds/osiris/neon/osiris-neon-@NAME@-dark-@RES@.jpg</from>
+    <to>/usr/share/backgrounds/osiris/neon/osiris-neon-@NAME@-light-@RES@.jpg</to>
   </transition>
 </background>

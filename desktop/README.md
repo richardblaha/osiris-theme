@@ -25,6 +25,7 @@ stages those. Every artifact ships **both** an `Osiris` (dark) and an
 
 ```sh
 scripts/build.sh desktop        # -> build/themes/, build/kvantum/, ...
+scripts/build.sh cursors        # -> build/cursors/Osiris-Cursors/
 scripts/install-local.sh desktop --dark      # copies into ~/.local/share + ~/.themes and switches
 ```
 

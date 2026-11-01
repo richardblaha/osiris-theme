@@ -64,13 +64,13 @@ Plasma colour schemes, Kvantum Qt themes (OsirisDark / OsirisLight), the
 OsirisDark Aurorae decoration and the Osiris Plasma desktop theme.
 
 %package -n osiris-icon-theme
-Summary:        OSIRIS Material Symbols Rounded icon theme
+Summary:        OSIRIS rounded icon and cursor theme
 BuildArch:      noarch
 Requires:       hicolor-icon-theme
 %description -n osiris-icon-theme
 Freedesktop icon theme in the Material Symbols Rounded 300 visual language — cyan/rose on a
 GitHub-flavoured ramp. Covers actions, apps, categories, devices, emblems,
-mimetypes, places and status with GNOME/KDE compatibility symlinks; inherits
+mimetypes, places and status with individually derived Papirus drawings and GNOME/KDE compatibility symlinks; inherits
 Adwaita / Breeze / GNOME / hicolor. Installed as %{_datadir}/icons/Osiris.
 
 %package -n osiris-theme-grub
@@ -93,7 +93,7 @@ and KDE Plasma light/dark wallpaper packages.
 %autosetup -n %{name}-%{version}
 
 %build
-scripts/build.sh tokens gtk gnome sourceview plasma icons terminal grub wallpapers
+scripts/build.sh tokens gtk gnome sourceview plasma icons cursors terminal grub wallpapers
 
 %check
 scripts/check-tokens.sh
@@ -136,6 +136,7 @@ cp -rT build/plasma/desktoptheme/Osiris %{buildroot}%{_datadir}/plasma/desktopth
 # Icon theme
 install -d %{buildroot}%{_datadir}/icons
 cp -rT build/icons/Osiris %{buildroot}%{_datadir}/icons/Osiris
+cp -rT build/cursors/Osiris-Cursors %{buildroot}%{_datadir}/icons/Osiris-Cursors
 
 # GRUB
 install -d %{buildroot}%{_datadir}/grub/themes/osiris
@@ -219,6 +220,7 @@ fi
 %files -n osiris-icon-theme
 %license LICENSE
 %{_datadir}/icons/Osiris
+%{_datadir}/icons/Osiris-Cursors
 
 %files -n osiris-theme-grub
 %license LICENSE

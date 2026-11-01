@@ -56,6 +56,8 @@
             data-act="main-tab" data-main-tab="product-icons">Produktové ikony</button>
     <button type="button" class="main-tab" role="tab" aria-selected="false"
             data-act="main-tab" data-main-tab="desktop-icons">Ikony plochy</button>
+    <button type="button" class="main-tab" role="tab" aria-selected="false"
+            data-act="main-tab" data-main-tab="wallpapers">Wallpapery</button>
   </div>
 
   <!-- ================= IDE WINDOW ================= -->
@@ -639,6 +641,8 @@
            aria-label="Produktové ikony" hidden></section>
   <section class="icon-gallery" data-main-view="desktop-icons" data-theme-id="xdg"
            aria-label="Ikony plochy" hidden></section>
+  <section class="wallpaper-gallery" data-main-view="wallpapers"
+           aria-label="Wallpapery" hidden></section>
 
   <p class="footnote">
     Design tokeny (<b>--accent-primary</b>, <b>--accent-secondary</b>, <b>--bg-*</b>, <b>--text-*</b>) jsou definované jako CSS proměnné v <b>:root</b> a přepisované v blocích <b>[data-theme="dark"]</b> / <b>[data-theme="light"]</b> — připravené k extrakci do <b>assets/tokens.json</b> a odtud do všech témat OSIRIS.
@@ -647,6 +651,7 @@
 </div>
 
 <script src="icons.js"></script>
+<script src="wallpapers.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

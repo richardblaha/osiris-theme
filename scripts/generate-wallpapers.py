@@ -121,6 +121,31 @@ def discover(src_root: Path) -> dict[str, list[str]]:
     return {k: sorted(v) for k, v in sorted(fams.items())}
 
 
+def timed_collection(fam: str, designs: list[str], variant: str, phase: int,
+                     resolution: str) -> str:
+    """A 24-hour GNOME slideshow using four same-variant OSIRIS designs."""
+    selected = [designs[(phase + i * 2) % len(designs)] for i in range(4)]
+    base = f"/usr/share/backgrounds/osiris/{fam}/osiris-{fam}"
+    lines = [
+        '<?xml version="1.0"?>', '<background>', '  <starttime>',
+        '    <year>2026</year><month>01</month><day>01</day>',
+        f'    <hour>{phase * 2:02d}</hour><minute>00</minute><second>00</second>',
+        '  </starttime>',
+    ]
+    for i, name in enumerate(selected):
+        nxt = selected[(i + 1) % len(selected)]
+        current_path = f"{base}-{name}-{variant}-{resolution}.jpg"
+        next_path = f"{base}-{nxt}-{variant}-{resolution}.jpg"
+        lines += [
+            '  <static><duration>19800.0</duration>',
+            f'    <file>{current_path}</file></static>',
+            '  <transition type="overlay"><duration>1800.0</duration>',
+            f'    <from>{current_path}</from><to>{next_path}</to></transition>',
+        ]
+    lines.append('</background>')
+    return "\n".join(lines) + "\n"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=str(REPO / "build" / "wallpapers"))
@@ -205,6 +230,24 @@ def main() -> int:
                 "    <options>zoom</options>",
                 "  </wallpaper>",
             ]
+
+        # Three time-changing collections for each colour-scheme variant.
+        # They cycle through four existing masters and never cross from dark to
+        # light, so selecting a theme-specific collection remains predictable.
+        for variant, label in (("dark", "Dark"), ("light", "Light")):
+            for phase in range(3):
+                rel = f"osiris-{fam}-{variant}-animated-{phase + 1}-{default_res}.xml"
+                xml_text = timed_collection(fam, designs, variant, phase, default_res)
+                for root in (gnome_root / fam, bg_root / "gnome" / fam):
+                    root.mkdir(parents=True, exist_ok=True)
+                    (root / rel).write_text(xml_text, encoding="utf-8")
+                props += [
+                    "  <wallpaper deleted=\"false\">",
+                    f"    <name>Osiris {fam_title} — {label} Animated {phase + 1}</name>",
+                    f"    <filename>/usr/share/backgrounds/osiris/gnome/{fam}/{rel}</filename>",
+                    "    <options>zoom</options>",
+                    "  </wallpaper>",
+                ]
 
     props.append("</wallpapers>")
     (props_dir / "osiris.xml").write_text("\n".join(props) + "\n", encoding="utf-8")

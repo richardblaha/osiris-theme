@@ -11,7 +11,7 @@
     ".git": "folder-git", ".github": "folder-git", ".gitlab": "folder-git",
     "node_modules": "folder-assets", "vendor": "folder-assets", "bower_components": "folder-assets",
     "dist": "folder-assets", "build": "folder-assets", "out": "folder-assets", "target": "folder-assets",
-    "assets": "folder-assets", "images": "folder-assets", "img": "folder-assets", "media": "folder-assets", "public": "folder-assets", "static": "folder-assets",
+    "assets": "folder-assets", "images": "folder-pictures", "img": "folder-pictures", "pictures": "folder-pictures", "media": "folder-assets", "music": "folder-music", "audio": "folder-music", "videos": "folder-videos", "video": "folder-videos", "downloads": "folder-downloads", "documents": "folder-documents", "public": "folder-assets", "static": "folder-assets",
     "test": "folder-code", "tests": "folder-code", "__tests__": "folder-code", "spec": "folder-code", "e2e": "folder-code",
     "config": "folder-config", ".config": "folder-config", "settings": "folder-config", ".vscode": "folder-config", ".idea": "folder-config",
     "docs": "folder-assets", "doc": "folder-assets", "documentation": "folder-assets",

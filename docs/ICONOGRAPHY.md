@@ -7,6 +7,8 @@ it is generated from a single source:
 - **Official upstream outlines:** [`iconography/material_symbols.json`](../iconography/material_symbols.json)
 - **Upstream-name mapping:** [`iconography/material_map.json`](../iconography/material_map.json)
 - **Custom fallback outlines:** [`iconography/glyphs.json`](../iconography/glyphs.json)
+- **Papirus-derived compatibility drawings:** `iconography/papirus_derived.json.gz`
+  (GPL-3.0-only; source names in `papirus_catalog.json`)
 - **Assignment maps:** [`iconography/map/`](../iconography/map/) —
   `filetypes.json`, `xdg.json`, `producticons.json`
 - **Generator:** [`scripts/lib/gen_icons.py`](../scripts/lib/gen_icons.py)
@@ -45,10 +47,11 @@ from Material Symbols keylines and proportions.
 Glyphs are extracted as **filled geometric paths**. No stroke approximation,
 font substitution, gradient, or embedded raster is used.
 
-The current library is a **core set of 145 official Google outlines**. The maps compose and alias
-those primitives to the full required icon-name lists — e.g. `text-x-python`,
-`text-x-rust` and `application-javascript` all resolve to the `file-code`
-primitive, tinted per language. Refresh upstream paths with
+The current library has a core set of official Google outlines. Explicit semantic
+maps use those primitives. Papirus compatibility names without an explicit map
+do **not** fall back to a generic primitive: each resolves to its own normalized,
+monochrome rounded drawing derived from the corresponding Papirus SVG. Identical
+upstream aliases share one drawing. Refresh upstream paths with
 `scripts/lib/import_material_symbols.py`; add a local path only when no official
 symbol can represent the concept.
 
@@ -152,7 +155,7 @@ symlink** to its target. Aliases cover:
 - MIME fallbacks — `text-x-python`, `text-rust`, `application-typescript` →
   `text-x-source`; `application-vnd.rar` → `application-x-7z-compressed`; …
 
-~380 icons + ~310 aliases per build.
+The current build emits 16,000+ names plus explicit compatibility aliases.
 
 ---
 

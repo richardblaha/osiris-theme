@@ -15,6 +15,7 @@
 #   watermarks  -> assets/watermarks/*.png  (letterpress 1x/2x rasters)
 #   brand       appicons + watermarks
 #   icons       -> build/icons/Osiris/   (XDG icon theme: index.theme + scalable/ + sizes)
+#   cursors     -> build/cursors/Osiris-Cursors/ (Xcursor theme)
 #   terminal    -> build/terminal/       (GNOME Terminal / Ptyxis / Konsole schemes)
 #   browsers    -> dist/osiris-{chromium,firefox}-{dark,light}-<ver>.zip
 #   forgejo     -> dist/osiris-forgejo-<ver>.zip   (Forgejo / Gitea CSS themes)
@@ -89,9 +90,18 @@ build_icons() {
 # Portable icon-theme archive for systems where deb/rpm tooling is unavailable.
 build_iconpack() {
   build_icons
+  build_cursors
   mkdir -p "$DIST_DIR"
-  tar -C "$BUILD_DIR/icons" -czf "$DIST_DIR/osiris-icon-theme-$VERSION.tar.gz" Osiris
+  cp -rT "$BUILD_DIR/cursors/Osiris-Cursors" "$BUILD_DIR/icons/Osiris-Cursors"
+  tar -C "$BUILD_DIR/icons" -czf "$DIST_DIR/osiris-icon-theme-$VERSION.tar.gz" Osiris Osiris-Cursors
   log "  -> $DIST_DIR/osiris-icon-theme-$VERSION.tar.gz"
+}
+
+build_cursors() {
+  log "generating Xcursor theme"
+  have python3 || die "python3 required for the cursor theme"
+  python3 scripts/lib/gen_cursors.py "$BUILD_DIR/cursors/Osiris-Cursors"
+  log "  -> $BUILD_DIR/cursors/Osiris-Cursors"
 }
 
 # ---------------------------------------------------------------------------
@@ -396,6 +406,7 @@ build_pages() {
   # refresh the icon-gallery data (committed too, so file:// preview still works)
   if have python3; then
     python3 scripts/lib/gen_preview_icons.py
+    python3 scripts/lib/gen_preview_wallpapers.py
   else
     warn "python3 missing — docs/preview/icons.js not regenerated (using committed copy)"
   fi
@@ -412,7 +423,7 @@ build_pages() {
 }
 
 # ---------------------------------------------------------------------------
-for tgt in tokens vscode vitepress bootstrap appicons watermarks icons iconpack terminal browsers forgejo gtk gnome plasma sourceview themes grub wallpapers pages; do
+for tgt in tokens vscode vitepress bootstrap appicons watermarks icons iconpack cursors terminal browsers forgejo gtk gnome plasma sourceview themes grub wallpapers pages; do
   case "$tgt" in
     gtk|gnome|plasma|sourceview) want "$tgt" || want desktop || continue ;;
     vitepress|bootstrap)         want "$tgt" || want npm || continue ;;

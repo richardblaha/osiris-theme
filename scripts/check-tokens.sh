@@ -13,7 +13,7 @@ read_token() {   # read_token '.themes.dark.bg.editor'
     jq -r "$1" "$TOKENS"
   else
     TOKENS="$TOKENS" python3 - "$1" <<'PY'
-import json, os, sys
+import gzip, json, os, sys
 d = json.load(open(os.environ["TOKENS"], encoding="utf-8"))
 for k in sys.argv[1].strip(".").split("."):
     d = d[k]
@@ -198,7 +198,7 @@ done
 # --- iconography (shared rounded glyph source + maps resolve) ---
 if command -v python3 >/dev/null 2>&1; then
   ROOT="$ROOT" python3 - <<'PY' || fail=1
-import json, os, sys
+import gzip, json, os, sys
 root = os.environ["ROOT"]
 def L(*p): return json.load(open(os.path.join(root, *p), encoding="utf-8"))
 assert L("assets", "tokens.json")["icon"]["grid"] == 24
@@ -221,6 +221,18 @@ for cat, mapping in xd["icons"].items():
     bad += [f"xdg.icons.{cat}.{k}" for k, v in mapping.items() if v not in glyphs]
 pi = L("iconography", "map", "producticons.json")
 bad += [f"producticons.{k}" for k, v in pi.items() if not k.startswith("$") and v not in glyphs]
+catalog = L("iconography", "papirus_catalog.json")
+with gzip.open(os.path.join(root, "iconography", "papirus_derived.json.gz"), "rt", encoding="utf-8") as fh:
+    derived = json.load(fh)
+if derived.get("missing"):
+    bad += [f"papirus.missing.{name}" for name in derived["missing"]]
+for cat, names in catalog["icons"].items():
+    explicit = set(xd["icons"].get(cat, {}))
+    adapted = set(derived["icons"].get(cat, {}))
+    bad += [f"papirus.uncovered.{cat}.{name}" for name in names if name not in explicit | adapted]
+status_covered = set(xd["icons"].get("status", {})) | set(derived["icons"].get("status", {}))
+bad += [f"papirus.uncovered.status.{name}" for name in catalog.get("symbolic", [])
+        if name not in status_covered]
 if bad:
     print("  ICON  unresolved glyph refs: " + ", ".join(bad[:8]) +
           (f" (+{len(bad)-8} more)" if len(bad) > 8 else ""))
