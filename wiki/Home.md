@@ -6,7 +6,7 @@
 
 ### Jednotná vizuální identita a designový systém OSIRIS
 **Jeden repozitář pro kompletní ekosystém vývojářského prostředí**  
-*VS Code &bull; GTK 3/4 &bull; GNOME Shell &bull; KDE Plasma / Qt &bull; VitePress &bull; Bootstrap 5 &bull; Prohlížeče &bull; GRUB2 &bull; Tapety*
+*VS Code &bull; GTK 3/4 &bull; GNOME Shell &bull; KDE Plasma / Qt &bull; VitePress &bull; Bootstrap 5 &bull; Blazor Blueprint UI &bull; Prohlížeče &bull; GRUB2 &bull; Tapety*
 
 [Interaktivní živý náhled designu &rarr;](https://richardblaha.github.io/osiris-theme/)
 
@@ -20,7 +20,7 @@
 
 - **Vývojová prostředí:** VS Code (barevné téma, sady souborových i produktových ikon).
 - **Desktopová prostředí (Linux):** GTK 3.0 / 4.0, libadwaita, GNOME Shell, Metacity/Marco, KDE Plasma 6 (barevná schémata, Kvantum, Aurorae, desktoptheme), VTE terminály (GNOME Terminal, Ptyxis, Konsole).
-- **Web a dokumentace:** VitePress (oficiální téma dokumentace), Bootstrap 5 (Sass proměnné a komponenty), Forgejo / Gitea (tmavé, světlé a auto CSS téma).
+- **Web a dokumentace:** VitePress (oficiální téma dokumentace), Bootstrap 5 (Sass proměnné a komponenty), Blazor Blueprint UI (CSS proměnné ve stylu shadcn/ui, dark i light), Forgejo / Gitea (tmavé, světlé a auto CSS téma).
 - **Webové prohlížeče:** Google Chrome, Chromium, Microsoft Edge a Mozilla Firefox.
 - **Systémový start:** GRUB2 bootloader motiv s vlastní grafikou a typografií.
 - **Vizuální podklad:** Tapety Neon Sci-Fi — 10 motivů × dark/light s dynamickými přechody den/noc.

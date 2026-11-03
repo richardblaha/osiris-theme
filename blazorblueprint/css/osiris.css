@@ -1,0 +1,165 @@
+/* ============================================================================
+   OSIRIS — Blazor Blueprint UI theme (https://blazorblueprintui.com)
+   Derived from assets/tokens.json. Maps the OSIRIS dual-accent system (cyan
+   primary + magenta/rose secondary on a GitHub-flavoured neutral ramp) onto
+   the Blazor Blueprint / shadcn/ui CSS custom properties.
+
+   Usage — load this file BEFORE the BlazorBlueprint stylesheet:
+
+     <head>
+       <link href="css/osiris.css" rel="stylesheet" />                 <!-- 1. theme variables -->
+       <link href="_content/BlazorBlueprint.Components/blazorblueprint.css" rel="stylesheet" /> <!-- 2. components -->
+     </head>
+
+   Dark mode is the `.dark` class on <html> — the ThemeService /
+   BbDarkModeToggle components toggle it for you. Hex values are used instead
+   of OKLCH; Blazor Blueprint accepts any valid CSS color format.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Fonts — tokens.font
+   Fira Code ships inside this package (fonts/, SIL OFL-1.1). Consumers who
+   already load Fira Code can ignore this @font-face — the family name is the same.
+   --------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Fira Code";
+  src: url("../fonts/FiraCode-VF.woff2") format("woff2-variations"),
+       url("../fonts/FiraCode-VF.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ===========================================================================
+   LIGHT  —  themes.light  /  accent.*.light  /  state.*.light
+   =========================================================================== */
+:root {
+  color-scheme: light;
+
+  /* Core colors */
+  --background: #ffffff;                          /* themes.light.bg.editor */
+  --foreground: #1f2328;                          /* themes.light.text.primary */
+  --card: #ffffff;                                /* themes.light.bg.editor */
+  --card-foreground: #1f2328;
+  --popover: #ffffff;
+  --popover-foreground: #1f2328;
+  --primary: #0969da;                             /* accent.primary.light */
+  --primary-foreground: #ffffff;                  /* themes.light.text.inverse */
+  --secondary: #e01a76;                           /* accent.secondary.light */
+  --secondary-foreground: #ffffff;
+  --muted: #f6f8fa;                               /* themes.light.bg.sidebar */
+  --muted-foreground: #57606a;                    /* themes.light.text.secondary */
+  --accent: #eaeef2;                              /* themes.light.bg.hover */
+  --accent-foreground: #1f2328;
+  --destructive: #cf222e;                         /* state.error.light */
+  --destructive-foreground: #ffffff;
+  --border: #d0d7de;                              /* themes.light.border.strong */
+  --input: #d0d7de;
+  --ring: #0969da;                                /* accent.primary.light */
+
+  /* Alert colors — state.*.light + soft tints */
+  --alert-success: #1a7f37;                       /* state.success.light */
+  --alert-success-foreground: #1f2328;
+  --alert-success-bg: rgba(26, 127, 55, 0.08);
+  --alert-info: #0969da;                          /* state.info.light */
+  --alert-info-foreground: #1f2328;
+  --alert-info-bg: rgba(9, 105, 218, 0.1);        /* accent.primarySoft.light */
+  --alert-warning: #9a6700;                       /* state.warning.light */
+  --alert-warning-foreground: #1f2328;
+  --alert-warning-bg: rgba(154, 103, 0, 0.1);
+  --alert-danger: #cf222e;                        /* state.error.light */
+  --alert-danger-foreground: #1f2328;
+  --alert-danger-bg: rgba(207, 34, 46, 0.08);
+
+  /* Chart colors — accent + icon.fileIcon.palette */
+  --chart-1: #0969da;
+  --chart-2: #e01a76;
+  --chart-3: #589bf0;
+  --chart-4: #d9a441;
+  --chart-5: #a684f5;
+
+  /* Sidebar colors */
+  --sidebar: #f6f8fa;                             /* themes.light.bg.sidebar */
+  --sidebar-foreground: #1f2328;
+  --sidebar-primary: #0969da;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eaeef2;                      /* themes.light.bg.hover */
+  --sidebar-accent-foreground: #1f2328;
+  --sidebar-border: #d0d7de;
+  --sidebar-ring: #0969da;
+
+  /* Typography & layout — tokens.radius (4px controls, 6/8px floating), tokens.font */
+  --radius: 0.25rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.375rem;
+  --radius-xl: 0.5rem;
+  --font-sans: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, -apple-system, "Segoe UI", Ubuntu, sans-serif;
+  --font-serif: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, sans-serif;
+  --font-mono: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-feature-settings: "liga" 1, "calt" 1;      /* Fira Code ligatures */
+
+  /* Sidebar dimensions */
+  --sidebar-width: 16rem;
+  --sidebar-width-mobile: 18rem;
+  --sidebar-width-icon: 3rem;
+}
+
+/* ===========================================================================
+   DARK  —  themes.dark  /  accent.*.dark  /  state.*.dark
+   =========================================================================== */
+.dark {
+  color-scheme: dark;
+
+  /* Core colors */
+  --background: #0d1117;                          /* themes.dark.bg.editor */
+  --foreground: #e6edf3;                          /* themes.dark.text.primary */
+  --card: #161b22;                                /* themes.dark.bg.sidebar */
+  --card-foreground: #e6edf3;
+  --popover: #161b22;
+  --popover-foreground: #e6edf3;
+  --primary: #00f2fe;                             /* accent.primary.dark */
+  --primary-foreground: #04151a;                  /* themes.dark.text.inverse */
+  --secondary: #ff2a85;                           /* accent.secondary.dark */
+  --secondary-foreground: #04151a;
+  --muted: #21262d;                               /* themes.dark.bg.hover */
+  --muted-foreground: #8b949e;                    /* themes.dark.text.secondary */
+  --accent: #21262d;
+  --accent-foreground: #e6edf3;
+  --destructive: #ff5555;                         /* state.error.dark */
+  --destructive-foreground: #04151a;
+  --border: #30363d;                              /* themes.dark.border.strong */
+  --input: #21262d;                               /* themes.dark.bg.input */
+  --ring: #00f2fe;                                /* accent.primary.dark */
+
+  /* Alert colors — state.*.dark + soft tints */
+  --alert-success: #3fb950;                       /* state.success.dark */
+  --alert-success-foreground: #e6edf3;
+  --alert-success-bg: rgba(63, 185, 80, 0.12);
+  --alert-info: #00f2fe;                          /* state.info.dark */
+  --alert-info-foreground: #e6edf3;
+  --alert-info-bg: rgba(0, 242, 254, 0.14);       /* accent.primarySoft.dark */
+  --alert-warning: #d29922;                       /* state.warning.dark */
+  --alert-warning-foreground: #e6edf3;
+  --alert-warning-bg: rgba(210, 153, 34, 0.12);
+  --alert-danger: #ff5555;                        /* state.error.dark */
+  --alert-danger-foreground: #e6edf3;
+  --alert-danger-bg: rgba(255, 85, 85, 0.12);
+
+  /* Chart colors */
+  --chart-1: #00f2fe;
+  --chart-2: #ff2a85;
+  --chart-3: #79c0ff;
+  --chart-4: #d29922;
+  --chart-5: #a684f5;
+
+  /* Sidebar colors */
+  --sidebar: #161b22;                             /* themes.dark.bg.sidebar */
+  --sidebar-foreground: #e6edf3;
+  --sidebar-primary: #00f2fe;
+  --sidebar-primary-foreground: #04151a;
+  --sidebar-accent: #21262d;                      /* themes.dark.bg.hover */
+  --sidebar-accent-foreground: #e6edf3;
+  --sidebar-border: #30363d;
+  --sidebar-ring: #00f2fe;
+}

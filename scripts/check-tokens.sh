@@ -38,6 +38,7 @@ LIGHT="$ROOT/vscode/themes/osiris-light-color-theme.json"
 DS="$ROOT/docs/DESIGN_SYSTEM.md"
 PREVIEW="$ROOT/docs/preview/styles.css"
 VITEPRESS="$ROOT/vitepress/theme/osiris.css"
+BB_CSS="$ROOT/blazorblueprint/css/osiris.css"
 BOOTSTRAP_VARS="$ROOT/bootstrap/scss/_variables.scss"
 BOOTSTRAP_DARK="$ROOT/bootstrap/scss/_dark.scss"
 FORGEJO_DARK="$ROOT/forgejo/theme-osiris-dark.css"
@@ -78,6 +79,23 @@ do
   check "vitepress $key" "$want" "$VITEPRESS"
 done
 
+# --- blazorblueprint (dual-variant stylesheet: both accents live in one file) ---
+for path in \
+  '.accent.primary.dark:#00f2fe' \
+  '.accent.secondary.dark:#ff2a85' \
+  '.accent.primary.light:#0969da' \
+  '.accent.secondary.light:#e01a76' \
+  '.themes.dark.bg.editor:#0d1117' \
+  '.themes.dark.bg.sidebar:#161b22' \
+  '.themes.dark.text.primary:#e6edf3' \
+  '.themes.light.bg.editor:#ffffff' \
+  '.themes.light.bg.sidebar:#f6f8fa' \
+  '.themes.light.text.primary:#1f2328'
+do
+  key="${path%%:*}"; want="${path##*:}"
+  check "blazorblueprint $key" "$want" "$BB_CSS"
+done
+
 # --- bootstrap (scss: light drives _variables.scss, dark drives _dark.scss) ---
 for path in \
   '.accent.primary.light:#0969da' \
@@ -104,6 +122,7 @@ case "$fira_ui"   in "Fira Code, "*) ;; *) echo "  DRIFT .font.ui does not lead 
 case "$fira_mono" in "Fira Code, "*) ;; *) echo "  DRIFT .font.mono does not lead with 'Fira Code'"; fail=1 ;; esac
 for f in \
   "$VITEPRESS" \
+  "$BB_CSS" \
   "$BOOTSTRAP_VARS" \
   "$ROOT/docs/preview/styles.css" \
   "$ROOT/desktop/gnome-shell/gnome-shell.css.in" \

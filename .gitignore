@@ -24,6 +24,7 @@ node_modules/
 /vscode/node_modules/
 /vitepress/package-lock.json
 /bootstrap/package-lock.json
+/blazorblueprint/package-lock.json
 /bootstrap/dist/
 *.tgz
 

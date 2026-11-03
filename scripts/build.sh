@@ -10,7 +10,8 @@
 #   vscode      -> build/vscode/osiris-theme-<ver>.vsix   (needs: node + vsce)
 #   vitepress   -> dist/osiris-vitepress-theme-<ver>.tgz  (needs: npm)
 #   bootstrap   -> dist/osiris-bootstrap-theme-<ver>.tgz  (needs: npm)
-#   npm         vitepress + bootstrap
+#   blazorblueprint -> dist/osiris-blazorblueprint-theme-<ver>.tgz  (needs: npm)
+#   npm         vitepress + bootstrap + blazorblueprint
 #   appicons    -> assets/icons/app/     (.ico / .icns / multi-res .png / hicolor)
 #   watermarks  -> assets/watermarks/*.png  (letterpress 1x/2x rasters)
 #   brand       appicons + watermarks
@@ -201,6 +202,12 @@ build_bootstrap() {
   log "compiling + packing osiris-bootstrap-theme"
   npm_pack bootstrap install   # prepack runs `npm run build` -> dist/osiris-bootstrap.css
   log "  -> $DIST_DIR/osiris-bootstrap-theme-$VERSION.tgz"
+}
+
+build_blazorblueprint() {
+  log "packing osiris-blazorblueprint-theme"
+  npm_pack blazorblueprint
+  log "  -> $DIST_DIR/osiris-blazorblueprint-theme-$VERSION.tgz"
 }
 
 # ---------------------------------------------------------------------------
@@ -423,10 +430,10 @@ build_pages() {
 }
 
 # ---------------------------------------------------------------------------
-for tgt in tokens vscode vitepress bootstrap appicons watermarks icons iconpack cursors terminal browsers forgejo gtk gnome plasma sourceview themes grub wallpapers pages; do
+for tgt in tokens vscode vitepress bootstrap blazorblueprint appicons watermarks icons iconpack cursors terminal browsers forgejo gtk gnome plasma sourceview themes grub wallpapers pages; do
   case "$tgt" in
     gtk|gnome|plasma|sourceview) want "$tgt" || want desktop || continue ;;
-    vitepress|bootstrap)         want "$tgt" || want npm || continue ;;
+    vitepress|bootstrap|blazorblueprint) want "$tgt" || want npm || continue ;;
     appicons|watermarks)         want "$tgt" || want brand || continue ;;
     *)                           want "$tgt" || continue ;;
   esac

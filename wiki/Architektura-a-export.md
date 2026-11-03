@@ -22,6 +22,7 @@ iconography/material_symbols.json ─┼──→ vscode/fileicons/* ───�
                             ├──→ boot/grub/* ──────────────────────→ /boot/grub/themes/osiris
                             ├──→ vitepress/theme/osiris.css ───────→ npm: osiris-vitepress-theme
                             ├──→ bootstrap/scss/* ─────────────────→ npm: osiris-bootstrap-theme
+                            ├──→ blazorblueprint/css/osiris.css ───→ npm: osiris-blazorblueprint-theme
                             ├──→ forgejo/theme-osiris-*.css ───────→ Forgejo / Gitea ZIP archiv
                             ├──→ browsers/*/manifest.json ─────────→ Chrome / Edge / Firefox doplňky
                             └──→ assets/wallpapers/* ──────────────→ /usr/share/backgrounds/osiris
@@ -38,6 +39,7 @@ iconography/material_symbols.json ─┼──→ vscode/fileicons/* ───�
 | **Linux (Fedora / openSUSE)** | `.rpm` | RPM specifikace generující odpovídající subbalíčky |
 | **VitePress (NPM)** | `.tgz` | `osiris-vitepress-theme` |
 | **Bootstrap 5 (NPM)** | `.tgz` | `osiris-bootstrap-theme` |
+| **Blazor Blueprint UI (NPM)** | `.tgz` | `osiris-blazorblueprint-theme` |
 | **Forgejo / Gitea** | `.zip` | Samostatný balíček CSS motivů |
 | **Webové prohlížeče** | `.zip` | Rozšíření pro Chromium i Firefox (Dark & Light) |
 | **GRUB2** | adresář / skript | Téma bootloaderu s automatickým instalátorem `install.sh` |
@@ -55,7 +57,7 @@ bash scripts/check-tokens.sh
 ### Co tento skript ověřuje v CI:
 1. Shodu každého hexadecimálního kódu v `docs/DESIGN_SYSTEM.md` s `assets/tokens.json`.
 2. Validitu map ikon vůči sjednocené sadě oficiálních Material Symbols a explicitních fallbacků.
-3. Správnost CSS proměnných v balíčcích pro VitePress, Bootstrap a Forgejo.
+3. Správnost CSS proměnných v balíčcích pro VitePress, Bootstrap, Blazor Blueprint UI a Forgejo.
 
 Při jakémkoliv nesouladu dojde k okamžitému selhání CI pipeline na GitHubu.
 

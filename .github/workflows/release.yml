@@ -87,8 +87,9 @@ jobs:
             *Osiris File Icons* and *Osiris Product Icons*.
 
             ### Web
-            - npm: `osiris-vitepress-theme`, `osiris-bootstrap-theme` — attached as
-              `.tgz` and published to <https://www.npmjs.com/>.
+            - npm: `osiris-vitepress-theme`, `osiris-bootstrap-theme`,
+              `osiris-blazorblueprint-theme` — attached as `.tgz` and published to
+              <https://www.npmjs.com/>.
             - Browsers: `osiris-{chromium,firefox}-{dark,light}-*.zip` — Manifest V3
               (Chromium/Chrome/Edge) and V2 (Firefox) themes.
             - Forgejo / Gitea: `osiris-forgejo-*.zip` — `osiris-{dark,light,auto}`

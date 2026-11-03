@@ -7,8 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 One repository that generates the entire **OSIRIS** visual identity from a single set of
 design tokens: a VS Code extension (colour + file and product icon themes), an XDG/GNOME icon
 theme, GTK 3/4, GNOME Shell, Metacity, KDE Plasma/Qt/Kvantum, GtkSourceView, GNOME
-Terminal/Ptyxis/Konsole palettes, GRUB2, a VitePress npm theme, a Bootstrap 5 npm theme,
-Forgejo/Gitea CSS, Chromium/Firefox manifests, and wallpapers. Output ships as `.vsix`,
+Terminal/Ptyxis/Konsole palettes, GRUB2, a VitePress npm theme, a Bootstrap 5 npm theme, a Blazor Blueprint UI npm
+theme, Forgejo/Gitea CSS, Chromium/Firefox manifests, and wallpapers. Output ships as `.vsix`,
 `.tgz`, `.zip`, `.deb`, `.rpm`, and a `.tar.gz` bundle.
 
 ## The one rule: single source of truth
@@ -39,6 +39,7 @@ Never hand-tune a hex in a theme file or add a glyph straight into a target. `ma
 - **Hand-derived and drift-checked** — edit these by hand when tokens change, then the guard
   confirms the values match: `vscode/themes/osiris-{dark,light}-color-theme.json`,
   `docs/DESIGN_SYSTEM.md`, `docs/preview/styles.css`, `vitepress/theme/osiris.css`,
+  `blazorblueprint/css/osiris.css`,
   `bootstrap/scss/_variables.scss` (light) + `bootstrap/scss/_dark.scss` (dark),
   `forgejo/theme-osiris-{dark,light}.css`, `browsers/*/manifest.json`, `docs/ICONOGRAPHY.md`.
   The terminal `terminal.ansi*` block in the committed VS Code themes is also compared to
@@ -74,7 +75,7 @@ with any map/palette change.
 make help          # list every target with its dependency notes
 make tokens        # palette + icon drift guard — the CI gate (needs: jq; python3 fallback)
 make vscode        # -> dist/osiris-theme-<ver>.vsix   (needs: node, vsce/npx, fantasticon, rsvg-convert)
-make npm           # -> dist/osiris-{vitepress,bootstrap}-theme-<ver>.tgz
+make npm           # -> dist/osiris-{vitepress,bootstrap,blazorblueprint}-theme-<ver>.tgz
 make icons         # -> build/icons/Osiris/            (needs: python3)
 make iconpack      # -> dist/osiris-icon-theme-<ver>.tar.gz
 make terminal browsers forgejo sourceview

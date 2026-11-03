@@ -4,7 +4,8 @@
 
 **One repository for the entire OSIRIS visual identity** — VS Code (color, file
 and product icons), a Material Symbols Rounded icon theme, GTK, GNOME Shell, KDE Plasma /
-Qt, GRUB2, VitePress, Bootstrap 5, Chromium & Firefox, and wallpapers — all
+Qt, GRUB2, VitePress, Bootstrap 5, Blazor Blueprint UI, Chromium & Firefox, and
+wallpapers — all
 generated from a single set of design tokens and shipped as `.vsix`, npm
 packages, browser `.zip`s, `.deb` and `.rpm`.
 
@@ -38,6 +39,7 @@ tokens.json ──┬─→ vscode/themes/*.json            → osiris-theme.vsi
               ├─→ boot/grub/*                      → /boot/grub/themes/osiris
               ├─→ vitepress/theme/osiris.css       → npm: osiris-vitepress-theme
               ├─→ bootstrap/scss/*                 → npm: osiris-bootstrap-theme
+              ├─→ blazorblueprint/css/osiris.css   → npm: osiris-blazorblueprint-theme
               ├─→ forgejo/theme-osiris-*.css       → Forgejo / Gitea (osiris-forgejo-<ver>.zip)
               ├─→ browsers/*/manifest.json         → Chromium / Chrome / Edge / Firefox
               └─→ assets/wallpapers/*              → /usr/share/backgrounds/osiris
@@ -69,6 +71,7 @@ osiris-theme/
 ├── vscode/                      # VS Code extension — colour + file + product icon themes
 ├── vitepress/                   # npm: osiris-vitepress-theme (default-theme override)
 ├── bootstrap/                   # npm: osiris-bootstrap-theme (Bootstrap 5, Sass)
+├── blazorblueprint/             # npm: osiris-blazorblueprint-theme (Blazor Blueprint UI CSS variables)
 ├── forgejo/                     # Forgejo / Gitea CSS themes — dark / light / auto
 ├── browsers/                    # chromium-{dark,light} + firefox-{dark,light} manifests
 ├── desktop/
@@ -113,11 +116,13 @@ Then:
 ### Web — npm
 
 ```sh
-npm i -D osiris-vitepress-theme   # VitePress default-theme skin
-npm i    osiris-bootstrap-theme   # Bootstrap 5 build (dark + light color modes)
+npm i -D osiris-vitepress-theme        # VitePress default-theme skin
+npm i    osiris-bootstrap-theme        # Bootstrap 5 build (dark + light color modes)
+npm i    osiris-blazorblueprint-theme  # Blazor Blueprint UI (blazorblueprintui.com) theme variables
 ```
 
-See [`vitepress/`](vitepress/) and [`bootstrap/`](bootstrap/) for wiring.
+See [`vitepress/`](vitepress/), [`bootstrap/`](bootstrap/) and
+[`blazorblueprint/`](blazorblueprint/) for wiring.
 
 ### Forgejo / Gitea
 
@@ -234,7 +239,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) and
 produces every `.vsix` / `.tgz` / `.zip` / `.deb` / `.rpm` into `dist/`. CI
 (`build.yml`) does the same on every push and PR; pushing a tag `vX.Y.Z` that
 matches `VERSION` runs `release.yml` — it builds everything, publishes a GitHub
-Release with all artifacts attached, `npm publish`es the two npm packages
+Release with all artifacts attached, `npm publish`es the three npm packages
 (needs the `NPM_TOKEN` secret) and redeploys the Pages preview.
 
 ## License

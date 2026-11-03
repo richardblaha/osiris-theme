@@ -1,0 +1,46 @@
+{
+  "name": "osiris-blazorblueprint-theme",
+  "version": "0.1.3",
+  "description": "Dual-accent (cyan / rose) theme for Blazor Blueprint UI — dark & light CSS variables — from the OSIRIS design system.",
+  "license": "MIT",
+  "main": "css/osiris.css",
+  "style": "css/osiris.css",
+  "exports": {
+    ".": "./css/osiris.css",
+    "./osiris.css": "./css/osiris.css",
+    "./css": "./css/osiris.css",
+    "./css/*": "./css/*",
+    "./fonts/*": "./fonts/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "css/",
+    "fonts/",
+    "README.md"
+  ],
+  "keywords": [
+    "blazor",
+    "blazor-blueprint",
+    "blazorblueprintui",
+    "blazor-blueprint-ui",
+    "shadcn",
+    "theme",
+    "osiris",
+    "dark",
+    "light",
+    "cyan",
+    "fira code"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/richardblaha/osiris-theme.git",
+    "directory": "blazorblueprint"
+  },
+  "homepage": "https://richardblaha.github.io/osiris-theme/",
+  "bugs": {
+    "url": "https://github.com/richardblaha/osiris-theme/issues"
+  },
+  "scripts": {
+    "lint": "bash ../scripts/check-tokens.sh"
+  }
+}

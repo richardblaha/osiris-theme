@@ -5,6 +5,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/); versioning: [SemVer](ht
 
 ## [Unreleased]
 
+## [0.6.0] — 2026-11-03
+
+### Added
+- **Blazor Blueprint UI theme** — `blazorblueprint/css/osiris.css` maps the OSIRIS
+  dual-accent palette onto the Blazor Blueprint (shadcn/ui-style) CSS variables for
+  both `:root` and `.dark`: core colors, alert triplets, `--chart-1…5`, the
+  `--sidebar-*` set, the 4/6/8 px `--radius` scale and Fira Code as
+  `--font-sans` / `--font-mono`. Shipped as npm: `osiris-blazorblueprint-theme`
+  (`make blazorblueprint`, drift-checked by `make tokens`).
+
 ## [0.5.0] — 2026-11-01
 
 ### Added

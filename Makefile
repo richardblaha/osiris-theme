@@ -9,7 +9,7 @@ DIST_DIR   := dist
 BUILD      := scripts/build.sh
 
 .DEFAULT_GOAL := help
-.PHONY: help all tokens vscode vitepress bootstrap npm appicons watermarks brand \
+.PHONY: help all tokens vscode vitepress bootstrap blazorblueprint npm appicons watermarks brand \
         icons iconpack cursors terminal browsers forgejo \
         gtk gnome sourceview themes plasma desktop grub wallpapers pages deb rpm apt \
         dist install-local clean distclean lint wiki-sync
@@ -32,7 +32,10 @@ vitepress: ## Pack osiris-vitepress-theme (dist/*.tgz) (needs: npm)
 bootstrap: ## Compile + pack osiris-bootstrap-theme (dist/*.tgz) (needs: npm)
 	@$(BUILD) bootstrap
 
-npm: vitepress bootstrap ## Both npm packages -> dist/*.tgz
+blazorblueprint: ## Pack osiris-blazorblueprint-theme (dist/*.tgz) (needs: npm)
+	@$(BUILD) blazorblueprint
+
+npm: vitepress bootstrap blazorblueprint ## All npm packages -> dist/*.tgz
 
 appicons: ## App icons .ico/.icns/.png -> assets/icons/app/ (needs: python3 + rsvg)
 	@$(BUILD) appicons
